@@ -1027,7 +1027,7 @@ body {
 .post-full-content img,.post-full-content video {
     display: block;
     margin: 1.5em auto;
-    max-width: 600px
+    max-width: 800px
 }
 
 @media (max-width:1040px) {
