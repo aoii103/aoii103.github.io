@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>User Agent on </title>
-    <link>http://aoii103.github.io/tags/user-agent/</link>
+    <link>http://pyocean.github.io/tags/user-agent/</link>
     <description>Recent content in User Agent on </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
     <lastBuildDate>Thu, 29 Nov 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="http://aoii103.github.io/tags/user-agent/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://pyocean.github.io/tags/user-agent/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>动动手做一个UserAgent库</title>
-      <link>http://aoii103.github.io/%E5%8A%A8%E5%8A%A8%E6%89%8B%E5%81%9A%E4%B8%80%E4%B8%AAuseragent%E5%BA%93/</link>
+      <link>http://pyocean.github.io/%E5%8A%A8%E5%8A%A8%E6%89%8B%E5%81%9A%E4%B8%80%E4%B8%AAuseragent%E5%BA%93/</link>
       <pubDate>Thu, 29 Nov 2018 00:00:00 +0000</pubDate>
       
-      <guid>http://aoii103.github.io/%E5%8A%A8%E5%8A%A8%E6%89%8B%E5%81%9A%E4%B8%80%E4%B8%AAuseragent%E5%BA%93/</guid>
+      <guid>http://pyocean.github.io/%E5%8A%A8%E5%8A%A8%E6%89%8B%E5%81%9A%E4%B8%80%E4%B8%AAuseragent%E5%BA%93/</guid>
       <description>前言 你是否曾使用着一个两个或者直接百度来谷歌来的几个User-Agent来作为爬虫的UA头，或是从浏览器调试工具扒拉下来的本机UA头，甚至是未使用。。作为一个爬虫脚本，基本的伪装是很必要的。而User-Agent头这个看似不起眼的元素，却起着至关重要的炮灰作用。
 当然，这里还是需要科普下UA，是何物。
 什么是UA  Wiki：在计算机科学中，用户代理（英语：User Agent）指的是代表用户行为的软件代理程序所提供的对自己的一个标识符。
