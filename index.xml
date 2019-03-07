@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title></title>
+    <link>http://aoii103.github.io/</link>
+    <description>Recent content on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Mon, 24 Dec 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://aoii103.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>快速实现暗网交易监控</title>
+      <link>http://aoii103.github.io/%E5%BF%AB%E9%80%9F%E5%AE%9E%E7%8E%B0%E6%9A%97%E7%BD%91%E4%BA%A4%E6%98%93%E7%9B%91%E6%8E%A7/</link>
+      <pubDate>Mon, 24 Dec 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://aoii103.github.io/%E5%BF%AB%E9%80%9F%E5%AE%9E%E7%8E%B0%E6%9A%97%E7%BD%91%E4%BA%A4%E6%98%93%E7%9B%91%E6%8E%A7/</guid>
+      <description>前言 暗网或许对大多数人来说都是一个陌生的名词，但对于一个安全人员却是必不可少的一样的东西。暗网之内鱼龙混杂，内含的活动内容也是参差不齐。
+其中不乏各类的交易黑市，且交易内容也让人触目惊心。(护眼)
+于是我们针对 deepmix2z2ayzi46.onion 暗网中文网编写了一个监控爬虫作为实践案例。
+功能简要  自动注册 自动登录 防封禁策略 ORM交互 事件详情/样本信息录入 事件提醒（telegram）  逻辑脑图 首先放出整个程序的逻辑图。
+分析过程 下面我们简单讲一下该网站的业务逻辑，在进入该网站后网站以一个 *PHPSESSID*Cookie 作为用户整个生命周期的身份ID，过期时间为1小时，且不会自动延长。
+只有靠再次登录才能刷个新的身份。那么在这里，我们需要设定一个Session会话来自动处理这个cookie。并配置socks5代理，关于tor的安装不再赘述。
+self.session = requests.Session() self.session.headers = { &amp;quot;Accept&amp;quot;: &amp;quot;text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8&amp;quot;, &amp;quot;Accept-Encoding&amp;quot;: &amp;quot;gzip, deflate&amp;quot;, &amp;quot;Accept-Language&amp;quot;: &amp;quot;zh-CN,zh;q=0.9,en;q=0.8&amp;quot;, &amp;quot;Cache-Control&amp;quot;: &amp;quot;max-age=0&amp;quot;, &amp;quot;Connection&amp;quot;: &amp;quot;keep-alive&amp;quot;, &amp;quot;Referer&amp;quot;: &amp;quot;http://bmp3qqimv55xdznb.onion/index.php&amp;quot;, &amp;quot;Upgrade-Insecure-Requests&amp;quot;: &amp;quot;1&amp;quot;, &amp;quot;User-Agent&amp;quot;: &amp;quot;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36&amp;quot; } self.proxy_url = &#39;socks5h://127.0.0.1:9150&#39; self.session.proxies = { &#39;https&#39;: self.proxy_url, &#39;http&#39;: self.proxy_url }  或许有同学会注意到这里使用的是 socks5h:// 协议，那么 Requests 模块文档中有注解。因为常规DNS服务器并不能解析*.</description>
+    </item>
+    
+    <item>
+      <title>动动手做一个UserAgent库</title>
+      <link>http://aoii103.github.io/%E5%8A%A8%E5%8A%A8%E6%89%8B%E5%81%9A%E4%B8%80%E4%B8%AAuseragent%E5%BA%93/</link>
+      <pubDate>Thu, 29 Nov 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://aoii103.github.io/%E5%8A%A8%E5%8A%A8%E6%89%8B%E5%81%9A%E4%B8%80%E4%B8%AAuseragent%E5%BA%93/</guid>
+      <description>前言 你是否曾使用着一个两个或者直接百度来谷歌来的几个User-Agent来作为爬虫的UA头，或是从浏览器调试工具扒拉下来的本机UA头，甚至是未使用。。作为一个爬虫脚本，基本的伪装是很必要的。而User-Agent头这个看似不起眼的元素，却起着至关重要的炮灰作用。
+当然，这里还是需要科普下UA，是何物。
+什么是UA  Wiki：在计算机科学中，用户代理（英语：User Agent）指的是代表用户行为的软件代理程序所提供的对自己的一个标识符。
+我：简而言之就是访问者的身份证。
+ 发现之旅 那么在常规爬虫脚本的编写中，通过每次请求虚假的UA来装饰每次请求，同样能达到一定的伪装作用,较为直观的理解就是，例如戴了个口罩。
+ 如果对方刨根问底要你摘下口罩查你IP的话，那这个就不适用了，请移步文章[](/img/content_img/ua_demo/)
+ 废话不多说，说干就干，首先我们打开谷歌（不要问我是怎么打开的。。）并输入user agent list，回车。
+这个时候我们可以看到结果中蓝框内有着令人兴奋的结果，UA的基础分类。 而红框内为此结果的源URL地址。于是我们访问这个站点。
+我们可以看到列表通过用途进行了一定分类。于是我们进行了一定的对比分析。
+https://developers.whatismybrowser.com/useragents/explore/software_name/chrome/ https://developers.whatismybrowser.com/useragents/explore/software_name/internet-explorer/ https://developers.whatismybrowser.com/useragents/explore/operating_system_name/windows/ https://developers.whatismybrowser.com/useragents/explore/operating_platform/nexus-5/  不难看出，这个站点根据尾部的两级目录进行了分类
+\type1\ \type2\ \page  说得直白一点，这或许是 三个循环 就能搞定的事情，当然page得根据抓取结果来判定。
+首先我们需要获取到全部的分类链接，也就是上 图中第一个箭头指向元素的 href属性，这里我们通过chrome调试工具直接选取到红框元素css路径并进行对比总结出通用路径
+# listing-by-field-name &amp;gt; li:nth-child(1) &amp;gt; h2 &amp;gt; a # listing-by-field-name &amp;gt; li:nth-child(2) &amp;gt; h2 &amp;gt; a # listing-by-field-name &amp;gt; li &amp;gt; h2 &amp;gt; a  并且我们可以发现，下级目录直接给出了二级类型及其总数量，具体取法同上文不再赘述。
+我们通过访问任意类型的任一一页，并统计单页数量来直接计算出总页数。那么怎么快速计算呢。这里我们来观察下数据集所处的dom位置。
+可以看到全文就一个tbody标签，并且每项的一个td标签存在useragent这样一个类属性。如此就好办了。我们可以通过编写js语句来直接读取单页总数。
+于是总页数就为math.ceil(nums/50)
+如此一来，一二级目录名称及总页数都找到了解决办法，这个时候我们就可以开始coding了。在编写过程中，我们发现这个站点也是对访问频率进行了一定限制，而Tor代理可以很好地绕过。具体手法详见【url】。
+考虑到我们使用的异步模块asks并没有proxy配置项，于是经过一番搜寻，我们找到了一个很好的命令行代理，接下来我给大家介绍它及其使用方法。
+命令代理ProxyChain4（以MAC为例）  使用环境Linux, BSD, MAC(win用户的悲剧)</description>
+    </item>
+    
+    <item>
+      <title>demo</title>
+      <link>http://aoii103.github.io/demo/</link>
+      <pubDate>Wed, 24 Oct 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://aoii103.github.io/demo/</guid>
+      <description>更多及时资讯欢迎关注我的公众号</description>
+    </item>
+    
+    <item>
+      <title>一个Tor代理绕过访问限制的典型案例</title>
+      <link>http://aoii103.github.io/%E4%B8%80%E4%B8%AAtor%E4%BB%A3%E7%90%86%E7%BB%95%E8%BF%87%E8%AE%BF%E9%97%AE%E9%99%90%E5%88%B6%E7%9A%84%E5%85%B8%E5%9E%8B%E6%A1%88%E4%BE%8B/</link>
+      <pubDate>Wed, 24 Oct 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://aoii103.github.io/%E4%B8%80%E4%B8%AAtor%E4%BB%A3%E7%90%86%E7%BB%95%E8%BF%87%E8%AE%BF%E9%97%AE%E9%99%90%E5%88%B6%E7%9A%84%E5%85%B8%E5%9E%8B%E6%A1%88%E4%BE%8B/</guid>
+      <description>前言 在编写爬虫测试初期，我们一般会验证目标站点是否存在若干的访问限制防护措施。例如UA防护啊 访问频率限制啊 人机验证啊巴拉巴拉的。。
+图片验证 而当我们在遇到图片验证的时候，有以下几种选择。
+ 云市场的识别API （金钱成本） 打码平台 （金钱成本） 自己训练样本识别 （时间成本，算法知识储备） 放弃..  滑动验证 再者当出现滑动验证的时候，那可就比较够呛，我暂时知道以下几种。
+ 模拟js滑动（高失败率） 训练真人滑动轨迹 （时间成本，算法知识储备） 转写逻辑+训练轨迹 （时间成本，js调试能力，算法知识储备，耐心） 再次放弃..  如果上述括号内的都具备了。那下文您啊就不用看啦
+ &amp;mdash;&amp;mdash;&amp;mdash;&amp;ndash;这是一条不起眼的大佬分割线&amp;mdash;&amp;mdash;&amp;mdash;&amp;ndash;
+ 前段时间为了爬取关于虚拟货币方面的及时咨询就遇到这么个站点
+通过使用调试工具我们可以看到。目标数据存在于中
+常规爬虫都会以轮询的方式对目标页进行爬取并应用相同的规则，在不同的时间节点取到不同的数据，而这个站，在刷了一段时间后，出现了这个么东西
+一个你不得不过的滑动验证..
+这个时候我们将url丢入tor浏览器中发现，站点的滑动验证已经消失。
+ 这里我要提一下，此结果只是说明这个站点可以通过ip代理来绕过，使用tor仅仅是为了高效而又0成本造福群众。
+ tor网络就像下面这幅图一样杂乱
+常规单条线路由 入口节点 -&amp;gt; 中转节点1 -&amp;gt; 中转接点2 -&amp;gt; 出口节点 组成，当然这个有点离题了。。抱歉没控制住。
+也就是说，互联网上存在多少个tor节点,你就能有多少个代理！
+此时我们可以通过借助在程序上部署tor代理来实现，
+Tor端口说明  9150 9050 socks5网络代理端口 9151 9051 tor控制端口  部署说明  图形化操作系统  下载安装Tor浏览器启动即可 并通过netstat查看端口是否开启，具体命令不再赘述  服务器 (这里以ubuntu为例)  sudo apt-get install tor -y sudo vi /etc/tor/torrc 将ControlPort前#去掉后保存 sudo /etc/init.</description>
+    </item>
+    
+  </channel>
+</rss>

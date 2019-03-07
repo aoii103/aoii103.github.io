@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Cawler on </title>
+    <link>http://aoii103.github.io/tags/cawler/</link>
+    <description>Recent content in Cawler on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Wed, 24 Oct 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://aoii103.github.io/tags/cawler/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>demo</title>
+      <link>http://aoii103.github.io/demo/</link>
+      <pubDate>Wed, 24 Oct 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://aoii103.github.io/demo/</guid>
+      <description>更多及时资讯欢迎关注我的公众号</description>
+    </item>
+    
+    <item>
+      <title>一个Tor代理绕过访问限制的典型案例</title>
+      <link>http://aoii103.github.io/%E4%B8%80%E4%B8%AAtor%E4%BB%A3%E7%90%86%E7%BB%95%E8%BF%87%E8%AE%BF%E9%97%AE%E9%99%90%E5%88%B6%E7%9A%84%E5%85%B8%E5%9E%8B%E6%A1%88%E4%BE%8B/</link>
+      <pubDate>Wed, 24 Oct 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://aoii103.github.io/%E4%B8%80%E4%B8%AAtor%E4%BB%A3%E7%90%86%E7%BB%95%E8%BF%87%E8%AE%BF%E9%97%AE%E9%99%90%E5%88%B6%E7%9A%84%E5%85%B8%E5%9E%8B%E6%A1%88%E4%BE%8B/</guid>
+      <description>前言 在编写爬虫测试初期，我们一般会验证目标站点是否存在若干的访问限制防护措施。例如UA防护啊 访问频率限制啊 人机验证啊巴拉巴拉的。。
+图片验证 而当我们在遇到图片验证的时候，有以下几种选择。
+ 云市场的识别API （金钱成本） 打码平台 （金钱成本） 自己训练样本识别 （时间成本，算法知识储备） 放弃..  滑动验证 再者当出现滑动验证的时候，那可就比较够呛，我暂时知道以下几种。
+ 模拟js滑动（高失败率） 训练真人滑动轨迹 （时间成本，算法知识储备） 转写逻辑+训练轨迹 （时间成本，js调试能力，算法知识储备，耐心） 再次放弃..  如果上述括号内的都具备了。那下文您啊就不用看啦
+ &amp;mdash;&amp;mdash;&amp;mdash;&amp;ndash;这是一条不起眼的大佬分割线&amp;mdash;&amp;mdash;&amp;mdash;&amp;ndash;
+ 前段时间为了爬取关于虚拟货币方面的及时咨询就遇到这么个站点
+通过使用调试工具我们可以看到。目标数据存在于中
+常规爬虫都会以轮询的方式对目标页进行爬取并应用相同的规则，在不同的时间节点取到不同的数据，而这个站，在刷了一段时间后，出现了这个么东西
+一个你不得不过的滑动验证..
+这个时候我们将url丢入tor浏览器中发现，站点的滑动验证已经消失。
+ 这里我要提一下，此结果只是说明这个站点可以通过ip代理来绕过，使用tor仅仅是为了高效而又0成本造福群众。
+ tor网络就像下面这幅图一样杂乱
+常规单条线路由 入口节点 -&amp;gt; 中转节点1 -&amp;gt; 中转接点2 -&amp;gt; 出口节点 组成，当然这个有点离题了。。抱歉没控制住。
+也就是说，互联网上存在多少个tor节点,你就能有多少个代理！
+此时我们可以通过借助在程序上部署tor代理来实现，
+Tor端口说明  9150 9050 socks5网络代理端口 9151 9051 tor控制端口  部署说明  图形化操作系统  下载安装Tor浏览器启动即可 并通过netstat查看端口是否开启，具体命令不再赘述  服务器 (这里以ubuntu为例)  sudo apt-get install tor -y sudo vi /etc/tor/torrc 将ControlPort前#去掉后保存 sudo /etc/init.</description>
+    </item>
+    
+  </channel>
+</rss>
