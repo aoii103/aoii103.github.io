@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN" />
 <head>
+
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
@@ -48,6 +49,9 @@
     
 
      
+    <link href="https://cdn.bootcss.com/highlight.js/9.12.0/styles/monokai.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
 
 </head>
 
@@ -71,6 +75,10 @@
         
             <li class="" role="menuitem">
               <a href="/tags/crawler/">Crawler</a>
+            </li>
+        
+            <li class="" role="menuitem">
+              <a href="/tags/python/">Python</a>
             </li>
         
             <li class="" role="menuitem">
@@ -222,44 +230,40 @@
 <ul>
 <li><a href="https://stem.torproject.org/api.html">stem</a> tor控制模块</li>
 </ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> logging
+<span style="color:#f92672">import</span> time
 
-<pre><code class="language-python">import logging
-import time
+<span style="color:#f92672">import</span> requests
+<span style="color:#f92672">from</span> pyquery <span style="color:#f92672">import</span> PyQuery <span style="color:#66d9ef">as</span> jq
+<span style="color:#f92672">from</span> stem <span style="color:#f92672">import</span> Signal
+<span style="color:#f92672">from</span> stem.control <span style="color:#f92672">import</span> Controller
 
-import requests
-from pyquery import PyQuery as jq
-from stem import Signal
-from stem.control import Controller
-
-logging.basicConfig(format= &quot;[%(asctime)s] &gt;&gt;&gt; %(levelname)s  %(name)s: %(message)s&quot;,level=logging.INFO)
-loger = logging.getLogger(&quot;Torctl&quot;)
-controller = Controller.from_port(port=9151)
-controller.authenticate()
+logging<span style="color:#f92672">.</span>basicConfig(format<span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;[</span><span style="color:#e6db74">%(asctime)s</span><span style="color:#e6db74">] &gt;&gt;&gt; </span><span style="color:#e6db74">%(levelname)s</span><span style="color:#e6db74">  </span><span style="color:#e6db74">%(name)s</span><span style="color:#e6db74">: </span><span style="color:#e6db74">%(message)s</span><span style="color:#e6db74">&#34;</span>,level<span style="color:#f92672">=</span>logging<span style="color:#f92672">.</span>INFO)
+loger <span style="color:#f92672">=</span> logging<span style="color:#f92672">.</span>getLogger(<span style="color:#e6db74">&#34;Torctl&#34;</span>)
+controller <span style="color:#f92672">=</span> Controller<span style="color:#f92672">.</span>from_port(port<span style="color:#f92672">=</span><span style="color:#ae81ff">9151</span>)
+controller<span style="color:#f92672">.</span>authenticate()
 
 
-def main():
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span>():
 
-    while True:
-        time.sleep(2)
-        loger.info('NewID')
+    <span style="color:#66d9ef">while</span> True:
+        time<span style="color:#f92672">.</span>sleep(<span style="color:#ae81ff">2</span>)
+        loger<span style="color:#f92672">.</span>info(<span style="color:#e6db74">&#39;NewID&#39;</span>)
         checkIP()
-        controller.signal(Signal.NEWNYM)
+        controller<span style="color:#f92672">.</span>signal(Signal<span style="color:#f92672">.</span>NEWNYM)
 
-def checkIP():
-    try:
-        resp = requests.get('https://ipinfo.info/html/my_ip_address.php', proxies={
-            'https': 'socks5://127.0.0.1:9150'
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">checkIP</span>():
+    <span style="color:#66d9ef">try</span>:
+        resp <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#39;https://ipinfo.info/html/my_ip_address.php&#39;</span>, proxies<span style="color:#f92672">=</span>{
+            <span style="color:#e6db74">&#39;https&#39;</span>: <span style="color:#e6db74">&#39;socks5://127.0.0.1:9150&#39;</span>
         })
-        loger.info(jq(resp.text)(&quot;#Text10 &gt; p &gt; span &gt; b&quot;).text())
-    except Exception as e:
-        loger.error(e)
+        loger<span style="color:#f92672">.</span>info(jq(resp<span style="color:#f92672">.</span>text)(<span style="color:#e6db74">&#34;#Text10 &gt; p &gt; span &gt; b&#34;</span>)<span style="color:#f92672">.</span>text())
+    <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">Exception</span> <span style="color:#66d9ef">as</span> e:
+        loger<span style="color:#f92672">.</span>error(e)
     
 
-if __name__ == '__main__':
-    main()
-
-</code></pre>
-
+<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
+    main()</code></pre></div>
 <p>这样就完成了一个自动tor切换的脚本，你的代理已经在全世界飞了，当然实际根据被Ban时切换。</p>
 
 <p><img src="/img/content_img/tor_demo/torchange.png" alt="torchange.png" /></p>
@@ -276,7 +280,7 @@ if __name__ == '__main__':
         <img class="author-profile-image" src="https://aoii103.github.io/img/author.jpeg" alt="Author" />
         <section class="author-card-content">
             <h4 class="author-card-name"><a href="https://aoii103.github.io/">s045pd</a></h4>
-                <p>Describe yourself..</p>
+                <p>pretty world!</p>
         </section>
       </section>
     </footer>
@@ -293,6 +297,35 @@ if __name__ == '__main__':
   <div class="inner">
     <div class="read-next-feed">      
       
+<article class="read-next-card" style="background-color: #090a0b;">
+    <header class="read-next-card-header">
+        <small class="read-next-card-header-sitetitle">&mdash; 进击的Robot &mdash;</small>
+        
+        <h3 class="read-next-card-header-title"><a href="https://aoii103.github.io/tags/cawler/">#cawler</a></h3>
+    </header>
+    <div class="read-next-divider"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/></svg>
+    </div>
+
+    <div class="read-next-card-content">
+      
+        <ul>
+                      
+        
+          <li><a href="https://aoii103.github.io/%E5%87%A0%E6%AC%BE%E6%88%96%E8%AE%B8%E8%83%BD%E6%94%B9%E5%96%84%E7%BC%96%E5%86%99%E6%95%88%E7%8E%87%E7%9A%84%E5%B7%A5%E5%85%B7%E7%AC%AC%E4%B8%80%E6%9C%9F/">几款或许能改善编写效率的工具(第一期)</a></li>            
+        
+          <li><a href="https://aoii103.github.io/%E5%8A%A8%E5%8A%A8%E6%89%8B%E5%81%9A%E4%B8%80%E4%B8%AAuseragent%E5%BA%93/">动动手做一个UserAgent库</a></li>            
+        
+          <li><a href="https://aoii103.github.io/%E7%BB%95%E8%BF%87cloudflare-jsfuck%E9%98%B2%E6%8A%A4%E9%AA%8C%E8%AF%81/">绕过CloudFlare-JSfuck防护验证</a></li>            
+        
+          <li><a href="https://aoii103.github.io/%E5%BF%AB%E9%80%9F%E5%AE%9E%E7%8E%B0%E6%9A%97%E7%BD%91%E4%BA%A4%E6%98%93%E7%9B%91%E6%8E%A7/">快速实现暗网交易监控</a></li>            
+        </ul>
+    </div>
+    <footer class="read-next-card-footer">
+      
+        <a href="https://aoii103.github.io/tags/cawler/">See all related posts →</a>
+    </footer>
+</article>
+
 
       
       <article class="post-card post"> 
@@ -325,6 +358,37 @@ if __name__ == '__main__':
     </div>
 </article>
       
+      
+      <article class="post-card post"> 
+    
+    <a class="post-card-image-link" href="https://aoii103.github.io/%E7%BB%95%E8%BF%87cloudflare-jsfuck%E9%98%B2%E6%8A%A4%E9%AA%8C%E8%AF%81/">
+      <div class="post-card-image" style="background-image: url(https://aoii103.github.io/img/content_img/anticloudflare/cloudfare.jpg)"></div>
+    </a>
+    
+
+    <div class="post-card-content">
+      <a class="post-card-content-link" href="https://aoii103.github.io/%E7%BB%95%E8%BF%87cloudflare-jsfuck%E9%98%B2%E6%8A%A4%E9%AA%8C%E8%AF%81/">
+          <header class="post-card-header">
+              <span class="post-card-tags">
+              #jsfuck 
+              #python 
+              #crawler  </span>
+              
+              <h2 class="post-card-title">绕过CloudFlare-JSfuck防护验证</h2>
+          </header>
+          <section class="post-card-excerpt">
+               
+                <p>近日在爬取某个站点的时候发现，默认必须通过首页跳转才可以访问其内容页，就像这样&hellip;</p>
+              
+          </section>
+      </a>
+
+      <footer class="post-card-meta">
+          <img class="author-profile-image" src="https://aoii103.github.io/img/author.jpeg" alt="Author" />
+          <span class="post-card-author"><a href="/">s045pd</a></span>
+      </footer>
+    </div>
+</article>
       
     </div>
   </div>
@@ -366,7 +430,7 @@ if __name__ == '__main__':
 <footer class="site-footer outer">
   <div class="site-footer-content inner">
     <section class="copyright" style="line-height: 1.3em;">
-      <a href="/">EM</a>  <br>
+      <a href="/"></a>  <br>
       
     </section>
     <nav class="site-footer-nav">
@@ -387,6 +451,14 @@ if __name__ == '__main__':
 
 <script>hljs.initHighlightingOnLoad();</script>
 
+
+  <!-- Google Analytics -->
+  <script>
+    var _gaq=[['_setAccount','UA-135738940-1'],['_trackPageview']];
+    (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+    g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+    s.parentNode.insertBefore(g,s)}(document,'script'));
+  </script>
 
 
     <script>

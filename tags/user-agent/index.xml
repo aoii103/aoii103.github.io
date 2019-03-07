@@ -29,7 +29,7 @@
 https://developers.whatismybrowser.com/useragents/explore/software_name/chrome/ https://developers.whatismybrowser.com/useragents/explore/software_name/internet-explorer/ https://developers.whatismybrowser.com/useragents/explore/operating_system_name/windows/ https://developers.whatismybrowser.com/useragents/explore/operating_platform/nexus-5/  不难看出，这个站点根据尾部的两级目录进行了分类
 \type1\ \type2\ \page  说得直白一点，这或许是 三个循环 就能搞定的事情，当然page得根据抓取结果来判定。
 首先我们需要获取到全部的分类链接，也就是上 图中第一个箭头指向元素的 href属性，这里我们通过chrome调试工具直接选取到红框元素css路径并进行对比总结出通用路径
-# listing-by-field-name &amp;gt; li:nth-child(1) &amp;gt; h2 &amp;gt; a # listing-by-field-name &amp;gt; li:nth-child(2) &amp;gt; h2 &amp;gt; a # listing-by-field-name &amp;gt; li &amp;gt; h2 &amp;gt; a  并且我们可以发现，下级目录直接给出了二级类型及其总数量，具体取法同上文不再赘述。
+# listing-by-field-name &amp;gt; li:nth-child(1) &amp;gt; h2 &amp;gt; a # listing-by-field-name &amp;gt; li:nth-child(2) &amp;gt; h2 &amp;gt; a # listing-by-field-name &amp;gt; li &amp;gt; h2 &amp;gt; a 并且我们可以发现，下级目录直接给出了二级类型及其总数量，具体取法同上文不再赘述。
 我们通过访问任意类型的任一一页，并统计单页数量来直接计算出总页数。那么怎么快速计算呢。这里我们来观察下数据集所处的dom位置。
 可以看到全文就一个tbody标签，并且每项的一个td标签存在useragent这样一个类属性。如此就好办了。我们可以通过编写js语句来直接读取单页总数。
 于是总页数就为math.ceil(nums/50)

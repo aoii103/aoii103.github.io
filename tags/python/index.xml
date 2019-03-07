@@ -44,13 +44,35 @@ self.session = requests.Session() self.session.headers = { &amp;quot;Accept&amp;
 https://developers.whatismybrowser.com/useragents/explore/software_name/chrome/ https://developers.whatismybrowser.com/useragents/explore/software_name/internet-explorer/ https://developers.whatismybrowser.com/useragents/explore/operating_system_name/windows/ https://developers.whatismybrowser.com/useragents/explore/operating_platform/nexus-5/  不难看出，这个站点根据尾部的两级目录进行了分类
 \type1\ \type2\ \page  说得直白一点，这或许是 三个循环 就能搞定的事情，当然page得根据抓取结果来判定。
 首先我们需要获取到全部的分类链接，也就是上 图中第一个箭头指向元素的 href属性，这里我们通过chrome调试工具直接选取到红框元素css路径并进行对比总结出通用路径
-# listing-by-field-name &amp;gt; li:nth-child(1) &amp;gt; h2 &amp;gt; a # listing-by-field-name &amp;gt; li:nth-child(2) &amp;gt; h2 &amp;gt; a # listing-by-field-name &amp;gt; li &amp;gt; h2 &amp;gt; a  并且我们可以发现，下级目录直接给出了二级类型及其总数量，具体取法同上文不再赘述。
+# listing-by-field-name &amp;gt; li:nth-child(1) &amp;gt; h2 &amp;gt; a # listing-by-field-name &amp;gt; li:nth-child(2) &amp;gt; h2 &amp;gt; a # listing-by-field-name &amp;gt; li &amp;gt; h2 &amp;gt; a 并且我们可以发现，下级目录直接给出了二级类型及其总数量，具体取法同上文不再赘述。
 我们通过访问任意类型的任一一页，并统计单页数量来直接计算出总页数。那么怎么快速计算呢。这里我们来观察下数据集所处的dom位置。
 可以看到全文就一个tbody标签，并且每项的一个td标签存在useragent这样一个类属性。如此就好办了。我们可以通过编写js语句来直接读取单页总数。
 于是总页数就为math.ceil(nums/50)
 如此一来，一二级目录名称及总页数都找到了解决办法，这个时候我们就可以开始coding了。在编写过程中，我们发现这个站点也是对访问频率进行了一定限制，而Tor代理可以很好地绕过。具体手法详见【url】。
 考虑到我们使用的异步模块asks并没有proxy配置项，于是经过一番搜寻，我们找到了一个很好的命令行代理，接下来我给大家介绍它及其使用方法。
 命令代理ProxyChain4（以MAC为例）  使用环境Linux, BSD, MAC(win用户的悲剧)</description>
+    </item>
+    
+    <item>
+      <title>绕过CloudFlare-JSfuck防护验证</title>
+      <link>https://aoii103.github.io/%E7%BB%95%E8%BF%87cloudflare-jsfuck%E9%98%B2%E6%8A%A4%E9%AA%8C%E8%AF%81/</link>
+      <pubDate>Thu, 18 Oct 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://aoii103.github.io/%E7%BB%95%E8%BF%87cloudflare-jsfuck%E9%98%B2%E6%8A%A4%E9%AA%8C%E8%AF%81/</guid>
+      <description>经过使用Chrome调试工具审查Network过程后我们可以发现，在未设置cf_clearancecookie时，访问将无法进行。
+我们可以红框内容看到首次访问返回503其后通过访问chk_jschi后触发302跳转至main并成功响应，并且在绿框中我们可以看到在第二个set-cookie取到后再次加载main界面成功
+通过查看 chk_jschi 响应头我们可以看到其中的set-cookie内容正是我们所需要的
+那么问题来了，这个是请求是怎么生成的呢？此时我们通过搜索蓝框内的键
+我们来测试一下如果通过View-source会返回怎么样的结果,这里要注意要先将cookie清理干净
+成功找到相关参数，看起来似乎是没啥问题了。不过有没有注意到jschl_answer并没有内容 并且存在一个id属性 这就让我立即想到会通过js将其赋值的可能。
+于是根据ID查找，发现了惊喜
+那么上面一堆乱七八糟的东西是什么呢。。
+或许大部分人并不知道，这就是Jsfuck
+也就是说，这些代码是可执行的 我们直接取出部分代码丢入console 非常好，接下来就到了根据JS转写成python的过程了，这里我们使用execjs作为执行模块。
+源码地址: https://github.com/aoii103/AntiCloudFare 有需要的同学可自行前往下载。
+###测试执行结果
+可以看到成功生成了相应的url，这里有一点要注意下，在生成成功后，任然需要等待4秒钟再访问该链接才可以取到对应cookie。所以转写代码能全则全，毕竟用来做摆设的占少数。
+最后欢迎关注我的公众号获取最新资讯</description>
     </item>
     
   </channel>

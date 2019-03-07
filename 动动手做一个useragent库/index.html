@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN" />
 <head>
+
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
@@ -48,6 +49,9 @@
     
 
      
+    <link href="https://cdn.bootcss.com/highlight.js/9.12.0/styles/monokai.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
 
 </head>
 
@@ -71,6 +75,10 @@
         
             <li class="" role="menuitem">
               <a href="/tags/crawler/">Crawler</a>
+            </li>
+        
+            <li class="" role="menuitem">
+              <a href="/tags/python/">Python</a>
             </li>
         
             <li class="" role="menuitem">
@@ -172,13 +180,10 @@ https://developers.whatismybrowser.com/useragents/explore/operating_platform/nex
 <p><img src="/img/content_img/ua_demo/pagesearch.png" alt="" /></p>
 
 <p>首先我们需要获取到全部的分类链接，也就是上 图中第一个箭头指向元素的 <code>href</code>属性，这里我们通过chrome调试工具直接选取到红框元素css路径并进行对比总结出通用路径</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># listing-by-field-name &gt; li:nth-child(1) &gt; h2 &gt; a</span>
+<span style="color:#75715e"># listing-by-field-name &gt; li:nth-child(2) &gt; h2 &gt; a</span>
 
-<pre><code class="language-python"># listing-by-field-name &gt; li:nth-child(1) &gt; h2 &gt; a
-# listing-by-field-name &gt; li:nth-child(2) &gt; h2 &gt; a
-
-# listing-by-field-name &gt; li &gt; h2 &gt; a
-</code></pre>
-
+<span style="color:#75715e"># listing-by-field-name &gt; li &gt; h2 &gt; a</span></code></pre></div>
 <p>并且我们可以发现，下级目录直接给出了二级类型及其总数量，具体取法同上文不再赘述。</p>
 
 <p><img src="/img/content_img/ua_demo/nums.png" alt="" /></p>
@@ -201,128 +206,112 @@ https://developers.whatismybrowser.com/useragents/explore/operating_platform/nex
 
 <blockquote>
 <p>使用环境<code>Linux, BSD, MAC</code>(win用户的悲剧)</p>
+</blockquote>
 
 <h4 id="软件安装">软件安装</h4>
 
 <p>这里我们通过<code>brew</code>来管理软件包，具体关于<code>brew</code>的安装方式不再赘述。</p>
 
-<pre><code class="language-brew">
-#### 软件配置
+<p><code>brew install proxychains-ng</code></p>
 
-![](/img/content_img/ua_demo/proxy.png)
+<h4 id="软件配置">软件配置</h4>
 
-我们通过```vim```编辑配置文件```vi /usr/local/etc/proxychains.conf```，搜索```[ProxyList]```(一般在底部) 在其下方加上 ```socks5  127.0.0.1 9150```(此为Tor代理节点)并保存。
+<p><img src="/img/content_img/ua_demo/proxy.png" alt="" /></p>
 
-#### 使用方法
+<p>我们通过<code>vim</code>编辑配置文件<code>vi /usr/local/etc/proxychains.conf</code>，搜索<code>[ProxyList]</code>(一般在底部) 在其下方加上 <code>socks5  127.0.0.1 9150</code>(此为Tor代理节点)并保存。</p>
 
-这个神奇的插件可以通过```proxychains4 [你要运行的命令]``` 来让任何命令经过代理
+<h4 id="使用方法">使用方法</h4>
 
-![](/img/content_img/ua_demo/demo.png)
+<p>这个神奇的插件可以通过<code>proxychains4 [你要运行的命令]</code> 来让任何命令经过代理</p>
 
-当然它还能这样，如下是一张鲜明的对比图。
+<p><img src="/img/content_img/ua_demo/demo.png" alt="" /></p>
 
-![](/img/content_img/ua_demo/demo3.png)
+<p>当然它还能这样，如下是一张鲜明的对比图。</p>
 
-想必也有人会问，是否本地地址也会走代理，答案是，默认是的。需要通过修改配置才能跳过本地地址，找到如下配置并去掉**#**号即可。
+<p><img src="/img/content_img/ua_demo/demo3.png" alt="" /></p>
 
-![](/img/content_img/ua_demo/local.png)
+<p>想必也有人会问，是否本地地址也会走代理，答案是，默认是的。需要通过修改配置才能跳过本地地址，找到如下配置并去掉<strong>#</strong>号即可。</p>
 
-## 数据存储
+<p><img src="/img/content_img/ua_demo/local.png" alt="" /></p>
 
-为了快速构建我们选择使用sqlite，并通过模块```peewee```来构建ORM，没有安装的同学可以通过```pip install peewee```来安装。
+<h2 id="数据存储">数据存储</h2>
 
-首先我们来配置表字段
+<p>为了快速构建我们选择使用sqlite，并通过模块<code>peewee</code>来构建ORM，没有安装的同学可以通过<code>pip install peewee</code>来安装。</p>
 
-</code></pre>
+<p>首先我们来配置表字段</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> peewee <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
 
-<p>from peewee import *</p>
+db <span style="color:#f92672">=</span> SqliteDatabase(<span style="color:#e6db74">&#39;useragents.db&#39;</span>) <span style="color:#75715e"># 初始化数据库</span>
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">UAS</span>(Model):
+    uid <span style="color:#f92672">=</span> AutoField(primary_key<span style="color:#f92672">=</span>True, null<span style="color:#f92672">=</span>True) <span style="color:#75715e"># 自增ID</span>
+    useragent <span style="color:#f92672">=</span> TextField() <span style="color:#75715e"># UA</span>
+    software <span style="color:#f92672">=</span> CharField(null<span style="color:#f92672">=</span>True) <span style="color:#75715e"># 软件类型</span>
+    engine <span style="color:#f92672">=</span> CharField(null<span style="color:#f92672">=</span>True) <span style="color:#75715e"># 引擎</span>
+    types <span style="color:#f92672">=</span> CharField(null<span style="color:#f92672">=</span>True) <span style="color:#75715e"># 硬件类型</span>
+    popularity <span style="color:#f92672">=</span> CharField(null<span style="color:#f92672">=</span>True) <span style="color:#75715e"># 通用性</span>
+
+    <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Meta</span>:
+        database <span style="color:#f92672">=</span> db <span style="color:#75715e"># 指定数据库</span>
+
+db<span style="color:#f92672">.</span>connect() <span style="color:#75715e"># 连接数据库</span>
+db<span style="color:#f92672">.</span>create_tables([UAS]) <span style="color:#75715e"># 初始化创建不存在的库</span></code></pre></div>
+<p>这样我们就完成了表配置，考虑到脚本是异步执行，用同步代码会引发性能问题
+，所以接下来我们需要在运行完之后再将数据存储。并且在编写中遇到一个问题。<code>peewee</code>的<code>insert__many</code>方法并不能一下子插入较多的数据，所以得将结果数据分块存储。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">MakeChunk</span>(datas,length<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>):
+    <span style="color:#66d9ef">for</span> item <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1</span>, math<span style="color:#f92672">.</span>ceil(len(datas)<span style="color:#f92672">/</span>length)):
+        <span style="color:#66d9ef">yield</span> datas[item<span style="color:#f92672">*</span>length:(item<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">*</span>length]</code></pre></div>
+<p>在如上部分完成后，大致代码也已完成，这里截取爬了一定数量后中断的截图</p>
+
+<p><img src="/img/content_img/ua_demo/uares.png" alt="" /></p>
+
+<p>可以看到数据已经成功录入到了sqlite中</p>
+
+<p><img src="/img/content_img/ua_demo/uadb.png" alt="" /></p>
+
+<p>接下来就可以制作模块了。</p>
+
+<h2 id="查询代码">查询代码</h2>
+
+<blockquote>
+<p>原本考虑使用Django来做但那样实用性是在太差于是就觉得做了个针对特定需求内容的过滤查询并随机取值</p>
 </blockquote>
 
-<p>db = SqliteDatabase(&lsquo;useragents.db&rsquo;) # 初始化数据库</p>
-
-<p>class UAS(Model):
-    uid = AutoField(primary_key=True, null=True) # 自增ID
-    useragent = TextField() # UA
-    software = CharField(null=True) # 软件类型
-    engine = CharField(null=True) # 引擎
-    types = CharField(null=True) # 硬件类型
-    popularity = CharField(null=True) # 通用性</p>
-
-<pre><code>class Meta:
-    database = db # 指定数据库
-</code></pre>
-
-<p>db.connect() # 连接数据库
-db.create_tables([UAS]) # 初始化创建不存在的库</p>
-
-<pre><code>这样我们就完成了表配置，考虑到脚本是异步执行，用同步代码会引发性能问题
-，所以接下来我们需要在运行完之后再将数据存储。并且在编写中遇到一个问题。```peewee```的```insert__many```方法并不能一下子插入较多的数据，所以得将结果数据分块存储。
-
-</code></pre>
-
-<p>def MakeChunk(datas,length=100):
-    for item in range(1, math.ceil(len(datas)/length)):
-        yield datas[item*length:(item+1)*length]</p>
-
-<pre><code>
-在如上部分完成后，大致代码也已完成，这里截取爬了一定数量后中断的截图
-
-![](/img/content_img/ua_demo/uares.png)
-
-可以看到数据已经成功录入到了sqlite中
-
-![](/img/content_img/ua_demo/uadb.png)
-
-接下来就可以制作模块了。
-
-## 查询代码
-
-&gt; 原本考虑使用Django来做但那样实用性是在太差于是就觉得做了个针对特定需求内容的过滤查询并随机取值
-
-不多废话，直接上代码,这里我通过搜索关键内容```searchwords```字典传入希望查询的参数，当然这里并未支持模糊查询，这是有待改进的地方。并以```methods```为条件组合方法（与、或）进行查询。
-
-</code></pre>
-
-<p>def UserAgent(searchwords, methods=&lsquo;and&rsquo;):
-    &ldquo;&rdquo;&rdquo;
-       searchwords:
-       {
-            &ldquo;key&rdquo;:[
-                &ldquo;words1&rdquo;,
-                &ldquo;words2&rdquo;
-            ]
-        }
-    &ldquo;&rdquo;&rdquo;
-    count = 0
-    resagent = &ldquo;
-    if methods not in [&lsquo;and&rsquo;, &lsquo;or&rsquo;]:
-        return &ldquo;
-    methods = &lsquo;&amp;&rsquo; if not methods == &lsquo;or&rsquo; else &lsquo;|&rsquo;
-    whereQuery = f&rsquo; {methods} &lsquo;.join([
-        f&rsquo;(UAS.{key} &lt;&lt; {str(item)})&rsquo; for key, item in searchwords.items()
+<p>不多废话，直接上代码,这里我通过搜索关键内容<code>searchwords</code>字典传入希望查询的参数，当然这里并未支持模糊查询，这是有待改进的地方。并以<code>methods</code>为条件组合方法（与、或）进行查询。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">UserAgent</span>(searchwords, methods<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;and&#39;</span>):
+    <span style="color:#e6db74">&#34;&#34;&#34;
+</span><span style="color:#e6db74">       searchwords: 
+</span><span style="color:#e6db74">       {
+</span><span style="color:#e6db74">            &#34;key&#34;:[
+</span><span style="color:#e6db74">                &#34;words1&#34;,
+</span><span style="color:#e6db74">                &#34;words2&#34;
+</span><span style="color:#e6db74">            ]
+</span><span style="color:#e6db74">        }
+</span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+    count <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+    resagent <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>
+    <span style="color:#66d9ef">if</span> methods <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> [<span style="color:#e6db74">&#39;and&#39;</span>, <span style="color:#e6db74">&#39;or&#39;</span>]:
+        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#39;&#39;</span>
+    methods <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&amp;&#39;</span> <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> methods <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;or&#39;</span> <span style="color:#66d9ef">else</span> <span style="color:#e6db74">&#39;|&#39;</span>
+    whereQuery <span style="color:#f92672">=</span> f<span style="color:#e6db74">&#39; {methods} &#39;</span><span style="color:#f92672">.</span>join([
+        f<span style="color:#e6db74">&#39;(UAS.{key} &lt;&lt; {str(item)})&#39;</span> <span style="color:#66d9ef">for</span> key, item <span style="color:#f92672">in</span> searchwords<span style="color:#f92672">.</span>items()
     ])
-    try:
-        count = UAS.select().where(eval(whereQuery)).order_by(fn.Random()).count()
-        resagent = UAS.select().where(eval(whereQuery)).order_by(
-            fn.Random()).limit(1)[0].useragent
-    except Exception as e:
-        pass
-    return count, resagent</p>
+    <span style="color:#66d9ef">try</span>:
+        count <span style="color:#f92672">=</span> UAS<span style="color:#f92672">.</span>select()<span style="color:#f92672">.</span>where(eval(whereQuery))<span style="color:#f92672">.</span>order_by(fn<span style="color:#f92672">.</span>Random())<span style="color:#f92672">.</span>count()
+        resagent <span style="color:#f92672">=</span> UAS<span style="color:#f92672">.</span>select()<span style="color:#f92672">.</span>where(eval(whereQuery))<span style="color:#f92672">.</span>order_by(
+            fn<span style="color:#f92672">.</span>Random())<span style="color:#f92672">.</span>limit(<span style="color:#ae81ff">1</span>)[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>useragent
+    <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">Exception</span> <span style="color:#66d9ef">as</span> e:
+        <span style="color:#66d9ef">pass</span>
+    <span style="color:#66d9ef">return</span> count, resagent
+    </code></pre></div>
+<p>结果将返回所能查询到的<strong>数据量</strong>及随机一个<strong><code>UA</code></strong>结果字段组成的元祖，当然如果查询出错也会以友好的方式返回</p>
 
-<pre><code>
-结果将返回所能查询到的**数据量**及随机一个**```UA```**结果字段组成的元祖，当然如果查询出错也会以友好的方式返回
-
-在这里我们使用如下案例测试一下
-
-</code></pre>
-
-<p>print(UserAgent({
-        &ldquo;software&rdquo;: [
-            &lsquo;Android Browser 4.0&rsquo;
+<p>在这里我们使用如下案例测试一下</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(UserAgent({
+        <span style="color:#e6db74">&#34;software&#34;</span>: [
+            <span style="color:#e6db74">&#39;Android Browser 4.0&#39;</span>
         ]
-    }))
-```</p>
-
+    }))</code></pre></div>
 <p>可以看到结果如下</p>
 
 <p><img src="/img/content_img/ua_demo/fakedbres.png" alt="" /></p>
@@ -351,7 +340,7 @@ db.create_tables([UAS]) # 初始化创建不存在的库</p>
         <img class="author-profile-image" src="https://aoii103.github.io/img/author.jpeg" alt="Author" />
         <section class="author-card-content">
             <h4 class="author-card-name"><a href="https://aoii103.github.io/">s045pd</a></h4>
-                <p>Describe yourself..</p>
+                <p>pretty world!</p>
         </section>
       </section>
     </footer>
@@ -368,6 +357,35 @@ db.create_tables([UAS]) # 初始化创建不存在的库</p>
   <div class="inner">
     <div class="read-next-feed">      
       
+<article class="read-next-card" style="background-color: #090a0b;">
+    <header class="read-next-card-header">
+        <small class="read-next-card-header-sitetitle">&mdash; 进击的Robot &mdash;</small>
+        
+        <h3 class="read-next-card-header-title"><a href="https://aoii103.github.io/tags/user-agent/">#user-agent</a></h3>
+    </header>
+    <div class="read-next-divider"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/></svg>
+    </div>
+
+    <div class="read-next-card-content">
+      
+        <ul>
+          <li><a href="https://aoii103.github.io/%E7%BB%95%E8%BF%87cloudflare-jsfuck%E9%98%B2%E6%8A%A4%E9%AA%8C%E8%AF%81/">绕过CloudFlare-JSfuck防护验证</a></li>            
+        
+          <li><a href="https://aoii103.github.io/%E5%BF%AB%E9%80%9F%E5%AE%9E%E7%8E%B0%E6%9A%97%E7%BD%91%E4%BA%A4%E6%98%93%E7%9B%91%E6%8E%A7/">快速实现暗网交易监控</a></li>            
+        
+          <li><a href="https://aoii103.github.io/%E4%B8%80%E4%B8%AAtor%E4%BB%A3%E7%90%86%E7%BB%95%E8%BF%87%E8%AE%BF%E9%97%AE%E9%99%90%E5%88%B6%E7%9A%84%E5%85%B8%E5%9E%8B%E6%A1%88%E4%BE%8B/">一个Tor代理绕过访问限制的典型案例</a></li>            
+        
+                      
+        
+          <li><a href="https://aoii103.github.io/%E5%87%A0%E6%AC%BE%E6%88%96%E8%AE%B8%E8%83%BD%E6%94%B9%E5%96%84%E7%BC%96%E5%86%99%E6%95%88%E7%8E%87%E7%9A%84%E5%B7%A5%E5%85%B7%E7%AC%AC%E4%B8%80%E6%9C%9F/">几款或许能改善编写效率的工具(第一期)</a></li>            
+        </ul>
+    </div>
+    <footer class="read-next-card-footer">
+      
+        <a href="https://aoii103.github.io/tags/user-agent/">See all related posts →</a>
+    </footer>
+</article>
+
 
       
       <article class="post-card post"> 
@@ -473,7 +491,7 @@ db.create_tables([UAS]) # 初始化创建不存在的库</p>
 <footer class="site-footer outer">
   <div class="site-footer-content inner">
     <section class="copyright" style="line-height: 1.3em;">
-      <a href="/">EM</a>  <br>
+      <a href="/"></a>  <br>
       
     </section>
     <nav class="site-footer-nav">
@@ -494,6 +512,14 @@ db.create_tables([UAS]) # 初始化创建不存在的库</p>
 
 <script>hljs.initHighlightingOnLoad();</script>
 
+
+  <!-- Google Analytics -->
+  <script>
+    var _gaq=[['_setAccount','UA-135738940-1'],['_trackPageview']];
+    (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+    g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+    s.parentNode.insertBefore(g,s)}(document,'script'));
+  </script>
 
 
     <script>
