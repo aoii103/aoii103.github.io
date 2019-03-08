@@ -13,10 +13,10 @@
     
     <item>
       <title>几款或许能改善编写效率的工具(第一期)</title>
-      <link>https://aoii103.github.io/hugo-gitment-plugin-efficienttools/</link>
+      <link>https://aoii103.github.io/%E5%87%A0%E6%AC%BE%E6%88%96%E8%AE%B8%E8%83%BD%E6%94%B9%E5%96%84%E7%BC%96%E5%86%99%E6%95%88%E7%8E%87%E7%9A%84%E5%B7%A5%E5%85%B7%E7%AC%AC%E4%B8%80%E6%9C%9F/</link>
       <pubDate>Wed, 26 Dec 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://aoii103.github.io/hugo-gitment-plugin-efficienttools/</guid>
+      <guid>https://aoii103.github.io/%E5%87%A0%E6%AC%BE%E6%88%96%E8%AE%B8%E8%83%BD%E6%94%B9%E5%96%84%E7%BC%96%E5%86%99%E6%95%88%E7%8E%87%E7%9A%84%E5%B7%A5%E5%85%B7%E7%AC%AC%E4%B8%80%E6%9C%9F/</guid>
       <description>Quick HTTP Inspector Quick HTTP Inspector是一个快速导出网页请求流并转换成基于requests模块的python脚本的工具，让你不费吹灰之力就可以快速生成payload。当然，此插件适用于有一定基础的同学，不推荐初学者使用。
 安装方式 打开chrome，点击应用商店，搜索Quick HTTP Inspector后安装即可。
 go-sniffer go-sniffer可以抓取并截取项目中的数据库请求并解析成相应的语句。支持指定特定网络出口。这也算是sql调试的一大福音，免去了开发者在代码中插入各种针对调试sql的print和log。
