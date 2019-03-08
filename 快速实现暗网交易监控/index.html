@@ -162,25 +162,22 @@
 <p><img src="/img/content_img/darknet/cookie.png" alt="" /></p>
 
 <p>只有靠再次登录才能刷个新的身份。那么在这里，我们需要设定一个Session会话来自动处理这个cookie。并配置socks5代理，关于tor的安装不再赘述。</p>
-
-<pre><code>self.session = requests.Session()
-self.session.headers = {
-    &quot;Accept&quot;: &quot;text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8&quot;,
-    &quot;Accept-Encoding&quot;: &quot;gzip, deflate&quot;,
-    &quot;Accept-Language&quot;: &quot;zh-CN,zh;q=0.9,en;q=0.8&quot;,
-    &quot;Cache-Control&quot;: &quot;max-age=0&quot;,
-    &quot;Connection&quot;: &quot;keep-alive&quot;,
-    &quot;Referer&quot;: &quot;http://bmp3qqimv55xdznb.onion/index.php&quot;,
-    &quot;Upgrade-Insecure-Requests&quot;: &quot;1&quot;,
-    &quot;User-Agent&quot;: &quot;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36&quot;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">self<span style="color:#f92672">.</span>session <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>Session()
+self<span style="color:#f92672">.</span>session<span style="color:#f92672">.</span>headers <span style="color:#f92672">=</span> {
+    <span style="color:#e6db74">&#34;Accept&#34;</span>: <span style="color:#e6db74">&#34;text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8&#34;</span>,
+    <span style="color:#e6db74">&#34;Accept-Encoding&#34;</span>: <span style="color:#e6db74">&#34;gzip, deflate&#34;</span>,
+    <span style="color:#e6db74">&#34;Accept-Language&#34;</span>: <span style="color:#e6db74">&#34;zh-CN,zh;q=0.9,en;q=0.8&#34;</span>,
+    <span style="color:#e6db74">&#34;Cache-Control&#34;</span>: <span style="color:#e6db74">&#34;max-age=0&#34;</span>,
+    <span style="color:#e6db74">&#34;Connection&#34;</span>: <span style="color:#e6db74">&#34;keep-alive&#34;</span>,
+    <span style="color:#e6db74">&#34;Referer&#34;</span>: <span style="color:#e6db74">&#34;http://bmp3qqimv55xdznb.onion/index.php&#34;</span>,
+    <span style="color:#e6db74">&#34;Upgrade-Insecure-Requests&#34;</span>: <span style="color:#e6db74">&#34;1&#34;</span>,
+    <span style="color:#e6db74">&#34;User-Agent&#34;</span>: <span style="color:#e6db74">&#34;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36&#34;</span>
 }
-self.proxy_url = 'socks5h://127.0.0.1:9150'
-self.session.proxies = {
-    'https': self.proxy_url,
-    'http': self.proxy_url
-}
-</code></pre>
-
+self<span style="color:#f92672">.</span>proxy_url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;socks5h://127.0.0.1:9150&#39;</span>
+self<span style="color:#f92672">.</span>session<span style="color:#f92672">.</span>proxies <span style="color:#f92672">=</span> {
+    <span style="color:#e6db74">&#39;https&#39;</span>: self<span style="color:#f92672">.</span>proxy_url,
+    <span style="color:#e6db74">&#39;http&#39;</span>: self<span style="color:#f92672">.</span>proxy_url
+}</code></pre></div>
 <p>或许有同学会注意到这里使用的是 <em><code>socks5h://</code></em> 协议，那么 <em><code>Requests</code></em> 模块文档中有注解。因为常规DNS服务器并不能解析<code>*.onion</code>地址而Tor网络可以。</p>
 
 <p><img src="/img/content_img/darknet/usesocks5h.png" alt="" /></p>
@@ -198,130 +195,111 @@ self.session.proxies = {
 <p><img src="/img/content_img/darknet/reg1_html2.png" alt="" /></p>
 
 <p>于是我们使用<code>css selector</code>语法来取到各个字段，通过正则取到<code>sid</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 取到sid</span>
+self<span style="color:#f92672">.</span>sid <span style="color:#f92672">=</span> re<span style="color:#f92672">.</span>findall(<span style="color:#e6db74">&#39;sid=(.*?)&#34;&#39;</span>, step1resp)[<span style="color:#ae81ff">0</span>]
 
-<pre><code># 取到sid
-self.sid = re.findall('sid=(.*?)&quot;', step1resp)[0]
+<span style="color:#75715e"># 取到token</span>
+token <span style="color:#f92672">=</span> step1(<span style="color:#e6db74">&#39;input[name=&#34;form_token&#34;]&#39;</span>)<span style="color:#f92672">.</span>attr(<span style="color:#e6db74">&#39;value&#39;</span>)
 
-# 取到token
-token = step1('input[name=&quot;form_token&quot;]').attr('value')
+<span style="color:#75715e"># 取到creation_time</span>
+creation_time <span style="color:#f92672">=</span> step1(<span style="color:#e6db74">&#39;input[name=&#34;creation_time&#34;]&#39;</span>)<span style="color:#f92672">.</span>attr(<span style="color:#e6db74">&#39;value&#39;</span>)
 
-# 取到creation_time
-creation_time = step1('input[name=&quot;creation_time&quot;]').attr('value')
+<span style="color:#75715e"># 生成URL</span>
+url <span style="color:#f92672">=</span> f<span style="color:#e6db74">&#34;http://{self.domain}/ucp.php?mode=register&amp;sid={self.sid}&#34;</span>
 
-# 生成URL
-url = f&quot;http://{self.domain}/ucp.php?mode=register&amp;sid={self.sid}&quot;
-
-# 发送请求
-step2resp = self.session.post(url, data={
-    &quot;agreed&quot;: &quot;===好的,我已明白,请跳转到下一页继续注册====&quot;,
-    &quot;change_lang&quot;: &quot;&quot;,
-    &quot;creation_time&quot;: creation_time,
-    &quot;form_token&quot;: token
-}, headers=headers)
-</code></pre>
-
+<span style="color:#75715e"># 发送请求</span>
+step2resp <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>session<span style="color:#f92672">.</span>post(url, data<span style="color:#f92672">=</span>{
+    <span style="color:#e6db74">&#34;agreed&#34;</span>: <span style="color:#e6db74">&#34;===好的,我已明白,请跳转到下一页继续注册====&#34;</span>,
+    <span style="color:#e6db74">&#34;change_lang&#34;</span>: <span style="color:#e6db74">&#34;&#34;</span>,
+    <span style="color:#e6db74">&#34;creation_time&#34;</span>: creation_time,
+    <span style="color:#e6db74">&#34;form_token&#34;</span>: token
+}, headers<span style="color:#f92672">=</span>headers)</code></pre></div>
 <p>接下来我们成功得进入到了注册界面，这里要注意的是用户名密码需要同时包含大小写字符及数字，范围6-20，于是我们准备一个随机密码生成器</p>
-
-<pre><code>@staticmethod
-def RandomKey(length=20):
-    return ''.join((random.choice(random.choice((string.ascii_uppercase, string.ascii_lowercase, ''.join(map(str, range(0, 9)))))) for i in range(1,  length)))
-</code></pre>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#a6e22e">@staticmethod</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">RandomKey</span>(length<span style="color:#f92672">=</span><span style="color:#ae81ff">20</span>):
+    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#39;&#39;</span><span style="color:#f92672">.</span>join((random<span style="color:#f92672">.</span>choice(random<span style="color:#f92672">.</span>choice((string<span style="color:#f92672">.</span>ascii_uppercase, string<span style="color:#f92672">.</span>ascii_lowercase, <span style="color:#e6db74">&#39;&#39;</span><span style="color:#f92672">.</span>join(map(str, range(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">9</span>)))))) <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1</span>,  length)))</code></pre></div>
 <p>并模拟注册过程。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 获取第二步的resp内容</span>
+step2 <span style="color:#f92672">=</span> jq(step2resp<span style="color:#f92672">.</span>text)
 
-<pre><code># 获取第二步的resp内容
-step2 = jq(step2resp.text)
+<span style="color:#75715e"># 取到新token</span>
+token <span style="color:#f92672">=</span> step2(<span style="color:#e6db74">&#39;input[name=&#34;form_token&#34;]&#39;</span>)<span style="color:#f92672">.</span>attr(<span style="color:#e6db74">&#39;value&#39;</span>)
 
-# 取到新token
-token = step2('input[name=&quot;form_token&quot;]').attr('value')
+<span style="color:#75715e"># 取到创建时间</span>
+creation_time <span style="color:#f92672">=</span> step2(<span style="color:#e6db74">&#39;input[name=&#34;creation_time&#34;]&#39;</span>)<span style="color:#f92672">.</span>attr(<span style="color:#e6db74">&#39;value&#39;</span>)
 
-# 取到创建时间
-creation_time = step2('input[name=&quot;creation_time&quot;]').attr('value')
+<span style="color:#75715e"># 随机账户</span>
+self<span style="color:#f92672">.</span>usr <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>RandomKey()
+self<span style="color:#f92672">.</span>pwd <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>RandomKey()
 
-# 随机账户
-self.usr = self.RandomKey()
-self.pwd = self.RandomKey()
-
-# 生成payload
-data = {
-    &quot;username&quot;: self.usr,
-    &quot;new_password&quot;: self.pwd,
-    &quot;password_confirm&quot;: self.pwd,
-    &quot;email&quot;: &quot;xxxx@xxxx.xxx&quot;,
-    &quot;lang&quot;: &quot;zh_cmn_hans&quot;,
-    &quot;tz_date&quot;: &quot;UTC+08:00+-+Asia/Brunei+-+&quot; + moment.now().format(&quot;DD+MM月+YYYY,+HH:mm&quot;),
-    &quot;tz&quot;: &quot;Asia/Hong_Kong&quot;,
-    &quot;agreed&quot;: &quot;true&quot;,
-    &quot;change_lang&quot;: &quot;0&quot;,
-    &quot;submit&quot;: &quot; 用户名与密码已填好,+点此提交 &quot;,
-    &quot;creation_time&quot;: creation_time,
-    &quot;form_token&quot;: token
+<span style="color:#75715e"># 生成payload</span>
+data <span style="color:#f92672">=</span> {
+    <span style="color:#e6db74">&#34;username&#34;</span>: self<span style="color:#f92672">.</span>usr,
+    <span style="color:#e6db74">&#34;new_password&#34;</span>: self<span style="color:#f92672">.</span>pwd,
+    <span style="color:#e6db74">&#34;password_confirm&#34;</span>: self<span style="color:#f92672">.</span>pwd,
+    <span style="color:#e6db74">&#34;email&#34;</span>: <span style="color:#e6db74">&#34;xxxx@xxxx.xxx&#34;</span>,
+    <span style="color:#e6db74">&#34;lang&#34;</span>: <span style="color:#e6db74">&#34;zh_cmn_hans&#34;</span>,
+    <span style="color:#e6db74">&#34;tz_date&#34;</span>: <span style="color:#e6db74">&#34;UTC+08:00+-+Asia/Brunei+-+&#34;</span> <span style="color:#f92672">+</span> moment<span style="color:#f92672">.</span>now()<span style="color:#f92672">.</span>format(<span style="color:#e6db74">&#34;DD+MM月+YYYY,+HH:mm&#34;</span>),
+    <span style="color:#e6db74">&#34;tz&#34;</span>: <span style="color:#e6db74">&#34;Asia/Hong_Kong&#34;</span>,
+    <span style="color:#e6db74">&#34;agreed&#34;</span>: <span style="color:#e6db74">&#34;true&#34;</span>,
+    <span style="color:#e6db74">&#34;change_lang&#34;</span>: <span style="color:#e6db74">&#34;0&#34;</span>,
+    <span style="color:#e6db74">&#34;submit&#34;</span>: <span style="color:#e6db74">&#34; 用户名与密码已填好,+点此提交 &#34;</span>,
+    <span style="color:#e6db74">&#34;creation_time&#34;</span>: creation_time,
+    <span style="color:#e6db74">&#34;form_token&#34;</span>: token
 }
 
-# 发送注册请求
-resp = self.session.post(url, data=data, headers=headers)
+<span style="color:#75715e"># 发送注册请求</span>
+resp <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>session<span style="color:#f92672">.</span>post(url, data<span style="color:#f92672">=</span>data, headers<span style="color:#f92672">=</span>headers)
 
-# 判断是否注册成功，失败则触发retry重新注册
-assert '感谢注册' in resp.text
+<span style="color:#75715e"># 判断是否注册成功，失败则触发retry重新注册</span>
+<span style="color:#66d9ef">assert</span> <span style="color:#e6db74">&#39;感谢注册&#39;</span> <span style="color:#f92672">in</span> resp<span style="color:#f92672">.</span>text
 
-# 成功则保存账户
-DarkNet_User.create(**{
-    'user': self.usr,
-    'pwd': self.pwd
-})
-</code></pre>
-
+<span style="color:#75715e"># 成功则保存账户</span>
+DarkNet_User<span style="color:#f92672">.</span>create(<span style="color:#f92672">**</span>{
+    <span style="color:#e6db74">&#39;user&#39;</span>: self<span style="color:#f92672">.</span>usr,
+    <span style="color:#e6db74">&#39;pwd&#39;</span>: self<span style="color:#f92672">.</span>pwd
+})</code></pre></div>
 <p>然后以下是实际注册效果。因为使用的是佛系注册策略，所以有那么多。。</p>
 
 <p><img src="/img/content_img/darknet/reg_res.png" alt="" /></p>
 
 <p>在注册完成之后我们需要开始进行登录操作。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 登录URL</span>
+url <span style="color:#f92672">=</span> f<span style="color:#e6db74">&#39;http://{self.domain}/ucp.php?mode=login&#39;</span>
 
-<pre><code># 登录URL
-url = f'http://{self.domain}/ucp.php?mode=login'
-
-# 封装payload
-data = {
-    &quot;username&quot;: self.usr,
-    &quot;password&quot;: self.pwd,
-    &quot;login&quot;: &quot;登录&quot;,
-    &quot;redirect&quot;: f&quot;./index.php&amp;sid={self.sid}&quot;
+<span style="color:#75715e"># 封装payload</span>
+data <span style="color:#f92672">=</span> {
+    <span style="color:#e6db74">&#34;username&#34;</span>: self<span style="color:#f92672">.</span>usr,
+    <span style="color:#e6db74">&#34;password&#34;</span>: self<span style="color:#f92672">.</span>pwd,
+    <span style="color:#e6db74">&#34;login&#34;</span>: <span style="color:#e6db74">&#34;登录&#34;</span>,
+    <span style="color:#e6db74">&#34;redirect&#34;</span>: f<span style="color:#e6db74">&#34;./index.php&amp;sid={self.sid}&#34;</span>
 }
 
-# 发送登录
-resp = self.session.post(url, data=data, verify=False, timeout=120)
+<span style="color:#75715e"># 发送登录</span>
+resp <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>session<span style="color:#f92672">.</span>post(url, data<span style="color:#f92672">=</span>data, verify<span style="color:#f92672">=</span>False, timeout<span style="color:#f92672">=</span><span style="color:#ae81ff">120</span>)
 
-# 判断是否成功登录
-if self.usr not in resp.text:
+<span style="color:#75715e"># 判断是否成功登录</span>
+<span style="color:#66d9ef">if</span> self<span style="color:#f92672">.</span>usr <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> resp<span style="color:#f92672">.</span>text:
 	
-	# 如果被封禁则拉黑该账户并重新注册
-    if &quot;已被封禁&quot; in resp.text:
-        DarkNet_User.update({
-            &quot;useful&quot;: False
-        }).where(DarkNet_User.user == self.usr).execute()
-    self.Reg()
+	<span style="color:#75715e"># 如果被封禁则拉黑该账户并重新注册</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#e6db74">&#34;已被封禁&#34;</span> <span style="color:#f92672">in</span> resp<span style="color:#f92672">.</span>text:
+        DarkNet_User<span style="color:#f92672">.</span>update({
+            <span style="color:#e6db74">&#34;useful&#34;</span>: False
+        })<span style="color:#f92672">.</span>where(DarkNet_User<span style="color:#f92672">.</span>user <span style="color:#f92672">==</span> self<span style="color:#f92672">.</span>usr)<span style="color:#f92672">.</span>execute()
+    self<span style="color:#f92672">.</span>Reg()
     
-    # 注册完成触发retry
-    raise ValueError
-
-</code></pre>
-
+    <span style="color:#75715e"># 注册完成触发retry</span>
+    <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">ValueError</span></code></pre></div>
 <p>接下来我们就取到了登录后的响应界面也就是主页，这里我们可以看到栏目按 <code>.ad_div_b</code>来分布。</p>
 
 <p><img src="/img/content_img/darknet/main.png" alt="" /></p>
 
 <p>并且在查看更多选项为该栏目的详情首页。那么我通过如下代码获取全部的类型</p>
-
-<pre><code>self.types = {item('.index_list_title').attr('href').split('=')[1].split('&amp;')[0]: item('tr:nth-child(1) &gt; td').text().split()[0] for item in jq(resp.text)('.ad_table_b').items()}
-</code></pre>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">self<span style="color:#f92672">.</span>types <span style="color:#f92672">=</span> {item(<span style="color:#e6db74">&#39;.index_list_title&#39;</span>)<span style="color:#f92672">.</span>attr(<span style="color:#e6db74">&#39;href&#39;</span>)<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#39;=&#39;</span>)[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#39;&amp;&#39;</span>)[<span style="color:#ae81ff">0</span>]: item(<span style="color:#e6db74">&#39;tr:nth-child(1) &gt; td&#39;</span>)<span style="color:#f92672">.</span>text()<span style="color:#f92672">.</span>split()[<span style="color:#ae81ff">0</span>] <span style="color:#66d9ef">for</span> item <span style="color:#f92672">in</span> jq(resp<span style="color:#f92672">.</span>text)(<span style="color:#e6db74">&#39;.ad_table_b&#39;</span>)<span style="color:#f92672">.</span>items()}</code></pre></div>
 <p><img src="/img/content_img/darknet/types.png" alt="" /></p>
 
 <p>然后我们迭代这些类型，并将其qeaid、页码page及其他参数代入模板URL，以抓取栏目最大页数及详细列表。</p>
-
-<pre><code>http://{self.domain}/pay/user_area.php?page_y1={page}&amp;q_u_id=0&amp;m_order=&amp;q_ea_id={qeaid}&amp;sid={self.sid}#page_y1
-</code></pre>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">http://{self.domain}/pay/user_area.php?page_y1={page}<span style="color:#960050;background-color:#1e0010">&amp;</span>q_u_id=0<span style="color:#960050;background-color:#1e0010">&amp;</span>m_order=<span style="color:#960050;background-color:#1e0010">&amp;</span>q_ea_id={qeaid}<span style="color:#960050;background-color:#1e0010">&amp;</span>sid={self.sid}#page_y1</code></pre></div>
 <p><img src="/img/content_img/darknet/datalist.png" alt="" /></p>
 
 <blockquote>
@@ -329,29 +307,26 @@ if self.usr not in resp.text:
 </blockquote>
 
 <p>根据分析界面结果得出 <code>table.m_area_a tr</code>路径下的每个<code>div.length_400&gt;a</code>元素的href不为空，则为一条数据。根据这样的规则我们编写如下代码，并获取部分基础数据。</p>
-
-<pre><code>for item in jqdata('table.m_area_a tr').items():
-    detailPath = item('div.length_400&gt;a').attr('href')
-    if detailPath:
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">for</span> item <span style="color:#f92672">in</span> jqdata(<span style="color:#e6db74">&#39;table.m_area_a tr&#39;</span>)<span style="color:#f92672">.</span>items():
+    detailPath <span style="color:#f92672">=</span> item(<span style="color:#e6db74">&#39;div.length_400&gt;a&#39;</span>)<span style="color:#f92672">.</span>attr(<span style="color:#e6db74">&#39;href&#39;</span>)
+    <span style="color:#66d9ef">if</span> detailPath:
     
-    	# 组合URL
-        detailsURL = urljoin(resp.url, detailPath)
-        self.GetDetails(detailsURL, {
+    	<span style="color:#75715e"># 组合URL</span>
+        detailsURL <span style="color:#f92672">=</span> urljoin(resp<span style="color:#f92672">.</span>url, detailPath)
+        self<span style="color:#f92672">.</span>GetDetails(detailsURL, {
         
-        	# 保护期，默认一般都为15天
-            'lines':  FixNums(item('td:nth-child(7)').text().replace('天', '')),
+        	<span style="color:#75715e"># 保护期，默认一般都为15天</span>
+            <span style="color:#e6db74">&#39;lines&#39;</span>:  FixNums(item(<span style="color:#e6db74">&#39;td:nth-child(7)&#39;</span>)<span style="color:#f92672">.</span>text()<span style="color:#f92672">.</span>replace(<span style="color:#e6db74">&#39;天&#39;</span>, <span style="color:#e6db74">&#39;&#39;</span>)),
             
-            # 热度，关注人数
-            'hot': FixNums(item('td:nth-child(8)').text()),
+            <span style="color:#75715e"># 热度，关注人数</span>
+            <span style="color:#e6db74">&#39;hot&#39;</span>: FixNums(item(<span style="color:#e6db74">&#39;td:nth-child(8)&#39;</span>)<span style="color:#f92672">.</span>text()),
             
-            # 事件标题
-            'title': item('td:nth-child(5)').text(),
+            <span style="color:#75715e"># 事件标题</span>
+            <span style="color:#e6db74">&#39;title&#39;</span>: item(<span style="color:#e6db74">&#39;td:nth-child(5)&#39;</span>)<span style="color:#f92672">.</span>text(),
             
-            # 类型
-            'area': item('td:nth-child(3)').text()
-        })
-</code></pre>
-
+            <span style="color:#75715e"># 类型</span>
+            <span style="color:#e6db74">&#39;area&#39;</span>: item(<span style="color:#e6db74">&#39;td:nth-child(3)&#39;</span>)<span style="color:#f92672">.</span>text()
+        })</code></pre></div>
 <p>在获取箭头指示最大页数后，不断翻页迭代上面的过程以爬取全部页码及类型。</p>
 
 <blockquote>
@@ -367,12 +342,9 @@ if self.usr not in resp.text:
 </blockquote>
 
 <p>当然在取到数据的同时，我们需要判断该数据是否为允许提醒范围内的数据，如果是则通过<code>telebot</code>发送给<code>channel</code>。</p>
-
-<pre><code># 如果时间A 是在相对今天B天前的0点之前出现，则发送
-if moment.date(A) &gt; moment.now().replace(hours=0, minutes=0, seconds=0).add(days=B):
-    telegram.delay(msg, sid, Config.darknetchannelID)
-</code></pre>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 如果时间A 是在相对今天B天前的0点之前出现，则发送</span>
+<span style="color:#66d9ef">if</span> moment<span style="color:#f92672">.</span>date(A) <span style="color:#f92672">&gt;</span> moment<span style="color:#f92672">.</span>now()<span style="color:#f92672">.</span>replace(hours<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>, minutes<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>, seconds<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)<span style="color:#f92672">.</span>add(days<span style="color:#f92672">=</span>B):
+    telegram<span style="color:#f92672">.</span>delay(msg, sid, Config<span style="color:#f92672">.</span>darknetchannelID)</code></pre></div>
 <p>然后我们的客户端就收到了及时的提醒，于是整个项目就完成的差不多了。</p>
 
 <p>加入<strong>channel</strong>: <a href="https://t.me/fordarknetspiderbot">https://t.me/fordarknetspiderbot</a></p>
@@ -382,20 +354,17 @@ if moment.date(A) &gt; moment.now().replace(hours=0, minutes=0, seconds=0).add(d
 <h1 id="orm模型">ORM模型</h1>
 
 <p>首先我们通过pymysql连接数据库并查询是否存在该库，没有则创建，编码UTF8MB4。</p>
-
-<pre><code>try:
-    con = pymysql.connect(**Links)
-    with con.cursor() as cursor:
-        cursor.execute(
-            f'create database {Config.mysql_db} character set UTF8mb4 collate utf8mb4_bin')
-    con.close()
-except pymysql.err.ProgrammingError as e:
-    if '1007' in str(e):
-        pass
-except Exception as e:
-    raise e
-</code></pre>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">try</span>:
+    con <span style="color:#f92672">=</span> pymysql<span style="color:#f92672">.</span>connect(<span style="color:#f92672">**</span>Links)
+    <span style="color:#66d9ef">with</span> con<span style="color:#f92672">.</span>cursor() <span style="color:#66d9ef">as</span> cursor:
+        cursor<span style="color:#f92672">.</span>execute(
+            f<span style="color:#e6db74">&#39;create database {Config.mysql_db} character set UTF8mb4 collate utf8mb4_bin&#39;</span>)
+    con<span style="color:#f92672">.</span>close()
+<span style="color:#66d9ef">except</span> pymysql<span style="color:#f92672">.</span>err<span style="color:#f92672">.</span>ProgrammingError <span style="color:#66d9ef">as</span> e:
+    <span style="color:#66d9ef">if</span> <span style="color:#e6db74">&#39;1007&#39;</span> <span style="color:#f92672">in</span> str(e):
+        <span style="color:#66d9ef">pass</span>
+<span style="color:#66d9ef">except</span> <span style="color:#a6e22e">Exception</span> <span style="color:#66d9ef">as</span> e:
+    <span style="color:#66d9ef">raise</span> e</code></pre></div>
 <p>在完成创建后我们通过<code>peewee</code>来ORM驱动生成相应表格，以下是相应表的简介。</p>
 
 <ul>
@@ -416,11 +385,15 @@ except Exception as e:
 
 <p>为了让数据结果更加直观，我们通过grafana快速构建展示界面，当然这也是偷懒的操作。后期会针对grafana专门写一篇，本篇不再赘述。</p>
 
-<p>案例地址: <a href="https://gcokedsa123.grafana.net/dashboard/snapshot/2OJ9OtmtitwiGcIqwIVhvzgmTKDBtTkF?orgId=0">https://gcokedsa123.grafana.net/dashboard/snapshot/2OJ9OtmtitwiGcIqwIVhvzgmTKDBtTkF?orgId=0</a></p>
+<p>案例地址: <a href="https://gcokedsa123.grafana.net/dashboard/snapshot/2OJ9OtmtitwiGcIqwIVhvzgmTKDBtTkF?orgId=0">grafana_demo</a></p>
 
 <p><img src="/img/content_img/darknet/grafana.png" alt="" /></p>
 
 <p>最后，细心的同学是否有发现文章开头的贴图有些，特别么-v-?</p>
+
+<p>更多及时资讯欢迎关注我的公众号</p>
+
+<p><img src="/img/qrcode.png" alt="qrcode.png" /></p>
     
         </div>
     </section>
@@ -459,13 +432,15 @@ except Exception as e:
     <div class="read-next-card-content">
       
         <ul>
+                      
+        
+          <li><a href="https://aoii103.github.io/%E4%B8%80%E4%B8%AAtor%E4%BB%A3%E7%90%86%E7%BB%95%E8%BF%87%E8%AE%BF%E9%97%AE%E9%99%90%E5%88%B6%E7%9A%84%E5%85%B8%E5%9E%8B%E6%A1%88%E4%BE%8B/">一个Tor代理绕过访问限制的典型案例</a></li>            
+        
           <li><a href="https://aoii103.github.io/%E7%BB%95%E8%BF%87cloudflare-jsfuck%E9%98%B2%E6%8A%A4%E9%AA%8C%E8%AF%81/">绕过CloudFlare-JSfuck防护验证</a></li>            
         
           <li><a href="https://aoii103.github.io/%E5%87%A0%E6%AC%BE%E6%88%96%E8%AE%B8%E8%83%BD%E6%94%B9%E5%96%84%E7%BC%96%E5%86%99%E6%95%88%E7%8E%87%E7%9A%84%E5%B7%A5%E5%85%B7%E7%AC%AC%E4%B8%80%E6%9C%9F/">几款或许能改善编写效率的工具(第一期)</a></li>            
         
           <li><a href="https://aoii103.github.io/%E5%8A%A8%E5%8A%A8%E6%89%8B%E5%81%9A%E4%B8%80%E4%B8%AAuseragent%E5%BA%93/">动动手做一个UserAgent库</a></li>            
-        
-          <li><a href="https://aoii103.github.io/%E4%B8%80%E4%B8%AAtor%E4%BB%A3%E7%90%86%E7%BB%95%E8%BF%87%E8%AE%BF%E9%97%AE%E9%99%90%E5%88%B6%E7%9A%84%E5%85%B8%E5%9E%8B%E6%A1%88%E4%BE%8B/">一个Tor代理绕过访问限制的典型案例</a></li>            
         </ul>
     </div>
     <footer class="read-next-card-footer">

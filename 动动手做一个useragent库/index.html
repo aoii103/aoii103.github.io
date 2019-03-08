@@ -160,14 +160,10 @@
 <p><img src="/img/content_img/ua_demo/mainpage.png" alt="mainpage" /></p>
 
 <p>我们可以看到列表通过用途进行了一定分类。于是我们进行了一定的对比分析。</p>
-
-<pre><code>https://developers.whatismybrowser.com/useragents/explore/software_name/chrome/
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">https://developers.whatismybrowser.com/useragents/explore/software_name/chrome/
 https://developers.whatismybrowser.com/useragents/explore/software_name/internet-explorer/
 https://developers.whatismybrowser.com/useragents/explore/operating_system_name/windows/
-https://developers.whatismybrowser.com/useragents/explore/operating_platform/nexus-5/
-
-</code></pre>
-
+https://developers.whatismybrowser.com/useragents/explore/operating_platform/nexus-5/</code></pre></div>
 <p>不难看出，这个站点根据尾部的两级目录进行了分类</p>
 
 <pre><code>\type1\
@@ -180,10 +176,10 @@ https://developers.whatismybrowser.com/useragents/explore/operating_platform/nex
 <p><img src="/img/content_img/ua_demo/pagesearch.png" alt="" /></p>
 
 <p>首先我们需要获取到全部的分类链接，也就是上 图中第一个箭头指向元素的 <code>href</code>属性，这里我们通过chrome调试工具直接选取到红框元素css路径并进行对比总结出通用路径</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># listing-by-field-name &gt; li:nth-child(1) &gt; h2 &gt; a</span>
-<span style="color:#75715e"># listing-by-field-name &gt; li:nth-child(2) &gt; h2 &gt; a</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"># listing-by-field-name &gt; li:nth-child(1) &gt; h2 &gt; a
+# listing-by-field-name &gt; li:nth-child(2) &gt; h2 &gt; a
 
-<span style="color:#75715e"># listing-by-field-name &gt; li &gt; h2 &gt; a</span></code></pre></div>
+# listing-by-field-name &gt; li &gt; h2 &gt; a</code></pre></div>
 <p>并且我们可以发现，下级目录直接给出了二级类型及其总数量，具体取法同上文不再赘述。</p>
 
 <p><img src="/img/content_img/ua_demo/nums.png" alt="" /></p>
@@ -369,15 +365,15 @@ db<span style="color:#f92672">.</span>create_tables([UAS]) <span style="color:#7
     <div class="read-next-card-content">
       
         <ul>
-          <li><a href="https://aoii103.github.io/%E7%BB%95%E8%BF%87cloudflare-jsfuck%E9%98%B2%E6%8A%A4%E9%AA%8C%E8%AF%81/">绕过CloudFlare-JSfuck防护验证</a></li>            
-        
           <li><a href="https://aoii103.github.io/%E5%BF%AB%E9%80%9F%E5%AE%9E%E7%8E%B0%E6%9A%97%E7%BD%91%E4%BA%A4%E6%98%93%E7%9B%91%E6%8E%A7/">快速实现暗网交易监控</a></li>            
-        
-          <li><a href="https://aoii103.github.io/%E4%B8%80%E4%B8%AAtor%E4%BB%A3%E7%90%86%E7%BB%95%E8%BF%87%E8%AE%BF%E9%97%AE%E9%99%90%E5%88%B6%E7%9A%84%E5%85%B8%E5%9E%8B%E6%A1%88%E4%BE%8B/">一个Tor代理绕过访问限制的典型案例</a></li>            
         
                       
         
+          <li><a href="https://aoii103.github.io/%E7%BB%95%E8%BF%87cloudflare-jsfuck%E9%98%B2%E6%8A%A4%E9%AA%8C%E8%AF%81/">绕过CloudFlare-JSfuck防护验证</a></li>            
+        
           <li><a href="https://aoii103.github.io/%E5%87%A0%E6%AC%BE%E6%88%96%E8%AE%B8%E8%83%BD%E6%94%B9%E5%96%84%E7%BC%96%E5%86%99%E6%95%88%E7%8E%87%E7%9A%84%E5%B7%A5%E5%85%B7%E7%AC%AC%E4%B8%80%E6%9C%9F/">几款或许能改善编写效率的工具(第一期)</a></li>            
+        
+          <li><a href="https://aoii103.github.io/%E4%B8%80%E4%B8%AAtor%E4%BB%A3%E7%90%86%E7%BB%95%E8%BF%87%E8%AE%BF%E9%97%AE%E9%99%90%E5%88%B6%E7%9A%84%E5%85%B8%E5%9E%8B%E6%A1%88%E4%BE%8B/">一个Tor代理绕过访问限制的典型案例</a></li>            
         </ul>
     </div>
     <footer class="read-next-card-footer">

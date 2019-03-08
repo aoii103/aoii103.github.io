@@ -26,7 +26,7 @@
  废话不多说，说干就干，首先我们打开谷歌（不要问我是怎么打开的。。）并输入user agent list，回车。
 这个时候我们可以看到结果中蓝框内有着令人兴奋的结果，UA的基础分类。 而红框内为此结果的源URL地址。于是我们访问这个站点。
 我们可以看到列表通过用途进行了一定分类。于是我们进行了一定的对比分析。
-https://developers.whatismybrowser.com/useragents/explore/software_name/chrome/ https://developers.whatismybrowser.com/useragents/explore/software_name/internet-explorer/ https://developers.whatismybrowser.com/useragents/explore/operating_system_name/windows/ https://developers.whatismybrowser.com/useragents/explore/operating_platform/nexus-5/  不难看出，这个站点根据尾部的两级目录进行了分类
+https://developers.whatismybrowser.com/useragents/explore/software_name/chrome/ https://developers.whatismybrowser.com/useragents/explore/software_name/internet-explorer/ https://developers.whatismybrowser.com/useragents/explore/operating_system_name/windows/ https://developers.whatismybrowser.com/useragents/explore/operating_platform/nexus-5/ 不难看出，这个站点根据尾部的两级目录进行了分类
 \type1\ \type2\ \page  说得直白一点，这或许是 三个循环 就能搞定的事情，当然page得根据抓取结果来判定。
 首先我们需要获取到全部的分类链接，也就是上 图中第一个箭头指向元素的 href属性，这里我们通过chrome调试工具直接选取到红框元素css路径并进行对比总结出通用路径
 # listing-by-field-name &amp;gt; li:nth-child(1) &amp;gt; h2 &amp;gt; a # listing-by-field-name &amp;gt; li:nth-child(2) &amp;gt; h2 &amp;gt; a # listing-by-field-name &amp;gt; li &amp;gt; h2 &amp;gt; a 并且我们可以发现，下级目录直接给出了二级类型及其总数量，具体取法同上文不再赘述。
