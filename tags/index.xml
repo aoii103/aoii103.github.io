@@ -39,11 +39,29 @@
     </item>
     
     <item>
+      <title>Django</title>
+      <link>https://aoii103.github.io/tags/django/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://aoii103.github.io/tags/django/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Jsfuck</title>
       <link>https://aoii103.github.io/tags/jsfuck/</link>
       <pubDate>Thu, 18 Oct 2018 00:00:00 +0000</pubDate>
       
       <guid>https://aoii103.github.io/tags/jsfuck/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Jwt</title>
+      <link>https://aoii103.github.io/tags/jwt/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://aoii103.github.io/tags/jwt/</guid>
       <description></description>
     </item>
     

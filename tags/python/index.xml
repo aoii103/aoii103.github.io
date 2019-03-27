@@ -75,5 +75,14 @@ https://developers.whatismybrowser.com/useragents/explore/software_name/chrome/ 
 最后欢迎关注我的公众号获取最新资讯</description>
     </item>
     
+    <item>
+      <title>【django笔记】自定义JWT Header头</title>
+      <link>https://aoii103.github.io/django%E7%AC%94%E8%AE%B0%E8%87%AA%E5%AE%9A%E4%B9%89jwt-header%E5%A4%B4/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://aoii103.github.io/django%E7%AC%94%E8%AE%B0%E8%87%AA%E5%AE%9A%E4%B9%89jwt-header%E5%A4%B4/</guid>
+      <description>我们在apps目录下新建custom_jwt.py,填入如下代码，并替换[CustomHeader]为您所需要的自定义的jwt header头.  class JSONWebTokenAuthenticationQS(JSONWebTokenAuthentication): def get_jwt_value(self, request): return request.META.get(&amp;#39;HTTP_[CustomHeader]&amp;#39;)  修改setting.py如下位置以应用  REST_FRAMEWORK = { &#39;DEFAULT_AUTHENTICATION_CLASSES&#39;: ( # &#39;rest_framework_jwt.authentication.JSONWebTokenAuthentication&#39;, &#39;apps.custom_jwt.JSONWebTokenAuthenticationQS&#39;, ), }  参考：http://getblimp.github.io/django-rest-framework-jwt/#extending-jsonwebtokenauthentication</description>
+    </item>
+    
   </channel>
 </rss>
