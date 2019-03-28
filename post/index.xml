@@ -6,119 +6,72 @@
     <description>Recent content in Posts on </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Wed, 26 Dec 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 28 Mar 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://aoii103.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>Django ORM操作</title>
+      <link>https://aoii103.github.io/post/2019_03_28_django%E7%AC%94%E8%AE%B0_orm%E6%9F%A5%E8%AF%A2%E6%93%8D%E4%BD%9C/</link>
+      <pubDate>Thu, 28 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://aoii103.github.io/post/2019_03_28_django%E7%AC%94%E8%AE%B0_orm%E6%9F%A5%E8%AF%A2%E6%93%8D%E4%BD%9C/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>自定义JWT Header头</title>
+      <link>https://aoii103.github.io/post/2019_03_27_django%E7%AC%94%E8%AE%B0_%E8%87%AA%E5%AE%9A%E4%B9%89authheader%E5%A4%B4/</link>
+      <pubDate>Wed, 27 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://aoii103.github.io/post/2019_03_27_django%E7%AC%94%E8%AE%B0_%E8%87%AA%E5%AE%9A%E4%B9%89authheader%E5%A4%B4/</guid>
+      <description>&lt;p&gt;在某些特定场景下，我们需要修改默认的JWT认证请求Header头。这里做一下简单记录。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>几款或许能改善编写效率的工具(第一期)</title>
-      <link>https://aoii103.github.io/%E5%87%A0%E6%AC%BE%E6%88%96%E8%AE%B8%E8%83%BD%E6%94%B9%E5%96%84%E7%BC%96%E5%86%99%E6%95%88%E7%8E%87%E7%9A%84%E5%B7%A5%E5%85%B7%E7%AC%AC%E4%B8%80%E6%9C%9F/</link>
+      <link>https://aoii103.github.io/post/2018_12_26_%E5%87%A0%E6%AC%BE%E6%88%96%E8%AE%B8%E8%83%BD%E6%94%B9%E5%96%84%E7%BC%96%E5%86%99%E6%95%88%E7%8E%87%E7%9A%84%E5%B7%A5%E5%85%B7l1/</link>
       <pubDate>Wed, 26 Dec 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://aoii103.github.io/%E5%87%A0%E6%AC%BE%E6%88%96%E8%AE%B8%E8%83%BD%E6%94%B9%E5%96%84%E7%BC%96%E5%86%99%E6%95%88%E7%8E%87%E7%9A%84%E5%B7%A5%E5%85%B7%E7%AC%AC%E4%B8%80%E6%9C%9F/</guid>
-      <description>Quick HTTP Inspector Quick HTTP Inspector是一个快速导出网页请求流并转换成基于requests模块的python脚本的工具，让你不费吹灰之力就可以快速生成payload。当然，此插件适用于有一定基础的同学，不推荐初学者使用。
-安装方式 打开chrome，点击应用商店，搜索Quick HTTP Inspector后安装即可。
-go-sniffer go-sniffer可以抓取并截取项目中的数据库请求并解析成相应的语句。支持指定特定网络出口。这也算是sql调试的一大福音，免去了开发者在代码中插入各种针对调试sql的print和log。
-环境安装 #Centos yum -y install libpcap-devel #Ubuntu apt-get install libpcap-dev  运行 go get -v -u github.com/40t/go-sniffer cp -rf $(go env GOPATH)/bin/go-sniffer /usr/local/bin go-sniffer  [pdir2](https://github.com/laike9m/pdir2 你或许经常使用dir，但这里有一款或许更适合你的pdir2，以清晰得逻辑带解释得展示模块支持方法及属性。废话不多说，如下是效果图。
-安装方式 pip install pdir2  更好的应用方式 # 编辑 .bashrc 或者 .zshrc vi ~/.bashrc # 插入如下内容，在python启动时将自动导入pythonstartup的内容 export PYTHONSTARTUP=$HOME/.pythonstartup # 编辑.pythonstartup vi ~/.pythonstartup # 将下面内容写入文件 import pdir # 刷新配置，如此一来 pdir即可直接使用 source ~/.bashrc  tldr 与pdir类似，tldr可以快速展示系统命令的基本用法并给出相应解释。且颜色分明的显示方式更具可读性。</description>
+      <guid>https://aoii103.github.io/post/2018_12_26_%E5%87%A0%E6%AC%BE%E6%88%96%E8%AE%B8%E8%83%BD%E6%94%B9%E5%96%84%E7%BC%96%E5%86%99%E6%95%88%E7%8E%87%E7%9A%84%E5%B7%A5%E5%85%B7l1/</guid>
+      <description>&lt;p&gt;时间宝贵,效率至上.今日主讲: Quick HTTP Inspector、go-sniffer、pdir2、tldr、translate-shell&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>快速实现暗网交易监控</title>
-      <link>https://aoii103.github.io/%E5%BF%AB%E9%80%9F%E5%AE%9E%E7%8E%B0%E6%9A%97%E7%BD%91%E4%BA%A4%E6%98%93%E7%9B%91%E6%8E%A7/</link>
+      <link>https://aoii103.github.io/post/2018_12_24_%E5%BF%AB%E9%80%9F%E5%AE%9E%E7%8E%B0%E6%9A%97%E7%BD%91%E4%BA%A4%E6%98%93%E7%9B%91%E6%8E%A7/</link>
       <pubDate>Mon, 24 Dec 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://aoii103.github.io/%E5%BF%AB%E9%80%9F%E5%AE%9E%E7%8E%B0%E6%9A%97%E7%BD%91%E4%BA%A4%E6%98%93%E7%9B%91%E6%8E%A7/</guid>
-      <description>前言 暗网或许对大多数人来说都是一个陌生的名词，但对于一个安全人员却是必不可少的一样的东西。暗网之内鱼龙混杂，内含的活动内容也是参差不齐。
-其中不乏各类的交易黑市，且交易内容也让人触目惊心。(护眼)
-于是我们针对 deepmix2z2ayzi46.onion 暗网中文网编写了一个监控爬虫作为实践案例。
-功能简要  自动注册 自动登录 防封禁策略 ORM交互 事件详情/样本信息录入 事件提醒（telegram）  逻辑脑图 首先放出整个程序的逻辑图。
-分析过程 下面我们简单讲一下该网站的业务逻辑，在进入该网站后网站以一个 *PHPSESSID*Cookie 作为用户整个生命周期的身份ID，过期时间为1小时，且不会自动延长。
-只有靠再次登录才能刷个新的身份。那么在这里，我们需要设定一个Session会话来自动处理这个cookie。并配置socks5代理，关于tor的安装不再赘述。
-self.session = requests.Session() self.session.headers = { &amp;#34;Accept&amp;#34;: &amp;#34;text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8&amp;#34;, &amp;#34;Accept-Encoding&amp;#34;: &amp;#34;gzip, deflate&amp;#34;, &amp;#34;Accept-Language&amp;#34;: &amp;#34;zh-CN,zh;q=0.9,en;q=0.8&amp;#34;, &amp;#34;Cache-Control&amp;#34;: &amp;#34;max-age=0&amp;#34;, &amp;#34;Connection&amp;#34;: &amp;#34;keep-alive&amp;#34;, &amp;#34;Referer&amp;#34;: &amp;#34;http://bmp3qqimv55xdznb.onion/index.php&amp;#34;, &amp;#34;Upgrade-Insecure-Requests&amp;#34;: &amp;#34;1&amp;#34;, &amp;#34;User-Agent&amp;#34;: &amp;#34;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36&amp;#34; } self.proxy_url = &amp;#39;socks5h://127.0.0.1:9150&amp;#39; self.session.proxies = { &amp;#39;https&amp;#39;: self.proxy_url, &amp;#39;http&amp;#39;: self.proxy_url } 或许有同学会注意到这里使用的是 socks5h:// 协议，那么 Requests 模块文档中有注解。因为常规DNS服务器并不能解析*.</description>
+      <guid>https://aoii103.github.io/post/2018_12_24_%E5%BF%AB%E9%80%9F%E5%AE%9E%E7%8E%B0%E6%9A%97%E7%BD%91%E4%BA%A4%E6%98%93%E7%9B%91%E6%8E%A7/</guid>
+      <description>&lt;p&gt;暗网或许对大多数人来说都是一个陌生的名词，但对于一个安全人员却是必不可少的一样的东西。暗网之内鱼龙混杂，内含的活动内容也是参差不齐。&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>动动手做一个UserAgent库</title>
-      <link>https://aoii103.github.io/%E5%8A%A8%E5%8A%A8%E6%89%8B%E5%81%9A%E4%B8%80%E4%B8%AAuseragent%E5%BA%93/</link>
+      <link>https://aoii103.github.io/post/2018_11_29_%E5%8A%A8%E5%8A%A8%E6%89%8B%E5%81%9A%E4%B8%80%E4%B8%AAuseragent%E5%BA%93/</link>
       <pubDate>Thu, 29 Nov 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://aoii103.github.io/%E5%8A%A8%E5%8A%A8%E6%89%8B%E5%81%9A%E4%B8%80%E4%B8%AAuseragent%E5%BA%93/</guid>
-      <description>前言 你是否曾使用着一个两个或者直接百度来谷歌来的几个User-Agent来作为爬虫的UA头，或是从浏览器调试工具扒拉下来的本机UA头，甚至是未使用。。作为一个爬虫脚本，基本的伪装是很必要的。而User-Agent头这个看似不起眼的元素，却起着至关重要的炮灰作用。
-当然，这里还是需要科普下UA，是何物。
-什么是UA  Wiki：在计算机科学中，用户代理（英语：User Agent）指的是代表用户行为的软件代理程序所提供的对自己的一个标识符。
-我：简而言之就是访问者的身份证。
- 发现之旅 那么在常规爬虫脚本的编写中，通过每次请求虚假的UA来装饰每次请求，同样能达到一定的伪装作用,较为直观的理解就是，例如戴了个口罩。
- 如果对方刨根问底要你摘下口罩查你IP的话，那这个就不适用了，请移步文章[](/img/content_img/ua_demo/)
- 废话不多说，说干就干，首先我们打开谷歌（不要问我是怎么打开的。。）并输入user agent list，回车。
-这个时候我们可以看到结果中蓝框内有着令人兴奋的结果，UA的基础分类。 而红框内为此结果的源URL地址。于是我们访问这个站点。
-我们可以看到列表通过用途进行了一定分类。于是我们进行了一定的对比分析。
-https://developers.whatismybrowser.com/useragents/explore/software_name/chrome/ https://developers.whatismybrowser.com/useragents/explore/software_name/internet-explorer/ https://developers.whatismybrowser.com/useragents/explore/operating_system_name/windows/ https://developers.whatismybrowser.com/useragents/explore/operating_platform/nexus-5/ 不难看出，这个站点根据尾部的两级目录进行了分类
-\type1\ \type2\ \page  说得直白一点，这或许是 三个循环 就能搞定的事情，当然page得根据抓取结果来判定。
-首先我们需要获取到全部的分类链接，也就是上 图中第一个箭头指向元素的 href属性，这里我们通过chrome调试工具直接选取到红框元素css路径并进行对比总结出通用路径
-# listing-by-field-name &amp;gt; li:nth-child(1) &amp;gt; h2 &amp;gt; a # listing-by-field-name &amp;gt; li:nth-child(2) &amp;gt; h2 &amp;gt; a # listing-by-field-name &amp;gt; li &amp;gt; h2 &amp;gt; a 并且我们可以发现，下级目录直接给出了二级类型及其总数量，具体取法同上文不再赘述。
-我们通过访问任意类型的任一一页，并统计单页数量来直接计算出总页数。那么怎么快速计算呢。这里我们来观察下数据集所处的dom位置。
-可以看到全文就一个tbody标签，并且每项的一个td标签存在useragent这样一个类属性。如此就好办了。我们可以通过编写js语句来直接读取单页总数。
-于是总页数就为math.ceil(nums/50)
-如此一来，一二级目录名称及总页数都找到了解决办法，这个时候我们就可以开始coding了。在编写过程中，我们发现这个站点也是对访问频率进行了一定限制，而Tor代理可以很好地绕过。具体手法详见【url】。
-考虑到我们使用的异步模块asks并没有proxy配置项，于是经过一番搜寻，我们找到了一个很好的命令行代理，接下来我给大家介绍它及其使用方法。
-命令代理ProxyChain4（以MAC为例）  使用环境Linux, BSD, MAC(win用户的悲剧)</description>
+      <guid>https://aoii103.github.io/post/2018_11_29_%E5%8A%A8%E5%8A%A8%E6%89%8B%E5%81%9A%E4%B8%80%E4%B8%AAuseragent%E5%BA%93/</guid>
+      <description>&lt;p&gt;作为一个爬虫脚本，基本的伪装是很必要的。而User-Agent头这个看似不起眼的元素，却起着至关重要的作用。&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>一个Tor代理绕过访问限制的典型案例</title>
-      <link>https://aoii103.github.io/%E4%B8%80%E4%B8%AAtor%E4%BB%A3%E7%90%86%E7%BB%95%E8%BF%87%E8%AE%BF%E9%97%AE%E9%99%90%E5%88%B6%E7%9A%84%E5%85%B8%E5%9E%8B%E6%A1%88%E4%BE%8B/</link>
+      <link>https://aoii103.github.io/post/2018_10_24_%E4%B8%80%E4%B8%AAtor%E4%BB%A3%E7%90%86%E7%BB%95%E8%BF%87%E8%AE%BF%E9%97%AE%E9%99%90%E5%88%B6%E7%9A%84%E5%85%B8%E5%9E%8B%E6%A1%88%E4%BE%8B/</link>
       <pubDate>Wed, 24 Oct 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://aoii103.github.io/%E4%B8%80%E4%B8%AAtor%E4%BB%A3%E7%90%86%E7%BB%95%E8%BF%87%E8%AE%BF%E9%97%AE%E9%99%90%E5%88%B6%E7%9A%84%E5%85%B8%E5%9E%8B%E6%A1%88%E4%BE%8B/</guid>
-      <description>前言 在编写爬虫测试初期，我们一般会验证目标站点是否存在若干的访问限制防护措施。例如UA防护啊 访问频率限制啊 人机验证啊巴拉巴拉的。。
-图片验证 而当我们在遇到图片验证的时候，有以下几种选择。
- 云市场的识别API （金钱成本） 打码平台 （金钱成本） 自己训练样本识别 （时间成本，算法知识储备） 放弃..  滑动验证 再者当出现滑动验证的时候，那可就比较够呛，我暂时知道以下几种。
- 模拟js滑动（高失败率） 训练真人滑动轨迹 （时间成本，算法知识储备） 转写逻辑+训练轨迹 （时间成本，js调试能力，算法知识储备，耐心） 再次放弃..  如果上述括号内的都具备了。那下文您啊就不用看啦
- &amp;mdash;&amp;mdash;&amp;mdash;&amp;ndash;这是一条不起眼的大佬分割线&amp;mdash;&amp;mdash;&amp;mdash;&amp;ndash;
- 前段时间为了爬取关于虚拟货币方面的及时咨询就遇到这么个站点
-通过使用调试工具我们可以看到。目标数据存在于中
-常规爬虫都会以轮询的方式对目标页进行爬取并应用相同的规则，在不同的时间节点取到不同的数据，而这个站，在刷了一段时间后，出现了这个么东西
-一个你不得不过的滑动验证..
-这个时候我们将url丢入tor浏览器中发现，站点的滑动验证已经消失。
- 这里我要提一下，此结果只是说明这个站点可以通过ip代理来绕过，使用tor仅仅是为了高效而又0成本造福群众。
- tor网络就像下面这幅图一样杂乱
-常规单条线路由 入口节点 -&amp;gt; 中转节点1 -&amp;gt; 中转接点2 -&amp;gt; 出口节点 组成，当然这个有点离题了。。抱歉没控制住。
-也就是说，互联网上存在多少个tor节点,你就能有多少个代理！
-此时我们可以通过借助在程序上部署tor代理来实现，
-Tor端口说明  9150 9050 socks5网络代理端口 9151 9051 tor控制端口  部署说明  图形化操作系统  下载安装Tor浏览器启动即可 并通过netstat查看端口是否开启，具体命令不再赘述  服务器 (这里以ubuntu为例)  sudo apt-get install tor -y sudo vi /etc/tor/torrc 将ControlPort前#去掉后保存 sudo /etc/init.</description>
+      <guid>https://aoii103.github.io/post/2018_10_24_%E4%B8%80%E4%B8%AAtor%E4%BB%A3%E7%90%86%E7%BB%95%E8%BF%87%E8%AE%BF%E9%97%AE%E9%99%90%E5%88%B6%E7%9A%84%E5%85%B8%E5%9E%8B%E6%A1%88%E4%BE%8B/</guid>
+      <description>&lt;p&gt;在编写爬虫测试初期，我们一般会验证目标站点是否存在若干的访问限制防护措施。例如UA防护、访问频率限制、人机验证等。而些许站点虽然存在这样的防护，但也可以通过代理绕过。&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>绕过CloudFlare-JSfuck防护验证</title>
-      <link>https://aoii103.github.io/%E7%BB%95%E8%BF%87cloudflare-jsfuck%E9%98%B2%E6%8A%A4%E9%AA%8C%E8%AF%81/</link>
+      <link>https://aoii103.github.io/post/2018_10_19_%E7%BB%95%E8%BF%87cloudflare-jsfuck%E9%98%B2%E6%8A%A4%E9%AA%8C%E8%AF%81/</link>
       <pubDate>Thu, 18 Oct 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://aoii103.github.io/%E7%BB%95%E8%BF%87cloudflare-jsfuck%E9%98%B2%E6%8A%A4%E9%AA%8C%E8%AF%81/</guid>
-      <description>经过使用Chrome调试工具审查Network过程后我们可以发现，在未设置cf_clearancecookie时，访问将无法进行。
-我们可以红框内容看到首次访问返回503其后通过访问chk_jschi后触发302跳转至main并成功响应，并且在绿框中我们可以看到在第二个set-cookie取到后再次加载main界面成功
-通过查看 chk_jschi 响应头我们可以看到其中的set-cookie内容正是我们所需要的
-那么问题来了，这个是请求是怎么生成的呢？此时我们通过搜索蓝框内的键
-我们来测试一下如果通过View-source会返回怎么样的结果,这里要注意要先将cookie清理干净
-成功找到相关参数，看起来似乎是没啥问题了。不过有没有注意到jschl_answer并没有内容 并且存在一个id属性 这就让我立即想到会通过js将其赋值的可能。
-于是根据ID查找，发现了惊喜
-那么上面一堆乱七八糟的东西是什么呢。。
-或许大部分人并不知道，这就是Jsfuck
-也就是说，这些代码是可执行的 我们直接取出部分代码丢入console 非常好，接下来就到了根据JS转写成python的过程了，这里我们使用execjs作为执行模块。
-源码地址: https://github.com/aoii103/AntiCloudFare 有需要的同学可自行前往下载。
-###测试执行结果
-可以看到成功生成了相应的url，这里有一点要注意下，在生成成功后，任然需要等待4秒钟再访问该链接才可以取到对应cookie。所以转写代码能全则全，毕竟用来做摆设的占少数。
-最后欢迎关注我的公众号获取最新资讯</description>
-    </item>
-    
-    <item>
-      <title>【django笔记】自定义JWT Header头</title>
-      <link>https://aoii103.github.io/django%E7%AC%94%E8%AE%B0%E8%87%AA%E5%AE%9A%E4%B9%89jwt-header%E5%A4%B4/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://aoii103.github.io/django%E7%AC%94%E8%AE%B0%E8%87%AA%E5%AE%9A%E4%B9%89jwt-header%E5%A4%B4/</guid>
-      <description>我们在apps目录下新建custom_jwt.py,填入如下代码，并替换[CustomHeader]为您所需要的自定义的jwt header头.  class JSONWebTokenAuthenticationQS(JSONWebTokenAuthentication): def get_jwt_value(self, request): return request.META.get(&amp;#39;HTTP_[CustomHeader]&amp;#39;)  修改setting.py如下位置以应用  REST_FRAMEWORK = { &#39;DEFAULT_AUTHENTICATION_CLASSES&#39;: ( # &#39;rest_framework_jwt.authentication.JSONWebTokenAuthentication&#39;, &#39;apps.custom_jwt.JSONWebTokenAuthenticationQS&#39;, ), }  参考：http://getblimp.github.io/django-rest-framework-jwt/#extending-jsonwebtokenauthentication</description>
+      <guid>https://aoii103.github.io/post/2018_10_19_%E7%BB%95%E8%BF%87cloudflare-jsfuck%E9%98%B2%E6%8A%A4%E9%AA%8C%E8%AF%81/</guid>
+      <description>&lt;p&gt;近日在爬取某个站点的时候发现，默认必须通过首页跳转才可以访问其内容页。并且，源码中存在着一些诡异的js代码。&lt;/p&gt;</description>
     </item>
     
   </channel>

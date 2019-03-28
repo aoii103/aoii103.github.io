@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>快速实现暗网交易监控 - </title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta name="generator" content="Hugo 0.53" />
+	<meta property="og:title" content="快速实现暗网交易监控" />
+<meta property="og:description" content="暗网或许对大多数人来说都是一个陌生的名词，但对于一个安全人员却是必不可少的一样的东西。暗网之内鱼龙混杂，内含的活动内容也是参差不齐。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://aoii103.github.io/post/2018_12_24_%E5%BF%AB%E9%80%9F%E5%AE%9E%E7%8E%B0%E6%9A%97%E7%BD%91%E4%BA%A4%E6%98%93%E7%9B%91%E6%8E%A7/" /><meta property="article:published_time" content="2018-12-24T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2018-12-24T00:00:00&#43;00:00"/>
+
+	<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="快速实现暗网交易监控"/>
+<meta name="twitter:description" content="暗网或许对大多数人来说都是一个陌生的名词，但对于一个安全人员却是必不可少的一样的东西。暗网之内鱼龙混杂，内含的活动内容也是参差不齐。"/>
+
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-135738940-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="" rel="home">
+				<div class="logo__title"></div>
+				<div class="logo__tagline">进击的Robot</div>
+			</a>
+		</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">快速实现暗网交易监控</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2018-12-24T00:00:00">December 24, 2018</time>
+</div>
+</div>
+		</header>
+		<figure class="post__thumbnail">
+			<img src="/img/content_img/darknet/new_mosaic.jpg" alt="快速实现暗网交易监控">
+		</figure>
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#功能简要">功能简要</a></li>
+<li><a href="#逻辑脑图">逻辑脑图</a></li>
+<li><a href="#分析过程">分析过程</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#orm模型">ORM模型</a></li>
+<li><a href="#代码运行结果">代码运行结果</a></li>
+<li><a href="#grafana可视化">Grafana可视化</a></li>
+</ul>
+</nav>
+	</div>
+</div>
+<div class="content post__content clearfix">
+			<p>暗网或许对大多数人来说都是一个陌生的名词，但对于一个安全人员却是必不可少的一样的东西。暗网之内鱼龙混杂，内含的活动内容也是参差不齐。</p>
+
+<p><img src="/img/content_img/darknet/wikires_1.png" alt="" /></p>
+
+<p>其中不乏各类的交易黑市，且交易内容也让人触目惊心。(护眼)</p>
+
+<p><img src="/img/content_img/darknet/datasdemo_1.png" alt="" /></p>
+
+<p>于是我们针对 <code>deepmix2z2ayzi46.onion</code> 暗网中文网编写了一个监控爬虫作为实践案例。</p>
+
+<h3 id="功能简要">功能简要</h3>
+
+<ul>
+<li>自动注册</li>
+<li>自动登录</li>
+<li>防封禁策略</li>
+<li>ORM交互</li>
+<li>事件详情/样本信息录入</li>
+<li>事件提醒（telegram）</li>
+</ul>
+
+<h3 id="逻辑脑图">逻辑脑图</h3>
+
+<p>首先放出整个程序的逻辑图。</p>
+
+<p><img src="/img/content_img/darknet/DarkNet.png" alt="" /></p>
+
+<h3 id="分析过程">分析过程</h3>
+
+<p>下面我们简单讲一下该网站的业务逻辑，在进入该网站后网站以一个 *<code>PHPSESSID</code>*Cookie 作为用户整个生命周期的身份ID，过期时间为1小时，且不会自动延长。</p>
+
+<p><img src="/img/content_img/darknet/cookie.png" alt="" /></p>
+
+<p>只有靠再次登录才能刷个新的身份。那么在这里，我们需要设定一个Session会话来自动处理这个cookie。并配置socks5代理，关于tor的安装不再赘述。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">self<span style="color:#f92672">.</span>session <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>Session()
+self<span style="color:#f92672">.</span>session<span style="color:#f92672">.</span>headers <span style="color:#f92672">=</span> {
+    <span style="color:#e6db74">&#34;Accept&#34;</span>: <span style="color:#e6db74">&#34;text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8&#34;</span>,
+    <span style="color:#e6db74">&#34;Accept-Encoding&#34;</span>: <span style="color:#e6db74">&#34;gzip, deflate&#34;</span>,
+    <span style="color:#e6db74">&#34;Accept-Language&#34;</span>: <span style="color:#e6db74">&#34;zh-CN,zh;q=0.9,en;q=0.8&#34;</span>,
+    <span style="color:#e6db74">&#34;Cache-Control&#34;</span>: <span style="color:#e6db74">&#34;max-age=0&#34;</span>,
+    <span style="color:#e6db74">&#34;Connection&#34;</span>: <span style="color:#e6db74">&#34;keep-alive&#34;</span>,
+    <span style="color:#e6db74">&#34;Referer&#34;</span>: <span style="color:#e6db74">&#34;http://bmp3qqimv55xdznb.onion/index.php&#34;</span>,
+    <span style="color:#e6db74">&#34;Upgrade-Insecure-Requests&#34;</span>: <span style="color:#e6db74">&#34;1&#34;</span>,
+    <span style="color:#e6db74">&#34;User-Agent&#34;</span>: <span style="color:#e6db74">&#34;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36&#34;</span>
+}
+self<span style="color:#f92672">.</span>proxy_url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;socks5h://127.0.0.1:9150&#39;</span>
+self<span style="color:#f92672">.</span>session<span style="color:#f92672">.</span>proxies <span style="color:#f92672">=</span> {
+    <span style="color:#e6db74">&#39;https&#39;</span>: self<span style="color:#f92672">.</span>proxy_url,
+    <span style="color:#e6db74">&#39;http&#39;</span>: self<span style="color:#f92672">.</span>proxy_url
+}</code></pre></div>
+<p>或许有同学会注意到这里使用的是 <em><code>socks5h://</code></em> 协议，那么 <em><code>Requests</code></em> 模块文档中有注解。因为常规DNS服务器并不能解析<code>*.onion</code>地址而Tor网络可以。</p>
+
+<p><img src="/img/content_img/darknet/usesocks5h.png" alt="" /></p>
+
+<p>而后我们需要注册，这里要注意的在正式进入注册界面之前需要先同意一个xxx协议，而这过程为一个Post请求。</p>
+
+<p><img src="/img/content_img/darknet/reg1_html.png" alt="" /></p>
+
+<p>并且根据多次测试得出，如果不先发送该请求，则无法进入注册界面。考虑到这里使用的为Form Data，那么源数据就直接存在于HTML中。</p>
+
+<blockquote>
+<p>因后续注册，登录均使用Form，表单位置不再赘述</p>
+</blockquote>
+
+<p><img src="/img/content_img/darknet/reg1_html2.png" alt="" /></p>
+
+<p>于是我们使用<code>css selector</code>语法来取到各个字段，通过正则取到<code>sid</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 取到sid</span>
+self<span style="color:#f92672">.</span>sid <span style="color:#f92672">=</span> re<span style="color:#f92672">.</span>findall(<span style="color:#e6db74">&#39;sid=(.*?)&#34;&#39;</span>, step1resp)[<span style="color:#ae81ff">0</span>]
+
+<span style="color:#75715e"># 取到token</span>
+token <span style="color:#f92672">=</span> step1(<span style="color:#e6db74">&#39;input[name=&#34;form_token&#34;]&#39;</span>)<span style="color:#f92672">.</span>attr(<span style="color:#e6db74">&#39;value&#39;</span>)
+
+<span style="color:#75715e"># 取到creation_time</span>
+creation_time <span style="color:#f92672">=</span> step1(<span style="color:#e6db74">&#39;input[name=&#34;creation_time&#34;]&#39;</span>)<span style="color:#f92672">.</span>attr(<span style="color:#e6db74">&#39;value&#39;</span>)
+
+<span style="color:#75715e"># 生成URL</span>
+url <span style="color:#f92672">=</span> f<span style="color:#e6db74">&#34;http://{self.domain}/ucp.php?mode=register&amp;sid={self.sid}&#34;</span>
+
+<span style="color:#75715e"># 发送请求</span>
+step2resp <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>session<span style="color:#f92672">.</span>post(url, data<span style="color:#f92672">=</span>{
+    <span style="color:#e6db74">&#34;agreed&#34;</span>: <span style="color:#e6db74">&#34;===好的,我已明白,请跳转到下一页继续注册====&#34;</span>,
+    <span style="color:#e6db74">&#34;change_lang&#34;</span>: <span style="color:#e6db74">&#34;&#34;</span>,
+    <span style="color:#e6db74">&#34;creation_time&#34;</span>: creation_time,
+    <span style="color:#e6db74">&#34;form_token&#34;</span>: token
+}, headers<span style="color:#f92672">=</span>headers)</code></pre></div>
+<p>接下来我们成功得进入到了注册界面，这里要注意的是用户名密码需要同时包含大小写字符及数字，范围6-20，于是我们准备一个随机密码生成器</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#a6e22e">@staticmethod</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">RandomKey</span>(length<span style="color:#f92672">=</span><span style="color:#ae81ff">20</span>):
+    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#39;&#39;</span><span style="color:#f92672">.</span>join((random<span style="color:#f92672">.</span>choice(random<span style="color:#f92672">.</span>choice((string<span style="color:#f92672">.</span>ascii_uppercase, string<span style="color:#f92672">.</span>ascii_lowercase, <span style="color:#e6db74">&#39;&#39;</span><span style="color:#f92672">.</span>join(map(str, range(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">9</span>)))))) <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1</span>,  length)))</code></pre></div>
+<p>并模拟注册过程。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 获取第二步的resp内容</span>
+step2 <span style="color:#f92672">=</span> jq(step2resp<span style="color:#f92672">.</span>text)
+
+<span style="color:#75715e"># 取到新token</span>
+token <span style="color:#f92672">=</span> step2(<span style="color:#e6db74">&#39;input[name=&#34;form_token&#34;]&#39;</span>)<span style="color:#f92672">.</span>attr(<span style="color:#e6db74">&#39;value&#39;</span>)
+
+<span style="color:#75715e"># 取到创建时间</span>
+creation_time <span style="color:#f92672">=</span> step2(<span style="color:#e6db74">&#39;input[name=&#34;creation_time&#34;]&#39;</span>)<span style="color:#f92672">.</span>attr(<span style="color:#e6db74">&#39;value&#39;</span>)
+
+<span style="color:#75715e"># 随机账户</span>
+self<span style="color:#f92672">.</span>usr <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>RandomKey()
+self<span style="color:#f92672">.</span>pwd <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>RandomKey()
+
+<span style="color:#75715e"># 生成payload</span>
+data <span style="color:#f92672">=</span> {
+    <span style="color:#e6db74">&#34;username&#34;</span>: self<span style="color:#f92672">.</span>usr,
+    <span style="color:#e6db74">&#34;new_password&#34;</span>: self<span style="color:#f92672">.</span>pwd,
+    <span style="color:#e6db74">&#34;password_confirm&#34;</span>: self<span style="color:#f92672">.</span>pwd,
+    <span style="color:#e6db74">&#34;email&#34;</span>: <span style="color:#e6db74">&#34;xxxx@xxxx.xxx&#34;</span>,
+    <span style="color:#e6db74">&#34;lang&#34;</span>: <span style="color:#e6db74">&#34;zh_cmn_hans&#34;</span>,
+    <span style="color:#e6db74">&#34;tz_date&#34;</span>: <span style="color:#e6db74">&#34;UTC+08:00+-+Asia/Brunei+-+&#34;</span> <span style="color:#f92672">+</span> moment<span style="color:#f92672">.</span>now()<span style="color:#f92672">.</span>format(<span style="color:#e6db74">&#34;DD+MM月+YYYY,+HH:mm&#34;</span>),
+    <span style="color:#e6db74">&#34;tz&#34;</span>: <span style="color:#e6db74">&#34;Asia/Hong_Kong&#34;</span>,
+    <span style="color:#e6db74">&#34;agreed&#34;</span>: <span style="color:#e6db74">&#34;true&#34;</span>,
+    <span style="color:#e6db74">&#34;change_lang&#34;</span>: <span style="color:#e6db74">&#34;0&#34;</span>,
+    <span style="color:#e6db74">&#34;submit&#34;</span>: <span style="color:#e6db74">&#34; 用户名与密码已填好,+点此提交 &#34;</span>,
+    <span style="color:#e6db74">&#34;creation_time&#34;</span>: creation_time,
+    <span style="color:#e6db74">&#34;form_token&#34;</span>: token
+}
+
+<span style="color:#75715e"># 发送注册请求</span>
+resp <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>session<span style="color:#f92672">.</span>post(url, data<span style="color:#f92672">=</span>data, headers<span style="color:#f92672">=</span>headers)
+
+<span style="color:#75715e"># 判断是否注册成功，失败则触发retry重新注册</span>
+<span style="color:#66d9ef">assert</span> <span style="color:#e6db74">&#39;感谢注册&#39;</span> <span style="color:#f92672">in</span> resp<span style="color:#f92672">.</span>text
+
+<span style="color:#75715e"># 成功则保存账户</span>
+DarkNet_User<span style="color:#f92672">.</span>create(<span style="color:#f92672">**</span>{
+    <span style="color:#e6db74">&#39;user&#39;</span>: self<span style="color:#f92672">.</span>usr,
+    <span style="color:#e6db74">&#39;pwd&#39;</span>: self<span style="color:#f92672">.</span>pwd
+})</code></pre></div>
+<p>然后以下是实际注册效果。因为使用的是佛系注册策略，所以有那么多。。</p>
+
+<p><img src="/img/content_img/darknet/reg_res.png" alt="" /></p>
+
+<p>在注册完成之后我们需要开始进行登录操作。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 登录URL</span>
+url <span style="color:#f92672">=</span> f<span style="color:#e6db74">&#39;http://{self.domain}/ucp.php?mode=login&#39;</span>
+
+<span style="color:#75715e"># 封装payload</span>
+data <span style="color:#f92672">=</span> {
+    <span style="color:#e6db74">&#34;username&#34;</span>: self<span style="color:#f92672">.</span>usr,
+    <span style="color:#e6db74">&#34;password&#34;</span>: self<span style="color:#f92672">.</span>pwd,
+    <span style="color:#e6db74">&#34;login&#34;</span>: <span style="color:#e6db74">&#34;登录&#34;</span>,
+    <span style="color:#e6db74">&#34;redirect&#34;</span>: f<span style="color:#e6db74">&#34;./index.php&amp;sid={self.sid}&#34;</span>
+}
+
+<span style="color:#75715e"># 发送登录</span>
+resp <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>session<span style="color:#f92672">.</span>post(url, data<span style="color:#f92672">=</span>data, verify<span style="color:#f92672">=</span>False, timeout<span style="color:#f92672">=</span><span style="color:#ae81ff">120</span>)
+
+<span style="color:#75715e"># 判断是否成功登录</span>
+<span style="color:#66d9ef">if</span> self<span style="color:#f92672">.</span>usr <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> resp<span style="color:#f92672">.</span>text:
+	
+	<span style="color:#75715e"># 如果被封禁则拉黑该账户并重新注册</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#e6db74">&#34;已被封禁&#34;</span> <span style="color:#f92672">in</span> resp<span style="color:#f92672">.</span>text:
+        DarkNet_User<span style="color:#f92672">.</span>update({
+            <span style="color:#e6db74">&#34;useful&#34;</span>: False
+        })<span style="color:#f92672">.</span>where(DarkNet_User<span style="color:#f92672">.</span>user <span style="color:#f92672">==</span> self<span style="color:#f92672">.</span>usr)<span style="color:#f92672">.</span>execute()
+    self<span style="color:#f92672">.</span>Reg()
+    
+    <span style="color:#75715e"># 注册完成触发retry</span>
+    <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">ValueError</span></code></pre></div>
+<p>接下来我们就取到了登录后的响应界面也就是主页，这里我们可以看到栏目按 <code>.ad_div_b</code>来分布。</p>
+
+<p><img src="/img/content_img/darknet/main.png" alt="" /></p>
+
+<p>并且在查看更多选项为该栏目的详情首页。那么我通过如下代码获取全部的类型</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">self<span style="color:#f92672">.</span>types <span style="color:#f92672">=</span> {item(<span style="color:#e6db74">&#39;.index_list_title&#39;</span>)<span style="color:#f92672">.</span>attr(<span style="color:#e6db74">&#39;href&#39;</span>)<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#39;=&#39;</span>)[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#39;&amp;&#39;</span>)[<span style="color:#ae81ff">0</span>]: item(<span style="color:#e6db74">&#39;tr:nth-child(1) &gt; td&#39;</span>)<span style="color:#f92672">.</span>text()<span style="color:#f92672">.</span>split()[<span style="color:#ae81ff">0</span>] <span style="color:#66d9ef">for</span> item <span style="color:#f92672">in</span> jq(resp<span style="color:#f92672">.</span>text)(<span style="color:#e6db74">&#39;.ad_table_b&#39;</span>)<span style="color:#f92672">.</span>items()}</code></pre></div>
+<p><img src="/img/content_img/darknet/types.png" alt="" /></p>
+
+<p>然后我们迭代这些类型，并将其qeaid、页码page及其他参数代入模板URL，以抓取栏目最大页数及详细列表。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">http://{self.domain}/pay/user_area.php?page_y1={page}<span style="color:#960050;background-color:#1e0010">&amp;</span>q_u_id=0<span style="color:#960050;background-color:#1e0010">&amp;</span>m_order=<span style="color:#960050;background-color:#1e0010">&amp;</span>q_ea_id={qeaid}<span style="color:#960050;background-color:#1e0010">&amp;</span>sid={self.sid}#page_y1</code></pre></div>
+<p><img src="/img/content_img/darknet/datalist.png" alt="" /></p>
+
+<blockquote>
+<p>在获取页码的时候，我们需要将字符串做一个split+join操作以去除所有的分隔符。</p>
+</blockquote>
+
+<p>根据分析界面结果得出 <code>table.m_area_a tr</code>路径下的每个<code>div.length_400&gt;a</code>元素的href不为空，则为一条数据。根据这样的规则我们编写如下代码，并获取部分基础数据。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">for</span> item <span style="color:#f92672">in</span> jqdata(<span style="color:#e6db74">&#39;table.m_area_a tr&#39;</span>)<span style="color:#f92672">.</span>items():
+    detailPath <span style="color:#f92672">=</span> item(<span style="color:#e6db74">&#39;div.length_400&gt;a&#39;</span>)<span style="color:#f92672">.</span>attr(<span style="color:#e6db74">&#39;href&#39;</span>)
+    <span style="color:#66d9ef">if</span> detailPath:
+    
+    	<span style="color:#75715e"># 组合URL</span>
+        detailsURL <span style="color:#f92672">=</span> urljoin(resp<span style="color:#f92672">.</span>url, detailPath)
+        self<span style="color:#f92672">.</span>GetDetails(detailsURL, {
+        
+        	<span style="color:#75715e"># 保护期，默认一般都为15天</span>
+            <span style="color:#e6db74">&#39;lines&#39;</span>:  FixNums(item(<span style="color:#e6db74">&#39;td:nth-child(7)&#39;</span>)<span style="color:#f92672">.</span>text()<span style="color:#f92672">.</span>replace(<span style="color:#e6db74">&#39;天&#39;</span>, <span style="color:#e6db74">&#39;&#39;</span>)),
+            
+            <span style="color:#75715e"># 热度，关注人数</span>
+            <span style="color:#e6db74">&#39;hot&#39;</span>: FixNums(item(<span style="color:#e6db74">&#39;td:nth-child(8)&#39;</span>)<span style="color:#f92672">.</span>text()),
+            
+            <span style="color:#75715e"># 事件标题</span>
+            <span style="color:#e6db74">&#39;title&#39;</span>: item(<span style="color:#e6db74">&#39;td:nth-child(5)&#39;</span>)<span style="color:#f92672">.</span>text(),
+            
+            <span style="color:#75715e"># 类型</span>
+            <span style="color:#e6db74">&#39;area&#39;</span>: item(<span style="color:#e6db74">&#39;td:nth-child(3)&#39;</span>)<span style="color:#f92672">.</span>text()
+        })</code></pre></div>
+<p>在获取箭头指示最大页数后，不断翻页迭代上面的过程以爬取全部页码及类型。</p>
+
+<blockquote>
+<p>需要注意一点，我们获取到的不一定是真实最大页码-。-，在爬行的时候需要判断结果列表是否为空。如果为空则为到达尾页需break跳出</p>
+</blockquote>
+
+<p>得到列表中的每条数据之后，为了获取详情，我们还需要进一步的其详情界面进行抓取。步骤依然为根据<code>css selector</code>路径来取到数据，不再赘述。</p>
+
+<p><img src="/img/content_img/darknet/details.png" alt="" /></p>
+
+<blockquote>
+<p>部分用户填写的出售数量大的超过了限制（过于夸张），这里我们需要默认一个最大值进行处理</p>
+</blockquote>
+
+<p>当然在取到数据的同时，我们需要判断该数据是否为允许提醒范围内的数据，如果是则通过<code>telebot</code>发送给<code>channel</code>。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 如果时间A 是在相对今天B天前的0点之前出现，则发送</span>
+<span style="color:#66d9ef">if</span> moment<span style="color:#f92672">.</span>date(A) <span style="color:#f92672">&gt;</span> moment<span style="color:#f92672">.</span>now()<span style="color:#f92672">.</span>replace(hours<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>, minutes<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>, seconds<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)<span style="color:#f92672">.</span>add(days<span style="color:#f92672">=</span>B):
+    telegram<span style="color:#f92672">.</span>delay(msg, sid, Config<span style="color:#f92672">.</span>darknetchannelID)</code></pre></div>
+<p>然后我们的客户端就收到了及时的提醒，于是整个项目就完成的差不多了。</p>
+
+<p>加入<strong>channel</strong>: <a href="https://t.me/fordarknetspiderbot">https://t.me/fordarknetspiderbot</a></p>
+
+<p><img src="/img/content_img/darknet/telegram.png" alt="" /></p>
+
+<h1 id="orm模型">ORM模型</h1>
+
+<p>首先我们通过pymysql连接数据库并查询是否存在该库，没有则创建，编码UTF8MB4。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">try</span>:
+    con <span style="color:#f92672">=</span> pymysql<span style="color:#f92672">.</span>connect(<span style="color:#f92672">**</span>Links)
+    <span style="color:#66d9ef">with</span> con<span style="color:#f92672">.</span>cursor() <span style="color:#66d9ef">as</span> cursor:
+        cursor<span style="color:#f92672">.</span>execute(
+            f<span style="color:#e6db74">&#39;create database {Config.mysql_db} character set UTF8mb4 collate utf8mb4_bin&#39;</span>)
+    con<span style="color:#f92672">.</span>close()
+<span style="color:#66d9ef">except</span> pymysql<span style="color:#f92672">.</span>err<span style="color:#f92672">.</span>ProgrammingError <span style="color:#66d9ef">as</span> e:
+    <span style="color:#66d9ef">if</span> <span style="color:#e6db74">&#39;1007&#39;</span> <span style="color:#f92672">in</span> str(e):
+        <span style="color:#66d9ef">pass</span>
+<span style="color:#66d9ef">except</span> <span style="color:#a6e22e">Exception</span> <span style="color:#66d9ef">as</span> e:
+    <span style="color:#66d9ef">raise</span> e</code></pre></div>
+<p>在完成创建后我们通过<code>peewee</code>来ORM驱动生成相应表格，以下是相应表的简介。</p>
+
+<ul>
+<li><code>DarkNet_Saler</code> 售卖者信息</li>
+<li><code>DarkNet_User</code>  爬虫用户池</li>
+<li><code>DarkNet_IMGS</code>  数据说明信息 (鸡肋)</li>
+<li><code>DarkNet_Notice</code> 消息发送记录</li>
+<li><code>DarkNet_DataSale</code> 信息详情</li>
+</ul>
+
+<h1 id="代码运行结果">代码运行结果</h1>
+
+<p>可以看到，爬虫本身以及celery运行状态良好。</p>
+
+<p><img src="/img/content_img/darknet/run.png" alt="" /></p>
+
+<h1 id="grafana可视化">Grafana可视化</h1>
+
+<p>为了让数据结果更加直观，我们通过grafana快速构建展示界面，当然这也是偷懒的操作。后期会针对grafana专门写一篇，本篇不再赘述。</p>
+
+<p>案例地址: <a href="https://gcokedsa123.grafana.net/dashboard/snapshot/2OJ9OtmtitwiGcIqwIVhvzgmTKDBtTkF?orgId=0">grafana_demo</a></p>
+
+<p><img src="/img/content_img/darknet/grafana.png" alt="" /></p>
+
+<p>最后，细心的同学是否有发现文章开头的贴图有些，特别么-v-?</p>
+
+<p>更多及时资讯欢迎关注我的公众号</p>
+
+<p><img src="/img/qrcode.png" alt="qrcode.png" /></p>
+		</div>
+		
+<div class="post__tags tags clearfix">
+	<svg class="icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="/tags/darknet/" rel="tag">darknet</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/tor/" rel="tag">tor</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/python/" rel="tag">python</a></li>
+	</ul>
+</div>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="s045pd avatar" src="/img/github_icon.jpeg" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">About s045pd</span>
+	</div>
+	<div class="authorbox__description">
+		pretty world!
+	</div>
+</div>
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/post/2018_11_29_%E5%8A%A8%E5%8A%A8%E6%89%8B%E5%81%9A%E4%B8%80%E4%B8%AAuseragent%E5%BA%93/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">动动手做一个UserAgent库</p></a>
+	</div>
+	<div class="post-nav__item post-nav__item--next">
+		<a class="post-nav__link" href="/post/2018_12_26_%E5%87%A0%E6%AC%BE%E6%88%96%E8%AE%B8%E8%83%BD%E6%94%B9%E5%96%84%E7%BC%96%E5%86%99%E6%95%88%E7%8E%87%E7%9A%84%E5%B7%A5%E5%85%B7l1/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">几款或许能改善编写效率的工具(第一期)</p></a>
+	</div>
+</nav>
+
+<section class="comments">
+	<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "https://pyocean.com/" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2019 .
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script></body>
+</html>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Web Tools on </title>
+    <link>https://aoii103.github.io/categories/web-tools/</link>
+    <description>Recent content in Web Tools on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Wed, 26 Dec 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://aoii103.github.io/categories/web-tools/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>几款或许能改善编写效率的工具(第一期)</title>
+      <link>https://aoii103.github.io/post/2018_12_26_%E5%87%A0%E6%AC%BE%E6%88%96%E8%AE%B8%E8%83%BD%E6%94%B9%E5%96%84%E7%BC%96%E5%86%99%E6%95%88%E7%8E%87%E7%9A%84%E5%B7%A5%E5%85%B7l1/</link>
+      <pubDate>Wed, 26 Dec 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://aoii103.github.io/post/2018_12_26_%E5%87%A0%E6%AC%BE%E6%88%96%E8%AE%B8%E8%83%BD%E6%94%B9%E5%96%84%E7%BC%96%E5%86%99%E6%95%88%E7%8E%87%E7%9A%84%E5%B7%A5%E5%85%B7l1/</guid>
+      <description>&lt;p&gt;时间宝贵,效率至上.今日主讲: Quick HTTP Inspector、go-sniffer、pdir2、tldr、translate-shell&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>自定义JWT Header头 - </title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta name="generator" content="Hugo 0.53" />
+	<meta property="og:title" content="自定义JWT Header头" />
+<meta property="og:description" content="在某些特定场景下，我们需要修改默认的JWT认证请求Header头。这里做一下简单记录。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://aoii103.github.io/post/2019_03_27_django%E7%AC%94%E8%AE%B0_%E8%87%AA%E5%AE%9A%E4%B9%89authheader%E5%A4%B4/" /><meta property="article:published_time" content="2019-03-27T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2019-03-27T00:00:00&#43;00:00"/>
+
+	<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="自定义JWT Header头"/>
+<meta name="twitter:description" content="在某些特定场景下，我们需要修改默认的JWT认证请求Header头。这里做一下简单记录。"/>
+
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-135738940-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="" rel="home">
+				<div class="logo__title"></div>
+				<div class="logo__tagline">进击的Robot</div>
+			</a>
+		</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">自定义JWT Header头</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2019-03-27T00:00:00">March 27, 2019</time>
+</div>
+
+<div class="meta__item-categories meta__item">
+	<svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
+	<span class="meta__text"><a class="meta__link" href="/categories/django-notes" rel="category">Django Notes</a></span>
+</div>
+</div>
+		</header>
+		<figure class="post__thumbnail">
+			<img src="/img/content_img/jwt/demo.jpg" alt="自定义JWT Header头">
+		</figure>
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		
+	</div>
+</div>
+<div class="content post__content clearfix">
+			<p>在某些特定场景下，我们需要修改默认的JWT认证请求Header头。这里做一下简单记录。</p>
+
+<ol>
+<li>我们在apps目录下新建<code>custom_jwt.py</code>,填入如下代码，并替换<code>[CustomHeader]</code>为您所需要的自定义的<code>jwt header</code>头.</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">JSONWebTokenAuthenticationQS</span>(JSONWebTokenAuthentication):
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_jwt_value</span>(self, request):
+        <span style="color:#66d9ef">return</span> request<span style="color:#f92672">.</span>META<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#39;HTTP_[CustomHeader]&#39;</span>)</code></pre></div>
+<ol>
+<li>修改<code>setting.py</code>如下位置以应用</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">REST_FRAMEWORK <span style="color:#f92672">=</span> {
+    <span style="color:#e6db74">&#39;DEFAULT_AUTHENTICATION_CLASSES&#39;</span>: (
+        <span style="color:#75715e"># &#39;rest_framework_jwt.authentication.JSONWebTokenAuthentication&#39;,</span>
+        <span style="color:#e6db74">&#39;apps.custom_jwt.JSONWebTokenAuthenticationQS&#39;</span>,
+    ),
+}</code></pre></div>
+<p>参考：<a href="http://getblimp.github.io/django-rest-framework-jwt/#extending-jsonwebtokenauthentication">http://getblimp.github.io/django-rest-framework-jwt/#extending-jsonwebtokenauthentication</a></p>
+		</div>
+		
+<div class="post__tags tags clearfix">
+	<svg class="icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="/tags/django/" rel="tag">django</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/python/" rel="tag">python</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/jwt/" rel="tag">jwt</a></li>
+	</ul>
+</div>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="s045pd avatar" src="/img/github_icon.jpeg" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">About s045pd</span>
+	</div>
+	<div class="authorbox__description">
+		pretty world!
+	</div>
+</div>
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/post/2018_12_26_%E5%87%A0%E6%AC%BE%E6%88%96%E8%AE%B8%E8%83%BD%E6%94%B9%E5%96%84%E7%BC%96%E5%86%99%E6%95%88%E7%8E%87%E7%9A%84%E5%B7%A5%E5%85%B7l1/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">几款或许能改善编写效率的工具(第一期)</p></a>
+	</div>
+	<div class="post-nav__item post-nav__item--next">
+		<a class="post-nav__link" href="/post/2019_03_28_django%E7%AC%94%E8%AE%B0_orm%E6%9F%A5%E8%AF%A2%E6%93%8D%E4%BD%9C/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">Django ORM操作</p></a>
+	</div>
+</nav>
+
+<section class="comments">
+	<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "https://pyocean.com/" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2019 .
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script></body>
+</html>
