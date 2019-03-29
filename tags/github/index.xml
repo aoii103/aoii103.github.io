@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Github on 进击的Robot</title>
+    <link>https://aoii103.github.io/tags/github/</link>
+    <description>Recent content in Github on 进击的Robot</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Fri, 29 Mar 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://aoii103.github.io/tags/github/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Gihub&amp;Hugo搭建静态博客</title>
+      <link>https://aoii103.github.io/post/2019_03_29_githubhugo%E6%90%AD%E5%BB%BAblog/</link>
+      <pubDate>Fri, 29 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://aoii103.github.io/post/2019_03_29_githubhugo%E6%90%AD%E5%BB%BAblog/</guid>
+      <description>&lt;p&gt;作为非常受欢迎的开源静态站点生成器之一，Hugo兼速度与灵活性并存，而Github的存在又让blog搭建变成了几近0成本的可能。今天我们就来以Mac环境为例讲一讲如何利用俩者来快速搭建一个静态Blog。且编写风格为&lt;code&gt;Markdown&lt;/code&gt;。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

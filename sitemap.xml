@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://aoii103.github.io/post/2019_03_29_githubhugo%E6%90%AD%E5%BB%BAblog/</loc>
+    <lastmod>2019-03-29T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://aoii103.github.io/post/2019_03_28_django%E7%AC%94%E8%AE%B0_orm%E6%9F%A5%E8%AF%A2%E6%93%8D%E4%BD%9C/</loc>
     <lastmod>2019-03-28T00:00:00+00:00</lastmod>
   </url>
@@ -35,10 +40,6 @@
   <url>
     <loc>https://aoii103.github.io/post/2018_10_19_%E7%BB%95%E8%BF%87cloudflare-jsfuck%E9%98%B2%E6%8A%A4%E9%AA%8C%E8%AF%81/</loc>
     <lastmod>2018-10-18T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://aoii103.github.io/post/2019_03_29_caddyhugo%E6%90%AD%E5%BB%BAblog/</loc>
   </url>
   
   <url>
@@ -77,6 +78,18 @@
   </url>
   
   <url>
+    <loc>https://aoii103.github.io/tags/github/</loc>
+    <lastmod>2019-03-29T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://aoii103.github.io/tags/hugo/</loc>
+    <lastmod>2019-03-29T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://aoii103.github.io/categories/javascript-reverse/</loc>
     <lastmod>2018-10-18T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -102,7 +115,7 @@
   
   <url>
     <loc>https://aoii103.github.io/post/</loc>
-    <lastmod>2019-03-28T00:00:00+00:00</lastmod>
+    <lastmod>2019-03-29T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -138,7 +151,7 @@
   
   <url>
     <loc>https://aoii103.github.io/</loc>
-    <lastmod>2019-03-28T00:00:00+00:00</lastmod>
+    <lastmod>2019-03-29T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
