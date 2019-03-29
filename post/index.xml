@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on </title>
+    <title>Posts on 进击的Robot</title>
     <link>https://aoii103.github.io/post/</link>
-    <description>Recent content in Posts on </description>
+    <description>Recent content in Posts on 进击的Robot</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
     <lastBuildDate>Thu, 28 Mar 2019 00:00:00 +0000</lastBuildDate>
@@ -72,6 +72,15 @@
       
       <guid>https://aoii103.github.io/post/2018_10_19_%E7%BB%95%E8%BF%87cloudflare-jsfuck%E9%98%B2%E6%8A%A4%E9%AA%8C%E8%AF%81/</guid>
       <description>&lt;p&gt;近日在爬取某个站点的时候发现，默认必须通过首页跳转才可以访问其内容页。并且，源码中存在着一些诡异的js代码。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://aoii103.github.io/post/2019_03_29_caddyhugo%E6%90%AD%E5%BB%BAblog/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://aoii103.github.io/post/2019_03_29_caddyhugo%E6%90%AD%E5%BB%BAblog/</guid>
+      <description></description>
     </item>
     
   </channel>
