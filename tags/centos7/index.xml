@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Centos7 on 进击的Robot</title>
+    <link>https://aoii103.github.io/tags/centos7/</link>
+    <description>Recent content in Centos7 on 进击的Robot</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Wed, 03 Apr 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://aoii103.github.io/tags/centos7/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Centos7下编译安装tor[0.4.0.4]</title>
+      <link>https://aoii103.github.io/post/2019_04_03_centos7%E4%B8%8B%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85tor0.4.0.4/</link>
+      <pubDate>Wed, 03 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://aoii103.github.io/post/2019_04_03_centos7%E4%B8%8B%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85tor0.4.0.4/</guid>
+      <description>&lt;p&gt;tor安装笔记,简单记录一下.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Caddy&amp;WebHook移植静态博客 - 进击的Robot</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta name="generator" content="Hugo 0.53" />
+	<meta property="og:title" content="Caddy&amp;WebHook移植静态博客" />
+<meta property="og:description" content="在完成了通过github搭建博客之后，我们希望使用自己的服务器及域名来运行博客。我们或许会想着，在本地生成后再传送到服务器相应文件夹目录即可，可这样似乎非常的麻烦。在这里我要推荐一款叫做Caddy的中间件。它类似Nginx，但却做到了极简配置、自动HTTPS等各种特性。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://aoii103.github.io/post/2019_03_30_caddywebhook%E6%90%AD%E5%BB%BAblog/" /><meta property="article:published_time" content="2019-03-30T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2019-03-30T00:00:00&#43;00:00"/>
+
+	<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Caddy&amp;WebHook移植静态博客"/>
+<meta name="twitter:description" content="在完成了通过github搭建博客之后，我们希望使用自己的服务器及域名来运行博客。我们或许会想着，在本地生成后再传送到服务器相应文件夹目录即可，可这样似乎非常的麻烦。在这里我要推荐一款叫做Caddy的中间件。它类似Nginx，但却做到了极简配置、自动HTTPS等各种特性。"/>
+
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-135738940-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="进击的Robot" rel="home">
+				<div class="logo__title">进击的Robot</div>
+				<div class="logo__tagline">Strange new light can be just as frightening as the dark.</div>
+			</a>
+		</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Caddy&amp;WebHook移植静态博客</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2019-03-30T00:00:00">March 30, 2019</time>
+</div>
+</div>
+		</header>
+		<figure class="post__thumbnail">
+			<img src="/img/content_img/caddy/caddy_logo.jpg" alt="Caddy&amp;WebHook移植静态博客">
+		</figure>
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+<ul>
+<li><a href="#caddy安装">Caddy安装</a>
+<ul>
+<li><a href="#配置下载">配置下载</a></li>
+<li><a href="#软件安装">软件安装</a></li>
+<li><a href="#初始化">初始化</a></li>
+<li><a href="#案例生成">案例生成</a></li>
+</ul></li>
+<li><a href="#gihhub-webhook设定">Gihhub-WebHook设定</a>
+<ul>
+<li><a href="#新建项目">新建项目</a></li>
+<li><a href="#生成站点">生成站点</a></li>
+<li><a href="#推送上传">推送上传</a></li>
+</ul></li>
+<li><a href="#配置说明">配置说明</a></li>
+</ul>
+</nav>
+	</div>
+</div>
+<div class="content post__content clearfix">
+			<p>在完成了通过github搭建博客之后，我们希望使用自己的服务器及域名来运行博客。我们或许会想着，在本地生成后再传送到服务器相应文件夹目录即可，可这样似乎非常的麻烦。在这里我要推荐一款叫做<code>Caddy</code>的中间件。它类似<code>Nginx</code>，但却做到了极简配置、自动HTTPS等各种特性。</p>
+
+<h1 id="caddy安装">Caddy安装</h1>
+
+<h2 id="配置下载">配置下载</h2>
+
+<p>首先我们访问 <a href="https://caddyserver.com/download">https://caddyserver.com/download</a>并选择自己所需要的配置</p>
+
+<p><img src="/img/content_img/caddy/install_1.png" alt="" /></p>
+
+<h2 id="软件安装">软件安装</h2>
+
+<pre><code>brew install hugo
+</code></pre>
+
+<h2 id="初始化">初始化</h2>
+
+<p>我们通过如下命令新建名为<code>[site_name]</code>的站点</p>
+
+<pre><code>hugo new site [site_name]
+</code></pre>
+
+<p>在成功创建后我们会看到如下提示。</p>
+
+<p><img src="/img/content_img/hugo/hugo_new_site_res.png" alt="" /></p>
+
+<p>然后我们需要选择一款皮肤。这里随机选择一款，详情可以参考[](<a href="https://themes.gohugo.io)。">https://themes.gohugo.io)。</a></p>
+
+<pre><code>cd [site_name]
+git clone https://github.com/vimux/mainroad themes/mainroad
+hugo server  --buildDrafts --theme=mainroad
+</code></pre>
+
+<p>访问[](localhost:1313)可以看到案例界面，当然里面暂时啥都没有。</p>
+
+<p><img src="/img/content_img/hugo/hugo_new_site_mainroad.png" alt="" /></p>
+
+<h2 id="案例生成">案例生成</h2>
+
+<p>为了看到实际效果，我们将<code>mainroad</code>中的案例站点复制到<code>content</code>中来演示。</p>
+
+<pre><code>cp -r themes/mainroad/exampleSite/content/* ./content/
+cat themes/mainroad/exampleSite/config.toml &gt; ./config.toml
+hugo server  --buildDrafts --theme=mainroad
+</code></pre>
+
+<p>最后，刷新界面。</p>
+
+<p><img src="/img/content_img/hugo/hugo_new_site_end.png" alt="" /></p>
+
+<h1 id="gihhub-webhook设定">Gihhub-WebHook设定</h1>
+
+<h2 id="新建项目">新建项目</h2>
+
+<p>接下来我们将在Github上新建一个项目作为静态站点容器。项目名称为 <code>xxx.github.io</code> 其中<code>xxx</code>需为用户名，其他不用管。</p>
+
+<p><img src="/img/content_img/hugo/github_new_repo.png" alt="" /></p>
+
+<h2 id="生成站点">生成站点</h2>
+
+<p>运行如下命令会生成静态站点文件夹，baseUrl为项目的未来静态博客的实际地址。</p>
+
+<pre><code>hugo --baseUrl=&quot;https://xxx.github.io/&quot; --theme=mainroad
+</code></pre>
+
+<h2 id="推送上传">推送上传</h2>
+
+<p>然后我们进入到目录并将文件夹推送到远端。</p>
+
+<pre><code>cd public
+git init
+git add .
+git commit -m &quot;init&quot;
+git remote add origin https://github.com/xxx/xxx.github.io.git
+git push  --set-upstream origin master
+</code></pre>
+
+<p>这里拿自己的站点做一个案例,我们访问<code>https://aoii103.github.io/</code></p>
+
+<p><img src="/img/content_img/hugo/mysite.png" alt="" /></p>
+
+<h1 id="配置说明">配置说明</h1>
+
+<p>hugo配置文件可参考相关theme中的exampleSite/config.toml</p>
+
+<p>更多新建文章等操作可参考 <code>hugo --help</code></p>
+		</div>
+		
+<div class="post__tags tags clearfix">
+	<svg class="icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="/tags/hugo/" rel="tag">hugo</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/caddy/" rel="tag">caddy</a></li>
+	</ul>
+</div>
+	</article>
+</main>
+
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/post/2019_03_29_githubhugo%E6%90%AD%E5%BB%BAblog/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">Gihub&amp;Hugo搭建静态博客</p></a>
+	</div>
+	<div class="post-nav__item post-nav__item--next">
+		<a class="post-nav__link" href="/post/2019_04_01_%E5%B8%B8%E8%A7%81%E5%8C%BF%E5%90%8D%E6%8E%A5%E6%94%B6%E9%82%AE%E4%BB%B6/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">常见匿名接收邮箱</p></a>
+	</div>
+</nav>
+
+<section class="comments">
+	<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "https-pyocean-com" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2019 进击的Robot.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script></body>
+</html>

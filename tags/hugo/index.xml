@@ -6,10 +6,19 @@
     <description>Recent content in Hugo on 进击的Robot</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Fri, 29 Mar 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 30 Mar 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://aoii103.github.io/tags/hugo/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Caddy&amp;WebHook移植静态博客</title>
+      <link>https://aoii103.github.io/post/2019_03_30_caddywebhook%E6%90%AD%E5%BB%BAblog/</link>
+      <pubDate>Sat, 30 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://aoii103.github.io/post/2019_03_30_caddywebhook%E6%90%AD%E5%BB%BAblog/</guid>
+      <description>&lt;p&gt;在完成了通过github搭建博客之后，我们希望使用自己的服务器及域名来运行博客。我们或许会想着，在本地生成后再传送到服务器相应文件夹目录即可，可这样似乎非常的麻烦。在这里我要推荐一款叫做&lt;code&gt;Caddy&lt;/code&gt;的中间件。它类似&lt;code&gt;Nginx&lt;/code&gt;，但却做到了极简配置、自动HTTPS等各种特性。&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Gihub&amp;Hugo搭建静态博客</title>

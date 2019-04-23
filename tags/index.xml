@@ -6,10 +6,28 @@
     <description>Recent content in Tags on 进击的Robot</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Wed, 24 Oct 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 02 Apr 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://aoii103.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Anonymous</title>
+      <link>https://aoii103.github.io/tags/anonymous/</link>
+      <pubDate>Tue, 02 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://aoii103.github.io/tags/anonymous/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Caddy</title>
+      <link>https://aoii103.github.io/tags/caddy/</link>
+      <pubDate>Sat, 30 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://aoii103.github.io/tags/caddy/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Cawler</title>
@@ -17,6 +35,15 @@
       <pubDate>Wed, 24 Oct 2018 00:00:00 +0000</pubDate>
       
       <guid>https://aoii103.github.io/tags/cawler/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Centos7</title>
+      <link>https://aoii103.github.io/tags/centos7/</link>
+      <pubDate>Wed, 03 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://aoii103.github.io/tags/centos7/</guid>
       <description></description>
     </item>
     
@@ -48,6 +75,15 @@
     </item>
     
     <item>
+      <title>Email</title>
+      <link>https://aoii103.github.io/tags/email/</link>
+      <pubDate>Tue, 02 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://aoii103.github.io/tags/email/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Github</title>
       <link>https://aoii103.github.io/tags/github/</link>
       <pubDate>Fri, 29 Mar 2019 00:00:00 +0000</pubDate>
@@ -59,7 +95,7 @@
     <item>
       <title>Hugo</title>
       <link>https://aoii103.github.io/tags/hugo/</link>
-      <pubDate>Fri, 29 Mar 2019 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 30 Mar 2019 00:00:00 +0000</pubDate>
       
       <guid>https://aoii103.github.io/tags/hugo/</guid>
       <description></description>
@@ -104,7 +140,7 @@
     <item>
       <title>Tor</title>
       <link>https://aoii103.github.io/tags/tor/</link>
-      <pubDate>Mon, 24 Dec 2018 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 03 Apr 2019 00:00:00 +0000</pubDate>
       
       <guid>https://aoii103.github.io/tags/tor/</guid>
       <description></description>
