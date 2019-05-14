@@ -6,10 +6,19 @@
     <description>Recent content in Posts on 进击的Robot</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Wed, 03 Apr 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 01 May 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://aoii103.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>V2ray快速安装部署</title>
+      <link>https://aoii103.github.io/post/2019_05_01_v2ray%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/</link>
+      <pubDate>Wed, 01 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://aoii103.github.io/post/2019_05_01_v2ray%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/</guid>
+      <description>&lt;p&gt;&lt;code&gt;Shadowsock&lt;/code&gt;作为普遍用户第一的翻墙选择，已经变得泛滥。高识别率，加密方式存在已知缺陷等等都让它荣光不再。而这种时候，&lt;code&gt;V2ray&lt;/code&gt;站了出来。让我们一起来看看吧!&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Centos7下编译安装tor[0.4.0.4]</title>
@@ -62,7 +71,7 @@
       <pubDate>Thu, 28 Mar 2019 00:00:00 +0000</pubDate>
       
       <guid>https://aoii103.github.io/post/2019_03_28_django%E7%AC%94%E8%AE%B0_orm%E6%9F%A5%E8%AF%A2%E6%93%8D%E4%BD%9C/</guid>
-      <description></description>
+      <description>&lt;p&gt;简述djangoOrm过滤查询常用操作符。&lt;/p&gt;</description>
     </item>
     
     <item>

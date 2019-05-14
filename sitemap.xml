@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://aoii103.github.io/post/2019_05_01_v2ray%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/</loc>
+    <lastmod>2019-05-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://aoii103.github.io/post/2019_04_03_centos7%E4%B8%8B%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85tor0.4.0.4/</loc>
     <lastmod>2019-04-03T00:00:00+00:00</lastmod>
   </url>
@@ -159,13 +164,25 @@
   
   <url>
     <loc>https://aoii103.github.io/post/</loc>
-    <lastmod>2019-04-03T00:00:00+00:00</lastmod>
+    <lastmod>2019-05-01T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://aoii103.github.io/tags/python/</loc>
     <lastmod>2019-03-28T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://aoii103.github.io/tags/shadowrocket/</loc>
+    <lastmod>2019-05-01T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://aoii103.github.io/tags/shadowsock/</loc>
+    <lastmod>2019-05-01T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -188,6 +205,12 @@
   </url>
   
   <url>
+    <loc>https://aoii103.github.io/tags/v2ray/</loc>
+    <lastmod>2019-05-01T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://aoii103.github.io/categories/web-tools/</loc>
     <lastmod>2018-12-26T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -195,7 +218,7 @@
   
   <url>
     <loc>https://aoii103.github.io/</loc>
-    <lastmod>2019-04-03T00:00:00+00:00</lastmod>
+    <lastmod>2019-05-01T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
