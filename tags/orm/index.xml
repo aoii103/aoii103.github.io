@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Orm on 进击的Robot</title>
-    <link>https://aoii103.github.io/tags/orm/</link>
+    <link>https://pyocean.com/tags/orm/</link>
     <description>Recent content in Orm on 进击的Robot</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
     <lastBuildDate>Thu, 28 Mar 2019 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://aoii103.github.io/tags/orm/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://pyocean.com/tags/orm/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Django ORM操作</title>
-      <link>https://aoii103.github.io/post/2019_03_28_django%E7%AC%94%E8%AE%B0_orm%E6%9F%A5%E8%AF%A2%E6%93%8D%E4%BD%9C/</link>
+      <link>https://pyocean.com/post/2019_03_28_django%E7%AC%94%E8%AE%B0_orm%E6%9F%A5%E8%AF%A2%E6%93%8D%E4%BD%9C/</link>
       <pubDate>Thu, 28 Mar 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://aoii103.github.io/post/2019_03_28_django%E7%AC%94%E8%AE%B0_orm%E6%9F%A5%E8%AF%A2%E6%93%8D%E4%BD%9C/</guid>
+      <guid>https://pyocean.com/post/2019_03_28_django%E7%AC%94%E8%AE%B0_orm%E6%9F%A5%E8%AF%A2%E6%93%8D%E4%BD%9C/</guid>
       <description>&lt;p&gt;简述djangoOrm过滤查询常用操作符。&lt;/p&gt;</description>
     </item>
     

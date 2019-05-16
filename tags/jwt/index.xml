@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Jwt on 进击的Robot</title>
-    <link>https://aoii103.github.io/tags/jwt/</link>
+    <link>https://pyocean.com/tags/jwt/</link>
     <description>Recent content in Jwt on 进击的Robot</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
     <lastBuildDate>Wed, 27 Mar 2019 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://aoii103.github.io/tags/jwt/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://pyocean.com/tags/jwt/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>自定义JWT Header头</title>
-      <link>https://aoii103.github.io/post/2019_03_27_django%E7%AC%94%E8%AE%B0_%E8%87%AA%E5%AE%9A%E4%B9%89authheader%E5%A4%B4/</link>
+      <link>https://pyocean.com/post/2019_03_27_django%E7%AC%94%E8%AE%B0_%E8%87%AA%E5%AE%9A%E4%B9%89authheader%E5%A4%B4/</link>
       <pubDate>Wed, 27 Mar 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://aoii103.github.io/post/2019_03_27_django%E7%AC%94%E8%AE%B0_%E8%87%AA%E5%AE%9A%E4%B9%89authheader%E5%A4%B4/</guid>
+      <guid>https://pyocean.com/post/2019_03_27_django%E7%AC%94%E8%AE%B0_%E8%87%AA%E5%AE%9A%E4%B9%89authheader%E5%A4%B4/</guid>
       <description>&lt;p&gt;在某些特定场景下，我们需要修改默认的JWT认证请求Header头。这里做一下简单记录。&lt;/p&gt;</description>
     </item>
     

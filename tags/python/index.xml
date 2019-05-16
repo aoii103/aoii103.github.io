@@ -2,57 +2,57 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Python on 进击的Robot</title>
-    <link>https://aoii103.github.io/tags/python/</link>
+    <link>https://pyocean.com/tags/python/</link>
     <description>Recent content in Python on 进击的Robot</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
     <lastBuildDate>Thu, 28 Mar 2019 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://aoii103.github.io/tags/python/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://pyocean.com/tags/python/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Django ORM操作</title>
-      <link>https://aoii103.github.io/post/2019_03_28_django%E7%AC%94%E8%AE%B0_orm%E6%9F%A5%E8%AF%A2%E6%93%8D%E4%BD%9C/</link>
+      <link>https://pyocean.com/post/2019_03_28_django%E7%AC%94%E8%AE%B0_orm%E6%9F%A5%E8%AF%A2%E6%93%8D%E4%BD%9C/</link>
       <pubDate>Thu, 28 Mar 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://aoii103.github.io/post/2019_03_28_django%E7%AC%94%E8%AE%B0_orm%E6%9F%A5%E8%AF%A2%E6%93%8D%E4%BD%9C/</guid>
+      <guid>https://pyocean.com/post/2019_03_28_django%E7%AC%94%E8%AE%B0_orm%E6%9F%A5%E8%AF%A2%E6%93%8D%E4%BD%9C/</guid>
       <description>&lt;p&gt;简述djangoOrm过滤查询常用操作符。&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>自定义JWT Header头</title>
-      <link>https://aoii103.github.io/post/2019_03_27_django%E7%AC%94%E8%AE%B0_%E8%87%AA%E5%AE%9A%E4%B9%89authheader%E5%A4%B4/</link>
+      <link>https://pyocean.com/post/2019_03_27_django%E7%AC%94%E8%AE%B0_%E8%87%AA%E5%AE%9A%E4%B9%89authheader%E5%A4%B4/</link>
       <pubDate>Wed, 27 Mar 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://aoii103.github.io/post/2019_03_27_django%E7%AC%94%E8%AE%B0_%E8%87%AA%E5%AE%9A%E4%B9%89authheader%E5%A4%B4/</guid>
+      <guid>https://pyocean.com/post/2019_03_27_django%E7%AC%94%E8%AE%B0_%E8%87%AA%E5%AE%9A%E4%B9%89authheader%E5%A4%B4/</guid>
       <description>&lt;p&gt;在某些特定场景下，我们需要修改默认的JWT认证请求Header头。这里做一下简单记录。&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>快速实现暗网交易监控</title>
-      <link>https://aoii103.github.io/post/2018_12_24_%E5%BF%AB%E9%80%9F%E5%AE%9E%E7%8E%B0%E6%9A%97%E7%BD%91%E4%BA%A4%E6%98%93%E7%9B%91%E6%8E%A7/</link>
+      <link>https://pyocean.com/post/2018_12_24_%E5%BF%AB%E9%80%9F%E5%AE%9E%E7%8E%B0%E6%9A%97%E7%BD%91%E4%BA%A4%E6%98%93%E7%9B%91%E6%8E%A7/</link>
       <pubDate>Mon, 24 Dec 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://aoii103.github.io/post/2018_12_24_%E5%BF%AB%E9%80%9F%E5%AE%9E%E7%8E%B0%E6%9A%97%E7%BD%91%E4%BA%A4%E6%98%93%E7%9B%91%E6%8E%A7/</guid>
+      <guid>https://pyocean.com/post/2018_12_24_%E5%BF%AB%E9%80%9F%E5%AE%9E%E7%8E%B0%E6%9A%97%E7%BD%91%E4%BA%A4%E6%98%93%E7%9B%91%E6%8E%A7/</guid>
       <description>&lt;p&gt;暗网或许对大多数人来说都是一个陌生的名词，但对于一个安全人员却是必不可少的一样的东西。暗网之内鱼龙混杂，内含的活动内容也是参差不齐。&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>动动手做一个UserAgent库</title>
-      <link>https://aoii103.github.io/post/2018_11_29_%E5%8A%A8%E5%8A%A8%E6%89%8B%E5%81%9A%E4%B8%80%E4%B8%AAuseragent%E5%BA%93/</link>
+      <link>https://pyocean.com/post/2018_11_29_%E5%8A%A8%E5%8A%A8%E6%89%8B%E5%81%9A%E4%B8%80%E4%B8%AAuseragent%E5%BA%93/</link>
       <pubDate>Thu, 29 Nov 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://aoii103.github.io/post/2018_11_29_%E5%8A%A8%E5%8A%A8%E6%89%8B%E5%81%9A%E4%B8%80%E4%B8%AAuseragent%E5%BA%93/</guid>
+      <guid>https://pyocean.com/post/2018_11_29_%E5%8A%A8%E5%8A%A8%E6%89%8B%E5%81%9A%E4%B8%80%E4%B8%AAuseragent%E5%BA%93/</guid>
       <description>&lt;p&gt;作为一个爬虫脚本，基本的伪装是很必要的。而User-Agent头这个看似不起眼的元素，却起着至关重要的作用。&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>绕过CloudFlare-JSfuck防护验证</title>
-      <link>https://aoii103.github.io/post/2018_10_19_%E7%BB%95%E8%BF%87cloudflare-jsfuck%E9%98%B2%E6%8A%A4%E9%AA%8C%E8%AF%81/</link>
+      <link>https://pyocean.com/post/2018_10_19_%E7%BB%95%E8%BF%87cloudflare-jsfuck%E9%98%B2%E6%8A%A4%E9%AA%8C%E8%AF%81/</link>
       <pubDate>Thu, 18 Oct 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://aoii103.github.io/post/2018_10_19_%E7%BB%95%E8%BF%87cloudflare-jsfuck%E9%98%B2%E6%8A%A4%E9%AA%8C%E8%AF%81/</guid>
+      <guid>https://pyocean.com/post/2018_10_19_%E7%BB%95%E8%BF%87cloudflare-jsfuck%E9%98%B2%E6%8A%A4%E9%AA%8C%E8%AF%81/</guid>
       <description>&lt;p&gt;近日在爬取某个站点的时候发现，默认必须通过首页跳转才可以访问其内容页。并且，源码中存在着一些诡异的js代码。&lt;/p&gt;</description>
     </item>
     

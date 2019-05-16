@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>User Agent on 进击的Robot</title>
-    <link>https://aoii103.github.io/tags/user-agent/</link>
+    <link>https://pyocean.com/tags/user-agent/</link>
     <description>Recent content in User Agent on 进击的Robot</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
     <lastBuildDate>Thu, 29 Nov 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://aoii103.github.io/tags/user-agent/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://pyocean.com/tags/user-agent/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>动动手做一个UserAgent库</title>
-      <link>https://aoii103.github.io/post/2018_11_29_%E5%8A%A8%E5%8A%A8%E6%89%8B%E5%81%9A%E4%B8%80%E4%B8%AAuseragent%E5%BA%93/</link>
+      <link>https://pyocean.com/post/2018_11_29_%E5%8A%A8%E5%8A%A8%E6%89%8B%E5%81%9A%E4%B8%80%E4%B8%AAuseragent%E5%BA%93/</link>
       <pubDate>Thu, 29 Nov 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://aoii103.github.io/post/2018_11_29_%E5%8A%A8%E5%8A%A8%E6%89%8B%E5%81%9A%E4%B8%80%E4%B8%AAuseragent%E5%BA%93/</guid>
+      <guid>https://pyocean.com/post/2018_11_29_%E5%8A%A8%E5%8A%A8%E6%89%8B%E5%81%9A%E4%B8%80%E4%B8%AAuseragent%E5%BA%93/</guid>
       <description>&lt;p&gt;作为一个爬虫脚本，基本的伪装是很必要的。而User-Agent头这个看似不起眼的元素，却起着至关重要的作用。&lt;/p&gt;</description>
     </item>
     
