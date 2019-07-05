@@ -120,11 +120,29 @@
     </item>
     
     <item>
+      <title>Ocr</title>
+      <link>https://pyocean.com/tags/ocr/</link>
+      <pubDate>Mon, 24 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://pyocean.com/tags/ocr/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Orm</title>
       <link>https://pyocean.com/tags/orm/</link>
       <pubDate>Thu, 28 Mar 2019 00:00:00 +0000</pubDate>
       
       <guid>https://pyocean.com/tags/orm/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Proxy</title>
+      <link>https://pyocean.com/tags/proxy/</link>
+      <pubDate>Fri, 10 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://pyocean.com/tags/proxy/</guid>
       <description></description>
     </item>
     

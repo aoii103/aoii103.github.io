@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>如何在centos7上搭建验证码识别平台 - 进击的Robot</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta name="generator" content="Hugo 0.53" />
+	<meta property="og:title" content="如何在centos7上搭建验证码识别平台" />
+<meta property="og:description" content="验证码作为一种最为基础的图灵测试已经广泛存在于各种网站，而在某些场景下我们需要绕过这些测试，此时就需要使用到Tesseract，一个光学字符识别引擎，且支持多种操作系统。并且是被认为是最精准的开源光学字符识别引擎之一。现在我们来看看如何将其搭建到centos7上面的。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://pyocean.com/post/2019_06_24_%E5%A6%82%E4%BD%95%E5%9C%A8centos7%E4%B8%8A%E6%90%AD%E5%BB%BA%E9%AA%8C%E8%AF%81%E7%A0%81%E8%AF%86%E5%88%AB%E5%B9%B3%E5%8F%B0/" /><meta property="article:published_time" content="2019-06-24T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2019-06-24T00:00:00&#43;00:00"/>
+
+	<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="如何在centos7上搭建验证码识别平台"/>
+<meta name="twitter:description" content="验证码作为一种最为基础的图灵测试已经广泛存在于各种网站，而在某些场景下我们需要绕过这些测试，此时就需要使用到Tesseract，一个光学字符识别引擎，且支持多种操作系统。并且是被认为是最精准的开源光学字符识别引擎之一。现在我们来看看如何将其搭建到centos7上面的。"/>
+
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-135738940-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="进击的Robot" rel="home">
+				<div class="logo__title">进击的Robot</div>
+				<div class="logo__tagline">Strange new light can be just as frightening as the dark.</div>
+			</a>
+		</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">如何在centos7上搭建验证码识别平台</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2019-06-24T00:00:00">June 24, 2019</time>
+</div>
+</div>
+		</header>
+		<figure class="post__thumbnail">
+			<img src="/img/content_img/ocr/ocr.png" alt="如何在centos7上搭建验证码识别平台">
+		</figure>
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#系统更新">系统更新</a></li>
+<li><a href="#安装依赖包">安装依赖包</a></li>
+<li><a href="#安装编译环境icu">安装编译环境icu</a></li>
+<li><a href="#安装leptonica">安装leptonica</a></li>
+<li><a href="#安装autoconf-archive">安装autoconf-archive</a>
+<ul>
+<li><a href="#添加环境变量">添加环境变量</a>
+<ul>
+<li><a href="#在底部加入">在底部加入</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#安装tesseract">安装tesseract</a></li>
+<li><a href="#下载对应模型">下载对应模型</a></li>
+</ul></li>
+</ul>
+</nav>
+	</div>
+</div>
+<div class="content post__content clearfix">
+			<p>验证码作为一种最为基础的图灵测试已经广泛存在于各种网站，而在某些场景下我们需要绕过这些测试，此时就需要使用到<code>Tesseract</code>，一个光学字符识别引擎，且支持多种操作系统。并且是被认为是最精准的开源光学字符识别引擎之一。现在我们来看看如何将其搭建到centos7上面的。</p>
+
+<h2 id="系统更新">系统更新</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">yum update</code></pre></div>
+<h2 id="安装依赖包">安装依赖包</h2>
+
+<blockquote>
+<p>这里我们安装上必要的依赖包</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">yum groupinstall <span style="color:#e6db74">&#34;Development tools&#34;</span>
+yum -y install automake autoconf libtool zlib-devel libjpeg-devel giflib libtiff-devel libwebp libwebp-devel libicu-devel openjpeg-devel cairo-devel</code></pre></div>
+<h2 id="安装编译环境icu">安装编译环境icu</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">wget http://download.icu-project.org/files/icu4c/52.1/icu4c-52_1-src.tgz
+tar -xvzf icu4c-52_1-src.tgz
+cd icu/source/
+./runConfigureICU Linux --with-library-bits<span style="color:#f92672">=</span><span style="color:#ae81ff">64</span>
+make -j <span style="color:#ae81ff">5</span>
+make install
+
+ln -s /usr/local/lib/libicui18n.so.52 /usr/lib64/libicui18n.so.52
+ln -s /usr/local/lib/libicuio.so.52 /usr/lib64/libicuio.so.52
+ln -s /usr/local/lib/libicuuc.so.52 /usr/lib64/libicuuc.so.52
+ln -s /usr/local/lib/libicudata.so.52 /usr/lib64/libicudata.so.5</code></pre></div>
+<h2 id="安装leptonica">安装leptonica</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">wget http://www.leptonica.org/source/leptonica-1.78.0.tar.gz
+tar -zxvf leptonica-1.78.0.tar.gz
+cd leptonica-1.78.0
+./configure --perfix<span style="color:#f92672">=</span>/usr/local/
+make <span style="color:#f92672">&amp;&amp;</span> make install</code></pre></div>
+<h2 id="安装autoconf-archive">安装autoconf-archive</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">wget http://rpmfind.net/linux/mageia/distrib/6/x86_64/media/core/release/autoconf-archive-2016.09.16-1.mga6.noarch.rpm
+rpm -i autoconf-archive-2016.09.16-1.mga6.noarch.rpm</code></pre></div>
+<h3 id="添加环境变量">添加环境变量</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vim <span style="color:#ae81ff">\e</span>tc<span style="color:#ae81ff">\b</span>ashrc</code></pre></div>
+<h4 id="在底部加入">在底部加入</h4>
+
+<blockquote>
+<p>PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig</p>
+
+<p>export PKG_CONFIG_PATH</p>
+
+<p>CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:/usr/local/include/</p>
+
+<p>export CPLUS_INCLUDE_PATH</p>
+
+<p>C_INCLUDE_PATH=$C_INCLUDE_PATH:/usr/local/leptonica/include/leptonica</p>
+
+<p>export C_INCLUDE_PATH</p>
+
+<p>LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib</p>
+
+<p>export LD_LIBRARY_PATH</p>
+
+<p>LIBRARY_PATH=$LIBRARY_PATH:/usr/local/lib</p>
+
+<p>export LIBRARY_PATH</p>
+
+<p>TESSDATA_PREFIX=/root/tesseract/</p>
+
+<p>export TESSDATA_PREFIX</p>
+</blockquote>
+
+<p>并通过<code>source \etc\bashrc</code>刷新环境。</p>
+
+<h2 id="安装tesseract">安装tesseract</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">wget https://github.com/tesseract-ocr/tesseract/archive/4.0.0.tar.gz
+tar -zxvf <span style="color:#ae81ff">4</span>.0.0.tar.gz
+cd  tesseract-4.0.0
+./configure --perfix<span style="color:#f92672">=</span>/usr/local/
+make <span style="color:#f92672">&amp;&amp;</span> make install</code></pre></div>
+<p>现在tesseract已经成功安装 我们来测试一下<code>tesseract --version</code></p>
+
+<p><img src="/img/content_img/ocr/tess.png" alt="" /></p>
+
+<h2 id="下载对应模型">下载对应模型</h2>
+
+<p>我们可以到如下链接中去下载相应需要使用的模型。并存储到<code>/root/tesseract/</code>目录下</p>
+
+<p><a href="https://github.com/tesseract-ocr/tessdata_best">https://github.com/tesseract-ocr/tessdata_best</a></p>
+
+<p>通过<code>tesseract --list-langs</code>即可看到现有模型。</p>
+
+<p><img src="/img/content_img/ocr/tess_lang.png" alt="" /></p>
+		</div>
+		
+<div class="post__tags tags clearfix">
+	<svg class="icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="/tags/ocr/" rel="tag">OCR</a></li>
+	</ul>
+</div>
+	</article>
+</main>
+
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/post/2019_05_10_%E5%85%B3%E4%BA%8E%E4%BB%A3%E7%90%86%E5%8C%BF%E5%90%8D%E7%AD%89%E7%BA%A7%E6%A3%80%E6%B5%8B/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">关于代理匿名等级检测</p></a>
+	</div>
+</nav>
+
+<section class="comments">
+	<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "https-pyocean-com" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2019 进击的Robot.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script></body>
+</html>

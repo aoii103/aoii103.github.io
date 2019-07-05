@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>关于代理匿名等级检测 - 进击的Robot</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta name="generator" content="Hugo 0.53" />
+	<meta property="og:title" content="关于代理匿名等级检测" />
+<meta property="og:description" content="现在市面上我们可以了解到的代理类型分别为TRANSPARENT、ANONYMOUS、DISTORTING、ELITE四种。今天，我们就来简单聊聊如何根据请求Header进行代理的匿名检测。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://pyocean.com/post/2019_05_10_%E5%85%B3%E4%BA%8E%E4%BB%A3%E7%90%86%E5%8C%BF%E5%90%8D%E7%AD%89%E7%BA%A7%E6%A3%80%E6%B5%8B/" /><meta property="article:published_time" content="2019-05-10T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2019-05-10T00:00:00&#43;00:00"/>
+
+	<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="关于代理匿名等级检测"/>
+<meta name="twitter:description" content="现在市面上我们可以了解到的代理类型分别为TRANSPARENT、ANONYMOUS、DISTORTING、ELITE四种。今天，我们就来简单聊聊如何根据请求Header进行代理的匿名检测。"/>
+
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-135738940-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="进击的Robot" rel="home">
+				<div class="logo__title">进击的Robot</div>
+				<div class="logo__tagline">Strange new light can be just as frightening as the dark.</div>
+			</a>
+		</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">关于代理匿名等级检测</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2019-05-10T00:00:00">May 10, 2019</time>
+</div>
+</div>
+		</header>
+		<figure class="post__thumbnail">
+			<img src="/img/content_img/proxy/proxy.png" alt="关于代理匿名等级检测">
+		</figure>
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#定义匿名类">定义匿名类</a></li>
+<li><a href="#判断原理">判断原理</a></li>
+<li><a href="#原理图">原理图</a></li>
+<li><a href="#服务器准备">服务器准备</a></li>
+<li><a href="#逻辑呈现">逻辑呈现</a>
+<ul>
+<li>
+<ul>
+<li><a href="#server端">Server端</a></li>
+<li><a href="#client端">Client端</a></li>
+<li><a href="#tor测试">Tor测试</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#设置后台任务">设置后台任务</a></li>
+<li><a href="#项目源码">项目源码</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+	</div>
+</div>
+<div class="content post__content clearfix">
+			<p>现在市面上我们可以了解到的代理类型分别为<code>TRANSPARENT</code>、<code>ANONYMOUS</code>、<code>DISTORTING</code>、<code>ELITE</code>四种。今天，我们就来简单聊聊如何根据请求<code>Header</code>进行代理的匿名检测。</p>
+
+<h3 id="定义匿名类">定义匿名类</h3>
+
+<p>为了方便区分，除了以上4种代理，我们还加入了<strong>无代理</strong>及<strong>未知代理</strong>。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> enum <span style="color:#f92672">import</span> Enum, unique
+
+<span style="color:#a6e22e">@unique</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">PROXIES</span>(Enum):
+    NONE <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;无代理&#34;</span>
+    TRANSPARENT <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;透明代理&#34;</span>
+    ANONYMOUS <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;匿名代理&#34;</span>
+    DISTORTING <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;欺骗性代理&#34;</span>
+    ELITE <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;高匿代理&#34;</span>
+    UNKNOW <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;未知代理&#34;</span></code></pre></div>
+<h3 id="判断原理">判断原理</h3>
+
+<ul>
+<li><code>Remote_Addr</code> 末端代理服务器IP地址</li>
+<li><code>Via</code> 通过的代理服务器(ip或名称)</li>
+<li><code>X_ForWarded_For</code> 经过的代理IP地址集合(可伪造)</li>
+</ul>
+
+<blockquote>
+<p>假设您的地址为1.2.3.4 并通过了A代理来连接站点</p>
+</blockquote>
+
+<ol>
+<li><p><strong>TRANSPARENT</strong></p>
+
+<ul>
+<li><code>Remote_Addr</code> 为 <code>A</code></li>
+<li><code>X_ForWarded_For</code> 为 <code>1.2.3.4, A</code></li>
+<li>存在 <code>Via</code></li>
+</ul></li>
+
+<li><p><strong>ANONYMOUS</strong></p>
+
+<ul>
+<li><code>Remote_Addr</code> 为 <code>C</code></li>
+<li><code>X_ForWarded_For</code> 为 <code>A, B, C</code></li>
+<li>存在 <code>Via</code></li>
+</ul></li>
+
+<li><p><strong>DISTORTING</strong></p>
+
+<ul>
+<li><code>Remote_Addr</code> 可能为 <code>A</code> 或 <code>B</code> 或 <code>C</code></li>
+<li><code>X_ForWarded_For</code> 为不可预期的结果</li>
+<li>存在 <code>Via</code></li>
+</ul></li>
+
+<li><p><strong>ELITE</strong></p>
+
+<ul>
+<li><code>Remote_Addr</code> 可能为 <code>B</code> 或 <code>C</code></li>
+<li><code>X_ForWarded_For</code> 为空</li>
+<li><strong>不存在 <code>Via</code></strong></li>
+</ul></li>
+</ol>
+
+<h3 id="原理图">原理图</h3>
+
+<p><img src="/img/content_img/proxy/proxy_level.png" alt="" /></p>
+
+<h3 id="服务器准备">服务器准备</h3>
+
+<p>为了快速开发，我们这里使用Caddy作为反向代理，以保障获取到<code>X-Forwarded-for</code></p>
+
+<pre><code>0.0.0.0:80
+gzip
+proxy / 127.0.0.1:12888 {
+    header_upstream X-Forwarded-Port {server_port}
+    header_upstream X-Forwarded-Proto {scheme}
+    header_upstream X-Real-IP {remote}
+}
+</code></pre>
+
+<h3 id="逻辑呈现">逻辑呈现</h3>
+
+<p>我们使用tornado作为服务来进行判断，并且，请求所经过代理的请求附带提交<strong>真实客户端IP</strong>及使用的<strong>代理IP</strong></p>
+
+<h5 id="server端">Server端</h5>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Main</span>(tornado<span style="color:#f92672">.</span>web<span style="color:#f92672">.</span>RequestHandler):
+    async <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get</span>(self):
+        client_real_ip <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>get_argument(<span style="color:#e6db74">&#34;client&#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>)<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#34;:&#34;</span>)[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>strip() <span style="color:#75715e"># 起始客户端提供IP</span>
+        proxy_ip <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>get_argument(<span style="color:#e6db74">&#34;proxy&#34;</span>, None)  <span style="color:#75715e"># 起始客户端提供代理IP</span>
+
+        x_real_ip <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>request<span style="color:#f92672">.</span>remote_ip  <span style="color:#75715e"># 最后一级客户端IP</span>
+        x_forwarded_for <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>request<span style="color:#f92672">.</span>headers<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;X-Forwarded-For&#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>)
+        x_forwarded_for_ip <span style="color:#f92672">=</span> x_forwarded_for<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#34;,&#34;</span>)[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>strip()  <span style="color:#75715e"># 第一个代理IP地址</span>
+        http_via <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>request<span style="color:#f92672">.</span>headers<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;Via&#34;</span>)
+
+        types <span style="color:#f92672">=</span> PROXIES<span style="color:#f92672">.</span>UNKNOW<span style="color:#f92672">.</span>value <span style="color:#75715e"># 默认代理类型</span>
+        <span style="color:#66d9ef">if</span> is_ip(client_real_ip):  <span style="color:#75715e"># 是否有给定真实地址</span>
+            <span style="color:#66d9ef">if</span> http_via:  <span style="color:#75715e"># 是否有via</span>
+                <span style="color:#66d9ef">if</span> proxy_ip <span style="color:#f92672">and</span> is_ip(proxy_ip):  <span style="color:#75715e"># 是否有指明代理</span>
+                    <span style="color:#66d9ef">if</span> x_forwarded_for_ip <span style="color:#f92672">==</span> client_real_ip <span style="color:#f92672">and</span> x_real_ip <span style="color:#f92672">==</span> proxy_ip:  <span style="color:#75715e"># 透明代理</span>
+                        types <span style="color:#f92672">=</span> PROXIES<span style="color:#f92672">.</span>TRANSPARENT<span style="color:#f92672">.</span>value
+                    <span style="color:#66d9ef">elif</span> x_real_ip <span style="color:#f92672">==</span> proxy_ip <span style="color:#f92672">and</span> x_forwarded_for_ip <span style="color:#f92672">!=</span> client_real_ip:  <span style="color:#75715e"># 匿名代理</span>
+                        types <span style="color:#f92672">=</span> PROXIES<span style="color:#f92672">.</span>ANONYMOUS<span style="color:#f92672">.</span>value
+                    <span style="color:#66d9ef">elif</span> x_forwarded_for_ip <span style="color:#f92672">!=</span> proxy_ip <span style="color:#f92672">and</span> x_forwarded_for_ip:  <span style="color:#75715e"># 随机代理</span>
+                        types <span style="color:#f92672">=</span> PROXIES<span style="color:#f92672">.</span>DISTORTING<span style="color:#f92672">.</span>value
+            <span style="color:#66d9ef">else</span>:
+                <span style="color:#66d9ef">if</span> client_real_ip <span style="color:#f92672">!=</span> x_real_ip:
+                    types <span style="color:#f92672">=</span> PROXIES<span style="color:#f92672">.</span>ELITE<span style="color:#f92672">.</span>value  <span style="color:#75715e"># 高匿代理</span>
+                <span style="color:#66d9ef">else</span>:
+                    types <span style="color:#f92672">=</span> PROXIES<span style="color:#f92672">.</span>NONE<span style="color:#f92672">.</span>value  <span style="color:#75715e"># 未使用代理</span>
+            self<span style="color:#f92672">.</span>write({<span style="color:#e6db74">&#34;status&#34;</span>: True, <span style="color:#e6db74">&#34;msg&#34;</span>: <span style="color:#e6db74">&#34;ok&#34;</span>, <span style="color:#e6db74">&#34;types&#34;</span>: types, <span style="color:#e6db74">&#34;end_ip&#34;</span>: x_real_ip})
+        <span style="color:#66d9ef">else</span>:
+            self<span style="color:#f92672">.</span>write({<span style="color:#e6db74">&#34;status&#34;</span>: False,<span style="color:#e6db74">&#34;msg&#34;</span>: <span style="color:#e6db74">&#34;check your client ip&#34;</span>,<span style="color:#e6db74">&#34;types&#34;</span>: types,<span style="color:#e6db74">&#34;end_ip&#34;</span>: x_real_ip})</code></pre></div>
+<h5 id="client端">Client端</h5>
+
+<p>我们编写如下脚本进行批量测试</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> enum <span style="color:#f92672">import</span> Enum
+<span style="color:#f92672">import</span> requests
+
+SERVER_NET_PORT <span style="color:#f92672">=</span> <span style="color:#ae81ff">80</span>
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">IPs</span>(Enum):
+    CLIENT <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;33.44.55.66&#34;</span>
+    SERVER <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;12.13.14.15&#34;</span>
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">checker</span>(ip,port<span style="color:#f92672">=</span><span style="color:#ae81ff">80</span>,protocol<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;http&#39;</span>):
+    proxy_uri <span style="color:#f92672">=</span> f<span style="color:#e6db74">&#34;{protocol}://{ip}:{port}&#34;</span> <span style="color:#75715e"># 代理地址</span>
+    proxies <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;http&#34;</span>: proxy_uri, <span style="color:#e6db74">&#34;https&#34;</span>: proxy_uri} <span style="color:#75715e"># 代理地址字典</span>
+    server_url <span style="color:#f92672">=</span>f<span style="color:#e6db74">&#34;http://{IPs.SERVER.value}:{SERVER_NET_PORT}?client={IPs.CLIENT.value}&amp;proxy={ip}&#34;</span> <span style="color:#75715e"># 组合地址</span>
+    resp <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(server_url,proxies<span style="color:#f92672">=</span>proxies,timeout<span style="color:#f92672">=</span>TEST_TIMEOUT) <span style="color:#75715e"># 发送请求</span>
+    <span style="color:#66d9ef">return</span> {proxy_uri: resp<span style="color:#f92672">.</span>json()}
+
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span>():
+    proxy_list <span style="color:#f92672">=</span> [(<span style="color:#e6db74">&#34;200.255.122.170&#34;</span>,<span style="color:#ae81ff">8080</span>)]
+    datas <span style="color:#f92672">=</span> list(map(<span style="color:#66d9ef">lambda</span> item: checker(<span style="color:#f92672">*</span>item), proxy_list))
+    <span style="color:#66d9ef">print</span>(datas)</code></pre></div>
+<h5 id="tor测试">Tor测试</h5>
+
+<p>或者我们简单粗暴一些，直接通过匿名网络来测试。只需要提供源IP即可</p>
+
+<p><img src="/img/content_img/proxy/target.png" alt="" /></p>
+
+<p>可以看到返回加过为ELITE(高匿)</p>
+
+<h3 id="设置后台任务">设置后台任务</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kill -9 <span style="color:#e6db74">`</span>ps -ef|grep <span style="color:#e6db74">&#34;caddy&#34;</span>|awk <span style="color:#e6db74">&#39;{print $2}&#39;</span><span style="color:#e6db74">`</span>
+nohup caddy &gt;&gt; /var/log/caddy.log  &amp;
+
+kill -9 <span style="color:#e6db74">`</span>ps -ef|grep <span style="color:#e6db74">&#34;python3 server.py&#34;</span>|awk <span style="color:#e6db74">&#39;{print $2}&#39;</span><span style="color:#e6db74">`</span>
+nohup python3 server.py &gt;&gt; /var/log/tornado.log  &amp;</code></pre></div>
+<h3 id="项目源码">项目源码</h3>
+
+<p><a href="https://github.com/aoii103/proxy_checker">https://github.com/aoii103/proxy_checker</a></p>
+		</div>
+		
+<div class="post__tags tags clearfix">
+	<svg class="icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="/tags/proxy/" rel="tag">proxy</a></li>
+	</ul>
+</div>
+	</article>
+</main>
+
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/post/2019_05_01_v2ray%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">V2ray快速安装部署</p></a>
+	</div>
+	<div class="post-nav__item post-nav__item--next">
+		<a class="post-nav__link" href="/post/2019_06_24_%E5%A6%82%E4%BD%95%E5%9C%A8centos7%E4%B8%8A%E6%90%AD%E5%BB%BA%E9%AA%8C%E8%AF%81%E7%A0%81%E8%AF%86%E5%88%AB%E5%B9%B3%E5%8F%B0/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">如何在centos7上搭建验证码识别平台</p></a>
+	</div>
+</nav>
+
+<section class="comments">
+	<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "https-pyocean-com" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2019 进击的Robot.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script></body>
+</html>
