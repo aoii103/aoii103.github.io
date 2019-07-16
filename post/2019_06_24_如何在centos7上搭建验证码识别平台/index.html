@@ -74,19 +74,9 @@ if (!doNotTrack) {
 <ul>
 <li>
 <ul>
-<li><a href="#系统更新">系统更新</a></li>
-<li><a href="#安装依赖包">安装依赖包</a></li>
-<li><a href="#安装编译环境icu">安装编译环境icu</a></li>
-<li><a href="#安装leptonica">安装leptonica</a></li>
-<li><a href="#安装autoconf-archive">安装autoconf-archive</a>
-<ul>
-<li><a href="#添加环境变量">添加环境变量</a>
-<ul>
-<li><a href="#在底部加入">在底部加入</a></li>
-</ul></li>
-</ul></li>
-<li><a href="#安装tesseract">安装tesseract</a></li>
+<li><a href="#直接安装">直接安装</a></li>
 <li><a href="#下载对应模型">下载对应模型</a></li>
+<li><a href="#snum模型">snum模型</a></li>
 </ul></li>
 </ul>
 </nav>
@@ -95,83 +85,24 @@ if (!doNotTrack) {
 <div class="content post__content clearfix">
 			<p>验证码作为一种最为基础的图灵测试已经广泛存在于各种网站，而在某些场景下我们需要绕过这些测试，此时就需要使用到<code>Tesseract</code>，一个光学字符识别引擎，且支持多种操作系统。并且是被认为是最精准的开源光学字符识别引擎之一。现在我们来看看如何将其搭建到centos7上面的。</p>
 
-<h2 id="系统更新">系统更新</h2>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">yum update</code></pre></div>
-<h2 id="安装依赖包">安装依赖包</h2>
-
-<blockquote>
-<p>这里我们安装上必要的依赖包</p>
-</blockquote>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">yum groupinstall <span style="color:#e6db74">&#34;Development tools&#34;</span>
-yum -y install automake autoconf libtool zlib-devel libjpeg-devel giflib libtiff-devel libwebp libwebp-devel libicu-devel openjpeg-devel cairo-devel</code></pre></div>
-<h2 id="安装编译环境icu">安装编译环境icu</h2>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">wget http://download.icu-project.org/files/icu4c/52.1/icu4c-52_1-src.tgz
-tar -xvzf icu4c-52_1-src.tgz
-cd icu/source/
-./runConfigureICU Linux --with-library-bits<span style="color:#f92672">=</span><span style="color:#ae81ff">64</span>
-make -j <span style="color:#ae81ff">5</span>
-make install
-
-ln -s /usr/local/lib/libicui18n.so.52 /usr/lib64/libicui18n.so.52
-ln -s /usr/local/lib/libicuio.so.52 /usr/lib64/libicuio.so.52
-ln -s /usr/local/lib/libicuuc.so.52 /usr/lib64/libicuuc.so.52
-ln -s /usr/local/lib/libicudata.so.52 /usr/lib64/libicudata.so.5</code></pre></div>
-<h2 id="安装leptonica">安装leptonica</h2>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">wget http://www.leptonica.org/source/leptonica-1.78.0.tar.gz
-tar -zxvf leptonica-1.78.0.tar.gz
-cd leptonica-1.78.0
-./configure --perfix<span style="color:#f92672">=</span>/usr/local/
-make <span style="color:#f92672">&amp;&amp;</span> make install</code></pre></div>
-<h2 id="安装autoconf-archive">安装autoconf-archive</h2>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">wget http://rpmfind.net/linux/mageia/distrib/6/x86_64/media/core/release/autoconf-archive-2016.09.16-1.mga6.noarch.rpm
-rpm -i autoconf-archive-2016.09.16-1.mga6.noarch.rpm</code></pre></div>
-<h3 id="添加环境变量">添加环境变量</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vim <span style="color:#ae81ff">\e</span>tc<span style="color:#ae81ff">\b</span>ashrc</code></pre></div>
-<h4 id="在底部加入">在底部加入</h4>
-
-<blockquote>
-<p>PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig</p>
-
-<p>export PKG_CONFIG_PATH</p>
-
-<p>CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:/usr/local/include/</p>
-
-<p>export CPLUS_INCLUDE_PATH</p>
-
-<p>C_INCLUDE_PATH=$C_INCLUDE_PATH:/usr/local/leptonica/include/leptonica</p>
-
-<p>export C_INCLUDE_PATH</p>
-
-<p>LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib</p>
-
-<p>export LD_LIBRARY_PATH</p>
-
-<p>LIBRARY_PATH=$LIBRARY_PATH:/usr/local/lib</p>
-
-<p>export LIBRARY_PATH</p>
-
-<p>TESSDATA_PREFIX=/root/tesseract/</p>
-
-<p>export TESSDATA_PREFIX</p>
-</blockquote>
-
-<p>并通过<code>source \etc\bashrc</code>刷新环境。</p>
-
-<h2 id="安装tesseract">安装tesseract</h2>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">wget https://github.com/tesseract-ocr/tesseract/archive/4.0.0.tar.gz
-tar -zxvf <span style="color:#ae81ff">4</span>.0.0.tar.gz
-cd  tesseract-4.0.0
-./configure --perfix<span style="color:#f92672">=</span>/usr/local/
-make <span style="color:#f92672">&amp;&amp;</span> make install</code></pre></div>
+<h2 id="直接安装">直接安装</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo rpm --import https://build.opensuse.org/projects/home:Alexander_Pozdnyakov/public_key
+yum update
+yum install tesseract 
+yum install tesseract-langpack-deu</code></pre></div>
 <p>现在tesseract已经成功安装 我们来测试一下<code>tesseract --version</code></p>
 
 <p><img src="/img/content_img/ocr/tess.png" alt="" /></p>
 
 <h2 id="下载对应模型">下载对应模型</h2>
 
-<p>我们可以到如下链接中去下载相应需要使用的模型。并存储到<code>/root/tesseract/</code>目录下</p>
+<p>我们可以到如下链接中去下载相应需要使用的模型。并存储到<code>/usr/share/tesseract/tessdata</code>目录下</p>
 
 <p><a href="https://github.com/tesseract-ocr/tessdata_best">https://github.com/tesseract-ocr/tessdata_best</a></p>
+
+<h2 id="snum模型">snum模型</h2>
+
+<p><a href="/data/tesseract/snum.traineddata">snum.traineddata</a></p>
 
 <p>通过<code>tesseract --list-langs</code>即可看到现有模型。</p>
 
