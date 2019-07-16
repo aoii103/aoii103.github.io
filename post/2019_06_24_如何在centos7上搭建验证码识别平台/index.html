@@ -77,6 +77,8 @@ if (!doNotTrack) {
 <li><a href="#直接安装">直接安装</a></li>
 <li><a href="#下载对应模型">下载对应模型</a></li>
 <li><a href="#snum模型">snum模型</a></li>
+<li><a href="#服务端">服务端</a></li>
+<li><a href="#测试">测试</a></li>
 </ul></li>
 </ul>
 </nav>
@@ -107,6 +109,38 @@ yum install tesseract-langpack-deu</code></pre></div>
 <p>通过<code>tesseract --list-langs</code>即可看到现有模型。</p>
 
 <p><img src="/img/content_img/ocr/tess_lang.png" alt="" /></p>
+
+<h2 id="服务端">服务端</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> fastapi <span style="color:#f92672">import</span> FastAPI, Body
+<span style="color:#f92672">from</span> base64 <span style="color:#f92672">import</span> b64decode
+<span style="color:#f92672">from</span> io <span style="color:#f92672">import</span> BytesIO
+<span style="color:#f92672">from</span> PIL <span style="color:#f92672">import</span> Image
+<span style="color:#f92672">import</span> pytesseract
+
+app <span style="color:#f92672">=</span> FastAPI()
+SEC_KEY <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;randomcode&#34;</span>
+
+
+<span style="color:#a6e22e">@app.post</span>(<span style="color:#e6db74">&#34;/capcha&#34;</span>)
+async <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">read_capcha</span>(sec_key: str <span style="color:#f92672">=</span> Body(<span style="color:#f92672">...</span>), b64_img: str <span style="color:#f92672">=</span> Body(<span style="color:#f92672">...</span>)):
+    <span style="color:#66d9ef">if</span> SEC_KEY <span style="color:#f92672">==</span> sec_key:
+        <span style="color:#66d9ef">return</span> {
+            <span style="color:#e6db74">&#34;code&#34;</span>: <span style="color:#ae81ff">200</span>,
+            <span style="color:#e6db74">&#34;result&#34;</span>: pytesseract<span style="color:#f92672">.</span>image_to_string(
+                Image<span style="color:#f92672">.</span>open(BytesIO(b64decode(b64_img))), lang<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;snum&#34;</span>
+            )<span style="color:#f92672">.</span>replace(<span style="color:#e6db74">&#34; &#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>),
+        }</code></pre></div>
+<p>通过<code>uvicorn api:app --reload</code> 启动服务</p>
+
+<h2 id="测试">测试</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> base64 <span style="color:#f92672">import</span> b64encode
+<span style="color:#f92672">import</span> requests
+SEC_KEY <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;randomcode&#34;</span>
+url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;http://x.x.x.x:8000/capcha&#39;</span>
+img <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;xxx.png&#39;</span>
+<span style="color:#66d9ef">with</span> open(img,<span style="color:#e6db74">&#39;rb&#39;</span>) <span style="color:#66d9ef">as</span> f:
+    b64_img <span style="color:#f92672">=</span> bytes<span style="color:#f92672">.</span>decode(b64encode(f<span style="color:#f92672">.</span>read()))
+    requests<span style="color:#f92672">.</span>post(url,json<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#39;sec_key&#39;</span>:SEC_KEY,<span style="color:#e6db74">&#39;b64_img&#39;</span>:b64_img})<span style="color:#f92672">.</span>text</code></pre></div>
 		</div>
 		
 <div class="post__tags tags clearfix">
