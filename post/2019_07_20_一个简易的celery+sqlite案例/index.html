@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>一个简易的celery&#43;sqlite案例 - 进击的Robot</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta name="generator" content="Hugo 0.53" />
+	<meta property="og:title" content="一个简易的celery&#43;sqlite案例" />
+<meta property="og:description" content="Celery 是一个简单、灵活且可靠的，处理大量消息的分布式系统，并且提供维护这样一个系统的必需工具。今天我们通过一个案例简单得讲一下celery的快速应用。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://pyocean.com/post/2019_07_20_%E4%B8%80%E4%B8%AA%E7%AE%80%E6%98%93%E7%9A%84celery&#43;sqlite%E6%A1%88%E4%BE%8B/" /><meta property="article:published_time" content="2019-07-20T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2019-07-20T00:00:00&#43;00:00"/>
+
+	<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="一个简易的celery&#43;sqlite案例"/>
+<meta name="twitter:description" content="Celery 是一个简单、灵活且可靠的，处理大量消息的分布式系统，并且提供维护这样一个系统的必需工具。今天我们通过一个案例简单得讲一下celery的快速应用。"/>
+
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-135738940-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="进击的Robot" rel="home">
+				<div class="logo__title">进击的Robot</div>
+				<div class="logo__tagline">Strange new light can be just as frightening as the dark.</div>
+			</a>
+		</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">一个简易的celery&#43;sqlite案例</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2019-07-20T00:00:00">July 20, 2019</time>
+</div>
+</div>
+		</header>
+		<figure class="post__thumbnail">
+			<img src="/img/content_img/celery/celery.png" alt="一个简易的celery&#43;sqlite案例">
+		</figure>
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#环境依赖">环境依赖</a></li>
+<li><a href="#预设任务方法-task-py">预设任务方法  <code>task.py</code></a></li>
+<li><a href="#发布任务执行">发布任务执行</a></li>
+<li><a href="#使用效果">使用效果</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+	</div>
+</div>
+<div class="content post__content clearfix">
+			<p>Celery 是一个简单、灵活且可靠的，处理大量消息的分布式系统，并且提供维护这样一个系统的必需工具。今天我们通过一个案例简单得讲一下celery的快速应用。</p>
+
+<h3 id="环境依赖">环境依赖</h3>
+
+<ul>
+<li><code>python3</code>
+
+<ul>
+<li><code>sqlite3</code> 用于创建数据库</li>
+<li><code>requests_html</code> 请求测试</li>
+<li><code>celery</code> 异步任务</li>
+</ul></li>
+</ul>
+
+<h3 id="预设任务方法-task-py">预设任务方法  <code>task.py</code></h3>
+
+<p>通过设定<code>broker</code>参数为<code>sqla+sqlite:///xxx</code>来已连接sqlite的方式实例化<code>Celery</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> sqlite3
+<span style="color:#f92672">from</span> requests_html <span style="color:#f92672">import</span> HTMLSession
+<span style="color:#f92672">from</span> celery <span style="color:#f92672">import</span> Celery
+
+celery_db <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;db&#34;</span>  <span style="color:#75715e"># db名称</span>
+sqlite3<span style="color:#f92672">.</span>connect(celery_db)  <span style="color:#75715e"># 新建或连接库</span>
+app <span style="color:#f92672">=</span> Celery(<span style="color:#e6db74">&#34;demo&#34;</span>, broker<span style="color:#f92672">=</span>f<span style="color:#e6db74">&#34;sqla+sqlite:///{celery_db}&#34;</span>)  <span style="color:#75715e"># 设定celery</span>
+app<span style="color:#f92672">.</span>conf<span style="color:#f92672">.</span>update(
+    task_serializer<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;pickle&#34;</span>, result_serializer<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;pickle&#34;</span>, accept_content<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;pickle&#34;</span>]
+)  <span style="color:#75715e"># 设定为可以传输对象</span>
+
+
+<span style="color:#a6e22e">@app.task</span>()  <span style="color:#75715e"># celery方法写法</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">check_poc</span>(index,url):
+    resp <span style="color:#f92672">=</span> HTMLSession()<span style="color:#f92672">.</span>get(url) <span style="color:#75715e"># poc 测试</span>
+    <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;[{index}]{url}: {resp.html.find(&#39;title&#39;, first=True).text}&#34;</span>) <span style="color:#75715e"># 打印</span></code></pre></div>
+<h3 id="发布任务执行">发布任务执行</h3>
+
+<p>我们通过若干个网址作为<code>payload</code>来做测试</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> task <span style="color:#f92672">import</span> check_poc
+
+urls <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;http://qq.com&#34;</span>, <span style="color:#e6db74">&#34;http://baidu.com&#34;</span>, <span style="color:#e6db74">&#34;http://freebuf.com&#34;</span>] <span style="color:#75715e"># 测试案例站点</span>
+
+<span style="color:#66d9ef">for</span> index,url <span style="color:#f92672">in</span> enumerate(urls):
+    check_poc<span style="color:#f92672">.</span>delay(index,url) <span style="color:#75715e"># 异步调用</span></code></pre></div>
+<h3 id="使用效果">使用效果</h3>
+
+<p>最后使用<code>celery -B -A task worker -l info</code>命令启动<code>celery</code></p>
+
+<video controls="controls">
+  <source type="video/mp4" src="/img/content_img/celery/test.mp4"></source>
+  <p>Your browser does not support the video element.</p>
+</video>
+		</div>
+		
+<div class="post__tags tags clearfix">
+	<svg class="icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="/tags/celery/" rel="tag">celery</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/sqlite/" rel="tag">sqlite</a></li>
+	</ul>
+</div>
+	</article>
+</main>
+
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/post/2019_07_06_webot_%E5%BE%AE%E4%BF%A1%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AE%9E%E6%88%981/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">Webot微信机器人项目实战【登录】</p></a>
+	</div>
+</nav>
+
+<section class="comments">
+	<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "https-pyocean-com" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2019 s045pd.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script></body>
+</html>

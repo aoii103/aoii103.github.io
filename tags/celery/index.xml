@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Celery on 进击的Robot</title>
+    <link>https://pyocean.com/tags/celery/</link>
+    <description>Recent content in Celery on 进击的Robot</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sat, 20 Jul 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://pyocean.com/tags/celery/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>一个简易的celery&#43;sqlite案例</title>
+      <link>https://pyocean.com/post/2019_07_20_%E4%B8%80%E4%B8%AA%E7%AE%80%E6%98%93%E7%9A%84celery&#43;sqlite%E6%A1%88%E4%BE%8B/</link>
+      <pubDate>Sat, 20 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://pyocean.com/post/2019_07_20_%E4%B8%80%E4%B8%AA%E7%AE%80%E6%98%93%E7%9A%84celery&#43;sqlite%E6%A1%88%E4%BE%8B/</guid>
+      <description>&lt;p&gt;Celery 是一个简单、灵活且可靠的，处理大量消息的分布式系统，并且提供维护这样一个系统的必需工具。今天我们通过一个案例简单得讲一下celery的快速应用。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

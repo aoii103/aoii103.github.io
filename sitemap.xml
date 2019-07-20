@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://pyocean.com/post/2019_07_20_%E4%B8%80%E4%B8%AA%E7%AE%80%E6%98%93%E7%9A%84celery&#43;sqlite%E6%A1%88%E4%BE%8B/</loc>
+    <lastmod>2019-07-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://pyocean.com/post/2019_07_06_webot_%E5%BE%AE%E4%BF%A1%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AE%9E%E6%88%981/</loc>
     <lastmod>2019-07-06T00:00:00+00:00</lastmod>
   </url>
@@ -106,6 +111,12 @@
   </url>
   
   <url>
+    <loc>https://pyocean.com/tags/celery/</loc>
+    <lastmod>2019-07-20T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://pyocean.com/tags/centos7/</loc>
     <lastmod>2019-04-03T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -185,7 +196,7 @@
   
   <url>
     <loc>https://pyocean.com/post/</loc>
-    <lastmod>2019-07-06T00:00:00+00:00</lastmod>
+    <lastmod>2019-07-20T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -216,6 +227,12 @@
   <url>
     <loc>https://pyocean.com/tags/shadowsock/</loc>
     <lastmod>2019-05-01T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://pyocean.com/tags/sqlite/</loc>
+    <lastmod>2019-07-20T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -257,7 +274,7 @@
   
   <url>
     <loc>https://pyocean.com/</loc>
-    <lastmod>2019-07-06T00:00:00+00:00</lastmod>
+    <lastmod>2019-07-20T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
