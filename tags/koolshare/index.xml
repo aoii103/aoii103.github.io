@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Koolshare on 进击的Robot</title>
+    <link>https://pyocean.com/tags/koolshare/</link>
+    <description>Recent content in Koolshare on 进击的Robot</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Wed, 24 Jul 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://pyocean.com/tags/koolshare/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>koolshare下Entware安装</title>
+      <link>https://pyocean.com/post/2019_07_24_koolshare%E4%B8%8Bentware%E5%AE%89%E8%A3%85/</link>
+      <pubDate>Wed, 24 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://pyocean.com/post/2019_07_24_koolshare%E4%B8%8Bentware%E5%AE%89%E8%A3%85/</guid>
+      <description>&lt;p&gt;Entware 使用 opkg 包管理系统进行管理, 是一个适用于嵌入式系统的软件包库，迄今为止在官方的源上已经有超过 2000 个软件包。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

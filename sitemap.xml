@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://pyocean.com/post/2019_07_24_koolshare%E4%B8%8Bentware%E5%AE%89%E8%A3%85/</loc>
+    <lastmod>2019-07-24T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://pyocean.com/post/2019_07_20_%E4%B8%80%E4%B8%AA%E7%AE%80%E6%98%93%E7%9A%84celery&#43;sqlite%E6%A1%88%E4%BE%8B/</loc>
     <lastmod>2019-07-20T00:00:00+00:00</lastmod>
   </url>
@@ -153,6 +158,12 @@
   </url>
   
   <url>
+    <loc>https://pyocean.com/tags/entware/</loc>
+    <lastmod>2019-07-24T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://pyocean.com/tags/github/</loc>
     <lastmod>2019-03-29T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -183,8 +194,26 @@
   </url>
   
   <url>
+    <loc>https://pyocean.com/tags/koolshare/</loc>
+    <lastmod>2019-07-24T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://pyocean.com/tags/lede/</loc>
+    <lastmod>2019-07-24T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://pyocean.com/tags/ocr/</loc>
     <lastmod>2019-06-24T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://pyocean.com/tags/openwrt/</loc>
+    <lastmod>2019-07-24T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -196,7 +225,7 @@
   
   <url>
     <loc>https://pyocean.com/post/</loc>
-    <lastmod>2019-07-20T00:00:00+00:00</lastmod>
+    <lastmod>2019-07-24T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -274,7 +303,7 @@
   
   <url>
     <loc>https://pyocean.com/</loc>
-    <lastmod>2019-07-20T00:00:00+00:00</lastmod>
+    <lastmod>2019-07-24T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
