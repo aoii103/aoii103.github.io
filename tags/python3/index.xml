@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Python3 on 进击的Robot</title>
+    <link>https://pyocean.com/tags/python3/</link>
+    <description>Recent content in Python3 on 进击的Robot</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Thu, 22 Aug 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://pyocean.com/tags/python3/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>几个你所应该知晓的python3特性[python3.7及前版本]</title>
+      <link>https://pyocean.com/post/2019_08_22_%E5%87%A0%E4%B8%AA%E4%BD%A0%E6%89%80%E5%BA%94%E8%AF%A5%E7%9F%A5%E6%99%93%E7%9A%84python3%E7%89%B9%E6%80%A7/</link>
+      <pubDate>Thu, 22 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://pyocean.com/post/2019_08_22_%E5%87%A0%E4%B8%AA%E4%BD%A0%E6%89%80%E5%BA%94%E8%AF%A5%E7%9F%A5%E6%99%93%E7%9A%84python3%E7%89%B9%E6%80%A7/</guid>
+      <description>&lt;p&gt;时至今日，&lt;code&gt;python2&lt;/code&gt;大限已到，且&lt;code&gt;python3&lt;/code&gt;对各类原有框架及模块都有了非常好的支持。下面给大家简单介绍一些或许你不常用的，但你应该知道的那些 新特性。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

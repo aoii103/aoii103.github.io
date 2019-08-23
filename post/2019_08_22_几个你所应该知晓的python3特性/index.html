@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>几个你所应该知晓的python3特性[python3.7及前版本] - 进击的Robot</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta name="generator" content="Hugo 0.53" />
+	<meta property="og:title" content="几个你所应该知晓的python3特性[python3.7及前版本]" />
+<meta property="og:description" content="时至今日，python2大限已到，且python3对各类原有框架及模块都有了非常好的支持。下面给大家简单介绍一些或许你不常用的，但你应该知道的那些 新特性。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://pyocean.com/post/2019_08_22_%E5%87%A0%E4%B8%AA%E4%BD%A0%E6%89%80%E5%BA%94%E8%AF%A5%E7%9F%A5%E6%99%93%E7%9A%84python3%E7%89%B9%E6%80%A7/" /><meta property="article:published_time" content="2019-08-22T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2019-08-22T00:00:00&#43;00:00"/>
+
+	<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="几个你所应该知晓的python3特性[python3.7及前版本]"/>
+<meta name="twitter:description" content="时至今日，python2大限已到，且python3对各类原有框架及模块都有了非常好的支持。下面给大家简单介绍一些或许你不常用的，但你应该知道的那些 新特性。"/>
+
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-135738940-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="进击的Robot" rel="home">
+				<div class="logo__title">进击的Robot</div>
+				<div class="logo__tagline">Strange new light can be just as frightening as the dark.</div>
+			</a>
+		</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">几个你所应该知晓的python3特性[python3.7及前版本]</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2019-08-22T00:00:00">August 22, 2019</time>
+</div>
+</div>
+		</header>
+		<figure class="post__thumbnail">
+			<img src="/img/content_img/python/python.jpg" alt="几个你所应该知晓的python3特性[python3.7及前版本]">
+		</figure>
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#模板语法-f-strings">模板语法 f-strings</a></li>
+<li><a href="#解包扩展">解包扩展</a></li>
+<li><a href="#输入预提示">输入预提示</a></li>
+<li><a href="#async-与await-关键字及asycio">async 与await 关键字及asycio</a></li>
+<li><a href="#路径遍历增强">路径遍历增强</a></li>
+<li><a href="#枚举enum">枚举Enum</a></li>
+<li><a href="#lru-cache">lru_cache</a></li>
+<li><a href="#数据类-data-classes">数据类 Data classes</a></li>
+</ul></li>
+</ul>
+</nav>
+	</div>
+</div>
+<div class="content post__content clearfix">
+			<p>时至今日，<code>python2</code>大限已到，且<code>python3</code>对各类原有框架及模块都有了非常好的支持。下面给大家简单介绍一些或许你不常用的，但你应该知道的那些 新特性。</p>
+
+<h2 id="模板语法-f-strings">模板语法 f-strings</h2>
+
+<p>首先我们或许比较习惯使用<code>.format()</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">nums <span style="color:#f92672">=</span> <span style="color:#ae81ff">4</span>
+name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;tasks&#39;</span>
+time <span style="color:#f92672">=</span> <span style="color:#ae81ff">5.6</span>
+<span style="color:#e6db74">&#39;{} {} done, used {}s&#39;</span><span style="color:#f92672">.</span>format(nums,name,time)
+
+<span style="color:#ae81ff">4</span> tasks done , cost <span style="color:#ae81ff">5.6</span>s</code></pre></div>
+<p>接下来我们使用<code>'f'</code>模板语法, 有没有发现可读性提高了不少！</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">f<span style="color:#e6db74">&#39;{nums+1} {name} done, used {time}s&#39;</span>
+
+<span style="color:#ae81ff">5</span> tasks done , cost <span style="color:#ae81ff">5.6</span>s</code></pre></div>
+<h2 id="解包扩展">解包扩展</h2>
+
+<p>以前我们更新一个字典或许需要这样</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">dict_a <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#39;a&#39;</span>:<span style="color:#e6db74">&#39;b&#39;</span>}
+dict_b <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#39;c&#39;</span>:<span style="color:#e6db74">&#39;d&#39;</span>}
+dict_a<span style="color:#f92672">.</span>update(dict_b)
+
+<span style="color:#75715e"># output</span>
+
+{<span style="color:#e6db74">&#39;a&#39;</span>: <span style="color:#e6db74">&#39;b&#39;</span>, <span style="color:#e6db74">&#39;c&#39;</span>: <span style="color:#e6db74">&#39;d&#39;</span>} <span style="color:#75715e"># dict_a</span></code></pre></div>
+<p>而在<code>python3</code>中我们可以这样, <code>*</code>操作<code>tuple</code>、<code>list</code> 等同理</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">{<span style="color:#f92672">**</span>dict_a,<span style="color:#f92672">**</span>dict_b}
+
+<span style="color:#75715e"># output</span>
+
+{<span style="color:#e6db74">&#39;a&#39;</span>: <span style="color:#e6db74">&#39;b&#39;</span>, <span style="color:#e6db74">&#39;c&#39;</span>: <span style="color:#e6db74">&#39;d&#39;</span>}</code></pre></div>
+<h2 id="输入预提示">输入预提示</h2>
+
+<p>为了增强函数及返回值的类型提示，我们可以这样来定义一个<code>poc</code>函数, 提示<code>urls</code>变量是成员为<code>str</code>的元祖、<code>payload</code>为<code>PAYLOAD</code>类, 而超时时间为<code>float</code>类型, 默认值5秒，最终返回结果将为一个布尔值。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> typing <span style="color:#f92672">import</span> Tuple
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">PAYLOAD</span>:
+    <span style="color:#f92672">...</span>
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">poc</span>(urls: Tuple[str], payload: PAYLOAD, timeout: float <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span>) <span style="color:#f92672">-&gt;</span> bool:
+    <span style="color:#f92672">...</span>
+    <span style="color:#66d9ef">return</span> is_vul</code></pre></div>
+<h2 id="async-与await-关键字及asycio">async 与await 关键字及asycio</h2>
+
+<p>这里通过一个协程并发的案例来作简单说明。这里设定两个任务。</p>
+
+<ul>
+<li>任务1: 执行睡眠2秒</li>
+<li>任务2: 执行睡眠1秒</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> asyncio
+<span style="color:#f92672">import</span> logging
+
+logging<span style="color:#f92672">.</span>basicConfig(level<span style="color:#f92672">=</span>logging<span style="color:#f92672">.</span>DEBUG, format<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;[</span><span style="color:#e6db74">%(asctime)s</span><span style="color:#e6db74">]</span><span style="color:#e6db74">%(message)s</span><span style="color:#e6db74">&#34;</span>)
+log <span style="color:#f92672">=</span> logging<span style="color:#f92672">.</span>getLogger()
+
+async <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">sleep</span>(task, times: int):
+    log<span style="color:#f92672">.</span>info(f<span style="color:#e6db74">&#34;task {task} start.&#34;</span>)
+    await asyncio<span style="color:#f92672">.</span>sleep(times)
+    log<span style="color:#f92672">.</span>info(f<span style="color:#e6db74">&#34;task {task} done.&#34;</span>)
+
+async <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span>():
+    await asyncio<span style="color:#f92672">.</span>gather(
+        sleep(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>), 
+        sleep(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>)
+    )
+
+asyncio<span style="color:#f92672">.</span>run(main())
+
+<span style="color:#75715e"># output</span>
+
+[<span style="color:#ae81ff">07</span>:<span style="color:#ae81ff">30</span>:<span style="color:#ae81ff">09</span>,<span style="color:#ae81ff">109</span>]Using selector: KqueueSelector
+[<span style="color:#ae81ff">07</span>:<span style="color:#ae81ff">30</span>:<span style="color:#ae81ff">09</span>,<span style="color:#ae81ff">110</span>]task <span style="color:#ae81ff">1</span> start<span style="color:#f92672">.</span>
+[<span style="color:#ae81ff">07</span>:<span style="color:#ae81ff">30</span>:<span style="color:#ae81ff">09</span>,<span style="color:#ae81ff">111</span>]task <span style="color:#ae81ff">2</span> start<span style="color:#f92672">.</span>
+[<span style="color:#ae81ff">07</span>:<span style="color:#ae81ff">30</span>:<span style="color:#ae81ff">10</span>,<span style="color:#ae81ff">113</span>]task <span style="color:#ae81ff">2</span> done<span style="color:#f92672">.</span>
+[<span style="color:#ae81ff">07</span>:<span style="color:#ae81ff">30</span>:<span style="color:#ae81ff">11</span>,<span style="color:#ae81ff">115</span>]task <span style="color:#ae81ff">1</span> done<span style="color:#f92672">.</span></code></pre></div>
+<p>从输出结果我们可以看到，整个过程只花费了两秒钟。</p>
+
+<h2 id="路径遍历增强">路径遍历增强</h2>
+
+<p>现在我们使用<code>os.scandir()</code>来代替原有的<code>os.walk()</code>, 且其的执行效率将提高3至5倍。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">for</span> entry <span style="color:#f92672">in</span> os<span style="color:#f92672">.</span>scandir(path): <span style="color:#75715e"># 扫描path路径</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> entry<span style="color:#f92672">.</span>name<span style="color:#f92672">.</span>startswith(<span style="color:#e6db74">&#39;.&#39;</span>) <span style="color:#f92672">and</span> entry<span style="color:#f92672">.</span>is_file(): <span style="color:#75715e"># 过滤掉文件夹</span>
+        <span style="color:#66d9ef">print</span>(entry<span style="color:#f92672">.</span>name) <span style="color:#75715e"># 打印出文件名</span></code></pre></div>
+<h2 id="枚举enum">枚举Enum</h2>
+
+<p>假设我们设定一组星期数据。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">Sun <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+Mon <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>
+<span style="color:#f92672">...</span>
+Sat <span style="color:#f92672">=</span> <span style="color:#ae81ff">7</span></code></pre></div>
+<p>并用来判定一周的第N天是周几的时候，我们可以这么写</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">days <span style="color:#f92672">=</span> int(N)
+
+<span style="color:#66d9ef">if</span>(N<span style="color:#f92672">==</span>Mon){
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;Mon&#39;</span>)
+}
+<span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span>(N<span style="color:#f92672">==</span>Tue){
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;Tue&#39;</span>)
+}
+<span style="color:#f92672">...</span>
+<span style="color:#66d9ef">else</span>{
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;Sun&#39;</span>)
+}</code></pre></div>
+<p>但是我们有没有发现这样写有点 麻烦呢, 于是我们将它改为<code>enum</code>对象, 是否有变得简单很多呢~</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> enum <span style="color:#f92672">import</span> Enum, unique
+
+<span style="color:#a6e22e">@unique</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">week</span>(Enum):
+    Sun <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+    Mon <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>
+    <span style="color:#f92672">...</span>
+    Sat <span style="color:#f92672">=</span> <span style="color:#ae81ff">7</span>
+
+week(<span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>name <span style="color:#75715e"># Sun</span>
+
+<span style="color:#66d9ef">print</span>(week(<span style="color:#ae81ff">7</span>)) <span style="color:#75715e"># week.Sat</span>
+
+week<span style="color:#f92672">.</span>Sun<span style="color:#f92672">.</span>value <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span> <span style="color:#75715e"># True</span></code></pre></div>
+<h2 id="lru-cache">lru_cache</h2>
+
+<p>这是一个可以为函数提供缓存功能的装饰器，在下次以相同参数调用时直接返回上一次的结果。用以节约高开销或I/O函数的调用时间。</p>
+
+<p>例如我们可以用以高效计算斐波那契数列。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python3" data-lang="python3"><span style="color:#f92672">from</span> functools <span style="color:#66d9ef">import</span> lru_cache
+
+<span style="color:#a6e22e">@lru_cache</span>(maxsize<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>)
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">fib</span>(n):
+    <span style="color:#66d9ef">if</span> n <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">2</span>:
+        <span style="color:#66d9ef">return</span> n
+    <span style="color:#66d9ef">return</span> fib(n<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>) <span style="color:#f92672">+</span> fib(n<span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>)
+
+[fib(n) <span style="color:#66d9ef">for</span> n <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">32</span>)]
+
+
+<span style="color:#75715e"># 常规操作</span>
+<span style="color:#75715e"># python3 test.py  1.85s user 0.03s system 98% cpu 1.915 total </span>
+
+<span style="color:#75715e"># lru_cache</span>
+<span style="color:#75715e"># python3 test.py  0.04s user 0.02s system 90% cpu 0.066 total</span></code></pre></div>
+<p>在未加上<code>@lru_cache(maxsize=None)</code>时使用了 1.91秒, 而在加上之后只花费了 0.06秒。</p>
+
+<h2 id="数据类-data-classes">数据类 Data classes</h2>
+
+<p>以前我们要定义一个类或许需要这样</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">food</span>:
+    <span style="color:#66d9ef">def</span> __init__(self, name: str, overdue: bool <span style="color:#f92672">=</span> False) <span style="color:#f92672">-&gt;</span> None:
+        self<span style="color:#f92672">.</span>name <span style="color:#f92672">=</span> name
+        self<span style="color:#f92672">.</span>overdue <span style="color:#f92672">=</span> overdue
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">animal</span>:
+    <span style="color:#66d9ef">def</span> __init__(self, name: str, age: int <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">-&gt;</span> food:
+        self<span style="color:#f92672">.</span>name <span style="color:#f92672">=</span> name
+        self<span style="color:#f92672">.</span>age <span style="color:#f92672">=</span> age
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">eat</span>(self, thing: food) <span style="color:#f92672">-&gt;</span> bool:
+        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> thing<span style="color:#f92672">.</span>overdue:
+            <span style="color:#66d9ef">return</span> True
+
+meat <span style="color:#f92672">=</span> food(<span style="color:#e6db74">&#39;meat&#39;</span>)
+dog <span style="color:#f92672">=</span> animal(<span style="color:#e6db74">&#34;dog&#34;</span>, <span style="color:#ae81ff">1</span>)
+dog<span style="color:#f92672">.</span>eat(meat)</code></pre></div>
+<p>而现在我们可以这样, 它将帮你自动完成<code>__init__</code>,<code>__repr__</code>,<code>__eq__</code>等方法。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> dataclasses <span style="color:#f92672">import</span> dataclass
+
+<span style="color:#a6e22e">@dataclass</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">food</span>:
+    name: str
+    overdue: bool <span style="color:#f92672">=</span> False
+
+<span style="color:#a6e22e">@dataclass</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">animal</span>:
+    name: str
+    age: int <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">eat</span>(self, thing: food) <span style="color:#f92672">-&gt;</span> bool:
+        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> thing<span style="color:#f92672">.</span>overdue:
+            <span style="color:#66d9ef">return</span> True
+
+meat <span style="color:#f92672">=</span> food(<span style="color:#e6db74">&#39;meat&#39;</span>,True)
+dog <span style="color:#f92672">=</span> animal(<span style="color:#e6db74">&#34;dog&#34;</span>, <span style="color:#ae81ff">1</span>)
+dog<span style="color:#f92672">.</span>eat(meat)
+
+<span style="color:#75715e"># output</span>
+
+False</code></pre></div>
+		</div>
+		
+<div class="post__tags tags clearfix">
+	<svg class="icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="/tags/python3/" rel="tag">python3</a></li>
+	</ul>
+</div>
+	</article>
+</main>
+
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/post/2019_07_24_koolshare%E4%B8%8Bentware%E5%AE%89%E8%A3%85/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">koolshare下Entware安装</p></a>
+	</div>
+</nav>
+
+<section class="comments">
+	<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "https-pyocean-com" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2019 s045pd.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script></body>
+</html>
