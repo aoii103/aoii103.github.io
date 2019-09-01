@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>你就不想知道，他/她/ta/他们的这些照片，是在哪里拍的么~ - 进击的Robot</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta name="generator" content="Hugo 0.53" />
+	<meta property="og:title" content="你就不想知道，他/她/ta/他们的这些照片，是在哪里拍的么~" />
+<meta property="og:description" content="相信我们能在网络上浏览到各种各样的图片，或是在我们的手机里也存着非常多的照片。有没有在那么一刻，你渴望知道，这些图像的拍摄地，在哪儿。或是你想了解，某个人的曾经去了哪儿。那么今天，就给大家介绍一下，如何用工具解析图像的exif信息，画出所谓的人轨。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://pyocean.com/post/2019_08_31/" /><meta property="article:published_time" content="2019-08-22T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2019-08-22T00:00:00&#43;00:00"/>
+
+	<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="你就不想知道，他/她/ta/他们的这些照片，是在哪里拍的么~"/>
+<meta name="twitter:description" content="相信我们能在网络上浏览到各种各样的图片，或是在我们的手机里也存着非常多的照片。有没有在那么一刻，你渴望知道，这些图像的拍摄地，在哪儿。或是你想了解，某个人的曾经去了哪儿。那么今天，就给大家介绍一下，如何用工具解析图像的exif信息，画出所谓的人轨。"/>
+
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-135738940-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="进击的Robot" rel="home">
+				<div class="logo__title">进击的Robot</div>
+				<div class="logo__tagline">Strange new light can be just as frightening as the dark.</div>
+			</a>
+		</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">你就不想知道，他/她/ta/他们的这些照片，是在哪里拍的么~</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2019-08-22T00:00:00">August 22, 2019</time>
+</div>
+</div>
+		</header>
+		<figure class="post__thumbnail">
+			<img src="/img/content_img/exif/eye2.jpg" alt="你就不想知道，他/她/ta/他们的这些照片，是在哪里拍的么~">
+		</figure>
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#0x00-exif信息">0x00 EXIF信息</a></li>
+<li><a href="#0x01-获取gps信息">0x01 获取GPS信息</a></li>
+<li><a href="#0x02-获取其他辅助信息">0x02 获取其他辅助信息</a></li>
+<li><a href="#0x03-获取大概地址">0x03 获取大概地址</a></li>
+<li><a href="#0x04-最终数据">0x04 最终数据</a></li>
+<li><a href="#0x05-可视化处理">0x05 可视化处理</a></li>
+</ul></li>
+</ul>
+</nav>
+	</div>
+</div>
+<div class="content post__content clearfix">
+			<p>相信我们能在网络上浏览到各种各样的图片，或是在我们的手机里也存着非常多的照片。有没有在那么一刻，你渴望知道，这些图像的拍摄地，在哪儿。或是你想了解，某个人的曾经去了哪儿。那么今天，就给大家介绍一下，如何用工具解析图像的<code>exif</code>信息，画出所谓的人轨。</p>
+
+<h2 id="0x00-exif信息">0x00 EXIF信息</h2>
+
+<p><img src="/img/content_img/exif/exif_demo.png" alt="" /></p>
+
+<p>可交换图像文件格式（英语：Exchangeable image file format，官方简称Exif），是专门为数码相机的照片设定的，可以记录数码照片的属性信息和拍摄数据。例如<strong class='red'> GPS定位，设备型号，拍摄时间</strong>等等。</p>
+
+<p>当前我们依据<code>EXIF 2.3</code>版所定义的标准来截取<code>tag</code></p>
+
+<p><img src="/img/content_img/exif/tags.png" alt="" /></p>
+
+<blockquote>
+<p>更多tags可参考 <a href="https://www.exiv2.org/tags.html">https://www.exiv2.org/tags.html</a></p>
+</blockquote>
+
+<h2 id="0x01-获取gps信息">0x01 获取GPS信息</h2>
+
+<p>那么例如我们要通过编写脚本方法来获取<code>GPS信息</code>，我们就可以这样</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python3" data-lang="python3"><span style="color:#f92672">from</span> PIL <span style="color:#66d9ef">import</span> Image
+<span style="color:#f92672">from</span> fractions <span style="color:#66d9ef">import</span> Fraction
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">format</span>(datas: list)<span style="color:#f92672">-&gt;</span> float:
+    <span style="color:#e6db74">&#34;&#34;&#34;
+</span><span style="color:#e6db74">        经纬度格式转换 度分秒转小数
+</span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+    <span style="color:#66d9ef">return</span> float(
+        Fraction(<span style="color:#f92672">*</span>datas[<span style="color:#ae81ff">0</span>])
+        <span style="color:#f92672">+</span> Fraction(Fraction(<span style="color:#f92672">*</span>datas[<span style="color:#ae81ff">1</span>]),<span style="color:#ae81ff">60</span>)
+        <span style="color:#f92672">+</span> Fraction(Fraction(<span style="color:#f92672">*</span>datas[<span style="color:#ae81ff">2</span>]),<span style="color:#ae81ff">3600</span>)
+    )
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_exif_datas</span>(file,name<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;&#39;</span>):
+    <span style="color:#e6db74">&#34;&#34;&#34;
+</span><span style="color:#e6db74">        获取图像经纬度
+</span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+    <span style="color:#66d9ef">try</span>:
+        gps_key <span style="color:#f92672">=</span> <span style="color:#ae81ff">34853</span> <span style="color:#75715e"># GPS键名</span>
+        gps_data <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>open(filename)<span style="color:#f92672">.</span>_getexif()<span style="color:#f92672">.</span>get(gps_key, <span style="color:#66d9ef">None</span>)
+        <span style="color:#66d9ef">if</span> gps_data:
+            <span style="color:#66d9ef">return</span> (
+                (<span style="color:#ae81ff">1</span> <span style="color:#66d9ef">if</span> gps_data[<span style="color:#ae81ff">3</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;E&#34;</span> <span style="color:#66d9ef">else</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>) <span style="color:#f92672">*</span> format(gps_data[<span style="color:#ae81ff">4</span>]), <span style="color:#75715e"># 经度</span>
+                (<span style="color:#ae81ff">1</span> <span style="color:#66d9ef">if</span> gps_data[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;N&#34;</span> <span style="color:#66d9ef">else</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>) <span style="color:#f92672">*</span> format(gps_data[<span style="color:#ae81ff">2</span>])  <span style="color:#75715e"># 维度</span>
+            )
+    <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">Exception</span> <span style="color:#66d9ef">as</span> e:
+        <span style="color:#66d9ef">pass</span></code></pre></div>
+<p>因为不能用自己的相册做测试，所以我们在<code>github</code>搜寻了一个较为特殊的图集，数量1000+，大概就是些女装吧=_=</p>
+
+<p><img src="/img/content_img/exif/nz.png" alt="" /></p>
+
+<p>由于数据比较大，大概<strong class='red'>1G以上</strong>，所以我们选择在<a href="https://colab.research.google.com">Colab</a>上做测试</p>
+
+<p><img src="/img/content_img/exif/colab.png" alt="" /></p>
+
+<p>通过以上命令<code>!git clone https://github.com/komeiji-satori/Dress</code>，大概也就几秒就已经把数据存到了您的<code>google</code>云盘中。挺快。</p>
+
+<p><img src="/img/content_img/exif/colab2.png" alt="" /></p>
+
+<p>经过上述操作的测试 我们获得了大约<strong class='red'>47张</strong>图片的GPS标记。</p>
+
+<h2 id="0x02-获取其他辅助信息">0x02 获取其他辅助信息</h2>
+
+<p>当然，这部分信息在实际应用中似乎不足以做些啥。于是我们打算加入</p>
+
+<ul>
+<li><code>path</code> 图像路径</li>
+<li><code>date</code> 拍摄日期</li>
+<li><code>alt</code> 照片高度信息</li>
+<li><code>soft</code> 所用编辑软件</li>
+<li><code>model</code> 所用设备版本</li>
+<li><code>make</code> 所用设备型号</li>
+<li><code>address</code> 大概位置信息</li>
+</ul>
+
+<p>以上字段除了address，其他都可以直接从exif之中获取。</p>
+
+<h2 id="0x03-获取大概地址">0x03 获取大概地址</h2>
+
+<p>我们通过<code>http://restapi.amap.com/v3/geocode/regeo?key={}&amp;s=rsv3&amp;location={},{}</code>地址作为API来截取大概地址信息，前提是得注册并获取一个Key。</p>
+
+<h2 id="0x04-最终数据">0x04 最终数据</h2>
+
+<p>最终我们获取到的单个数据是这样的。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+    <span style="color:#f92672">&#34;path&#34;</span>: <span style="color:#e6db74">&#34;images/16.jpg&#34;</span>,
+    <span style="color:#f92672">&#34;date&#34;</span>: <span style="color:#e6db74">&#34;2019-06-20 16:31:38&#34;</span>,
+    <span style="color:#f92672">&#34;gps&#34;</span>: [
+        <span style="color:#ae81ff">36.3425</span>,
+        <span style="color:#ae81ff">119.75333333333333</span>
+    ],
+    <span style="color:#f92672">&#34;alt&#34;</span>: [
+        <span style="color:#ae81ff">0.0</span>,
+        <span style="color:#e6db74">&#34;海平面&#34;</span>
+    ],
+    <span style="color:#f92672">&#34;soft&#34;</span>: <span style="color:#e6db74">&#34;Adobe Photoshop CC 2018 (Windows)&#34;</span>,
+    <span style="color:#f92672">&#34;model&#34;</span>: <span style="color:#e6db74">&#34;SM-N9500&#34;</span>,
+    <span style="color:#f92672">&#34;make&#34;</span>: <span style="color:#e6db74">&#34;samsung&#34;</span>,
+    <span style="color:#f92672">&#34;address&#34;</span>: <span style="color:#e6db74">&#34;山东省潍坊市高密市高密市朝阳街道潍坊市高密中等专业学校青岛科技大学高密校区&#34;</span>
+}</code></pre></div>
+<h2 id="0x05-可视化处理">0x05 可视化处理</h2>
+
+<p>在获取了这些数据之后，我们使用强大的地理标记库<code>folium</code>来做可视化处理。以<code>30,120</code>作为中心。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">make_popup</span>(item):
+    <span style="color:#e6db74">&#34;&#34;&#34;
+</span><span style="color:#e6db74">        生成一个较为合理的信息面板
+</span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+    add_normal <span style="color:#f92672">=</span> <span style="color:#66d9ef">lambda</span> data, dicts: f<span style="color:#e6db74">&#34;&lt;p&gt;{data[1]}: {dicts[data[0]]}&lt;/p&gt;&#34;</span> <span style="color:#66d9ef">if</span> data[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">in</span> dicts <span style="color:#66d9ef">else</span> <span style="color:#e6db74">&#34;&#34;</span> <span style="color:#75715e"># 判断信息是否需要添加</span>
+    html <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>
+    cols <span style="color:#f92672">=</span> ((<span style="color:#e6db74">&#34;address&#34;</span>, <span style="color:#e6db74">&#34;地址&#34;</span>), (<span style="color:#e6db74">&#34;make&#34;</span>, <span style="color:#e6db74">&#34;设备&#34;</span>), (<span style="color:#e6db74">&#34;model&#34;</span>, <span style="color:#e6db74">&#34;型号&#34;</span>), (<span style="color:#e6db74">&#34;soft&#34;</span>, <span style="color:#e6db74">&#34;编辑软件&#34;</span>)) <span style="color:#75715e"># 基础信息键值</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#e6db74">&#34;path&#34;</span> <span style="color:#f92672">in</span> item:
+        html <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#39;&lt;center&gt;&lt;p&gt; &lt;a href=&#34;{}&#34;&gt;{}&lt;/a &gt;&lt;/p&gt;&lt;/center&gt;&#39;</span><span style="color:#f92672">.</span>format(
+            item[<span style="color:#e6db74">&#34;path&#34;</span>], item[<span style="color:#e6db74">&#34;path&#34;</span>]
+        )
+    <span style="color:#66d9ef">if</span> <span style="color:#e6db74">&#34;date&#34;</span> <span style="color:#f92672">in</span> item:
+        html <span style="color:#f92672">+=</span> f<span style="color:#e6db74">&#34;&lt;center&gt;&lt;p&gt;{item[&#39;date&#39;]}&lt;/p&gt;&lt;/center&gt;&#34;</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#e6db74">&#34;path&#34;</span> <span style="color:#f92672">in</span> item:
+        html <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;img src=&#39;{}&#39; height=&#39;240&#39; width=&#39;240&#39; /&gt;&#34;</span><span style="color:#f92672">.</span>format(item[<span style="color:#e6db74">&#34;path&#34;</span>])
+
+    html <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">.</span>join([add_normal(_, item) <span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> cols])
+    <span style="color:#66d9ef">if</span> <span style="color:#e6db74">&#34;alt&#34;</span> <span style="color:#f92672">in</span> item <span style="color:#f92672">and</span> item[<span style="color:#e6db74">&#34;alt&#34;</span>][<span style="color:#ae81ff">0</span>] <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0.0</span>:
+        html <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;p&gt;高度: {1} {0}米&lt;/p&gt;&#34;</span><span style="color:#f92672">.</span>format(<span style="color:#f92672">*</span>item[<span style="color:#e6db74">&#34;alt&#34;</span>])
+    <span style="color:#66d9ef">return</span> html</code></pre></div>
+<p>通过上面的方法我们可以得到一个信息较为直观的信息面板。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">map <span style="color:#f92672">=</span> folium<span style="color:#f92672">.</span>Map([<span style="color:#ae81ff">30</span>, <span style="color:#ae81ff">120</span>], world_copy_jump<span style="color:#f92672">=</span>False, detect_retina<span style="color:#f92672">=</span>True, no_wrap<span style="color:#f92672">=</span>True, zoom_start<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>) <span style="color:#75715e"># 预设地图</span>
+locations <span style="color:#f92672">=</span> [] <span style="color:#75715e"># 定位点</span>
+popups <span style="color:#f92672">=</span> [] <span style="color:#75715e"># 标点提示</span>
+<span style="color:#66d9ef">for</span> item <span style="color:#f92672">in</span> data:
+    locations<span style="color:#f92672">.</span>append(item[<span style="color:#e6db74">&#34;gps&#34;</span>])
+    popups<span style="color:#f92672">.</span>append(folium<span style="color:#f92672">.</span>Popup(make_popup(item), parse_html<span style="color:#f92672">=</span>False, max_width<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;100%&#34;</span>)) <span style="color:#75715e"># 载入标点</span>
+plugins<span style="color:#f92672">.</span>MarkerCluster(locations, popups<span style="color:#f92672">=</span>popups)<span style="color:#f92672">.</span>add_to(map) <span style="color:#75715e"># 生成标点</span>
+map<span style="color:#f92672">.</span>fit_bounds(map<span style="color:#f92672">.</span>get_bounds()) <span style="color:#75715e"># 自动转到大概位置</span>
+map<span style="color:#f92672">.</span>save(<span style="color:#e6db74">&#34;res.html&#34;</span>) <span style="color:#75715e"># 生成html</span></code></pre></div>
+<p>最终我们通过下面这个动图来更好的展现结果。</p>
+
+<video controls="controls">
+  <source type="video/mp4" src="/img/content_img/exif/exif.mp4"></source>
+  <p>Your browser does not support the video element.</p>
+</video>
+
+<p>可以看到，各位女装大佬的位置已经被mark到了地图上。</p>
+
+<blockquote>
+<p>在此之后我将这次的代码包装成了一个可用的脚本，毕竟它的用处可不止这样~ 关注微信公众号<span class='red'>进击的Robot</span>,回复相册定位，即可获得源代码。更多精彩，等你解锁。</p>
+</blockquote>
+
+<style>
+.red {
+    color:red;
+}
+</style>
+		</div>
+		
+<div class="post__tags tags clearfix">
+	<svg class="icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="/tags/python3/" rel="tag">python3</a></li>
+	</ul>
+</div>
+	</article>
+</main>
+
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/post/2019_08_22_%E5%87%A0%E4%B8%AA%E4%BD%A0%E6%89%80%E5%BA%94%E8%AF%A5%E7%9F%A5%E6%99%93%E7%9A%84python3%E7%89%B9%E6%80%A7/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">几个你所应该知晓的python3特性[python3.7及前版本]</p></a>
+	</div>
+</nav>
+
+<section class="comments">
+	<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "https-pyocean-com" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2019 s045pd.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script></body>
+</html>
