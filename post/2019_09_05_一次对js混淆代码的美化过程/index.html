@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>一次对js混淆代码的美化过程 - 进击的Robot</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta name="generator" content="Hugo 0.53" />
+	<meta property="og:title" content="一次对js混淆代码的美化过程" />
+<meta property="og:description" content="代码混淆(Obfuscated code)亦称花指令，是将计算机程序的代码，转换成一种功能上等价，但是难于阅读和理解的形式的行为。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://pyocean.com/post/2019_09_05_%E4%B8%80%E6%AC%A1%E5%AF%B9js%E6%B7%B7%E6%B7%86%E4%BB%A3%E7%A0%81%E7%9A%84%E7%BE%8E%E5%8C%96%E8%BF%87%E7%A8%8B/" /><meta property="article:published_time" content="2019-09-05T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2019-09-05T00:00:00&#43;00:00"/>
+
+	<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="一次对js混淆代码的美化过程"/>
+<meta name="twitter:description" content="代码混淆(Obfuscated code)亦称花指令，是将计算机程序的代码，转换成一种功能上等价，但是难于阅读和理解的形式的行为。"/>
+
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-135738940-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="进击的Robot" rel="home">
+				<div class="logo__title">进击的Robot</div>
+				<div class="logo__tagline">Strange new light can be just as frightening as the dark.</div>
+			</a>
+		</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">一次对js混淆代码的美化过程</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2019-09-05T00:00:00">September 05, 2019</time>
+</div>
+</div>
+		</header>
+		<figure class="post__thumbnail">
+			<img src="/img/content_img/encode/decode.jpg" alt="一次对js混淆代码的美化过程">
+		</figure>
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		
+	</div>
+</div>
+<div class="content post__content clearfix">
+			<p>代码混淆(Obfuscated code)亦称花指令，是将计算机程序的代码，转换成一种功能上等价，但是难于阅读和理解的形式的行为。</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> string
+<span style="color:#f92672">import</span> random
+<span style="color:#f92672">from</span> execjs <span style="color:#f92672">import</span> eval <span style="color:#66d9ef">as</span> jseval
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">random_key</span>(length<span style="color:#f92672">=</span><span style="color:#ae81ff">20</span>):
+    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">.</span>join(
+        (
+            random<span style="color:#f92672">.</span>choice(
+                random<span style="color:#f92672">.</span>choice(
+                    (
+                        string<span style="color:#f92672">.</span>ascii_uppercase,
+                        string<span style="color:#f92672">.</span>ascii_lowercase,
+                    )
+                )
+            )
+            <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1</span>, length)
+        )
+    )
+
+<span style="color:#f92672">import</span> re
+<span style="color:#f92672">from</span> base64 <span style="color:#f92672">import</span> b64decode
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">convert_to_normal_string</span>(text):
+    
+    
+    <span style="color:#75715e"># decode \x??</span>
+    <span style="color:#66d9ef">for</span> item <span style="color:#f92672">in</span> set(re<span style="color:#f92672">.</span>findall(<span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\\\\</span><span style="color:#e6db74">x[a-zA-Z0-9]+&#39;</span>,text)):
+        code <span style="color:#f92672">=</span> bytes<span style="color:#f92672">.</span>fromhex(item<span style="color:#f92672">.</span>replace(<span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">x&#39;</span>,<span style="color:#e6db74">&#39;&#39;</span>))<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#39;utf8&#39;</span>)
+        <span style="color:#66d9ef">if</span> code <span style="color:#f92672">in</span> {<span style="color:#e6db74">&#39;&#34;&#39;</span>,<span style="color:#e6db74">&#34;&#39;&#34;</span>}:
+            code <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">+</span>code
+        <span style="color:#66d9ef">print</span>(item,code)
+        text <span style="color:#f92672">=</span> text<span style="color:#f92672">.</span>replace(item,code)
+        
+    <span style="color:#75715e"># decode _0x????</span>
+    datas2 <span style="color:#f92672">=</span> re<span style="color:#f92672">.</span>findall(<span style="color:#e6db74">&#39;_0x[a-zA-Z0-9]+&#39;</span>,text)
+    length <span style="color:#f92672">=</span> len(str(len(datas2)))
+    <span style="color:#66d9ef">for</span> item <span style="color:#f92672">in</span> set(datas2):
+        code <span style="color:#f92672">=</span> random_key(length)
+        <span style="color:#66d9ef">print</span>(item,code)
+        text <span style="color:#f92672">=</span> text<span style="color:#f92672">.</span>replace(item,code)
+        
+    
+    <span style="color:#66d9ef">for</span> item <span style="color:#f92672">in</span> re<span style="color:#f92672">.</span>findall(<span style="color:#e6db74">&#39;0x[a-zA-Z0-9]+&#39;</span>,text):
+        code <span style="color:#f92672">=</span> jseval(item)
+        <span style="color:#66d9ef">print</span>(item,code)
+        text <span style="color:#f92672">=</span> text<span style="color:#f92672">.</span>replace(item,str(code))
+    
+    <span style="color:#66d9ef">return</span> text
+    
+    </code></pre></div>
+		</div>
+		
+<div class="post__tags tags clearfix">
+	<svg class="icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="/tags/python3/" rel="tag">python3</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/timecomplexity/" rel="tag">TimeComplexity</a></li>
+	</ul>
+</div>
+	</article>
+</main>
+
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/post/2019_09_02_python%E4%B8%8A%E7%9A%84%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">Python上的时间复杂度</p></a>
+	</div>
+</nav>
+
+<section class="comments">
+	<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "https-pyocean-com" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2019 s045pd.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script></body>
+</html>

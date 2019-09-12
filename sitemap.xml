@@ -3,6 +3,16 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://pyocean.com/post/2019_09_05_%E4%B8%80%E6%AC%A1%E5%AF%B9js%E6%B7%B7%E6%B7%86%E4%BB%A3%E7%A0%81%E7%9A%84%E7%BE%8E%E5%8C%96%E8%BF%87%E7%A8%8B/</loc>
+    <lastmod>2019-09-05T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pyocean.com/post/2019_09_02_python%E4%B8%8A%E7%9A%84%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6/</loc>
+    <lastmod>2019-08-22T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://pyocean.com/post/2019_08_31_%E4%BD%A0%E5%B0%B1%E4%B8%8D%E6%83%B3%E7%9F%A5%E9%81%93_%E4%BB%96%E4%BB%AC%E7%9A%84%E8%BF%99%E4%BA%9B%E7%85%A7%E7%89%87_%E6%98%AF%E5%9C%A8%E5%93%AA%E9%87%8C%E6%8B%8D%E7%9A%84%E4%B9%88/</loc>
     <lastmod>2019-08-22T00:00:00+00:00</lastmod>
   </url>
@@ -235,7 +245,7 @@
   
   <url>
     <loc>https://pyocean.com/post/</loc>
-    <lastmod>2019-08-22T00:00:00+00:00</lastmod>
+    <lastmod>2019-09-05T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -253,7 +263,7 @@
   
   <url>
     <loc>https://pyocean.com/tags/python3/</loc>
-    <lastmod>2019-08-22T00:00:00+00:00</lastmod>
+    <lastmod>2019-09-05T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -284,6 +294,12 @@
   <url>
     <loc>https://pyocean.com/tags/</loc>
     <lastmod>2019-04-02T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://pyocean.com/tags/timecomplexity/</loc>
+    <lastmod>2019-09-05T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -319,7 +335,7 @@
   
   <url>
     <loc>https://pyocean.com/</loc>
-    <lastmod>2019-08-22T00:00:00+00:00</lastmod>
+    <lastmod>2019-09-05T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
