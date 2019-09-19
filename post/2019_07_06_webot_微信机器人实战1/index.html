@@ -9,16 +9,14 @@
 	<meta name="description" content="">
 	<meta name="generator" content="Hugo 0.53" />
 	<meta property="og:title" content="Webot微信机器人项目实战【登录】" />
-<meta property="og:description" content="逻辑图集 登录逻辑 过程分解 首先我们把web微信的登录过程划分成以下几个步骤。
- 打开web微信首页 扫描二维码 手机确认登录 首页自动跳转进入 " />
+<meta property="og:description" content="相信各位都有在使用微信，并且也知晓web版微信的存在。今天我们就来讲一下，如何通过模拟web版微信接口来制作一个全自动的微信机器人。本篇是该实战项目的第一篇，主讲如何实现一个登陆过程。整个的分析过程实际上是对https://res.wx.qq.com/a/wx_fed/webwx/res/static/js/index_4f3487a.js文件的解读🐶。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://pyocean.com/post/2019_07_06_webot_%E5%BE%AE%E4%BF%A1%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AE%9E%E6%88%981/" /><meta property="article:published_time" content="2019-07-06T00:00:00&#43;00:00"/>
-<meta property="article:modified_time" content="2019-07-06T00:00:00&#43;00:00"/>
+<meta property="og:url" content="https://pyocean.com/post/2019_07_06_webot_%E5%BE%AE%E4%BF%A1%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AE%9E%E6%88%981/" /><meta property="article:published_time" content="2019-09-19T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2019-09-19T00:00:00&#43;00:00"/>
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Webot微信机器人项目实战【登录】"/>
-<meta name="twitter:description" content="逻辑图集 登录逻辑 过程分解 首先我们把web微信的登录过程划分成以下几个步骤。
- 打开web微信首页 扫描二维码 手机确认登录 首页自动跳转进入 "/>
+<meta name="twitter:description" content="相信各位都有在使用微信，并且也知晓web版微信的存在。今天我们就来讲一下，如何通过模拟web版微信接口来制作一个全自动的微信机器人。本篇是该实战项目的第一篇，主讲如何实现一个登陆过程。整个的分析过程实际上是对https://res.wx.qq.com/a/wx_fed/webwx/res/static/js/index_4f3487a.js文件的解读🐶。"/>
 
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">
 	<link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -62,7 +60,7 @@ if (!doNotTrack) {
 			<div class="post__meta meta">
 <div class="meta__item-datetime meta__item">
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
-	<time class="meta__text" datetime="2019-07-06T00:00:00">July 06, 2019</time>
+	<time class="meta__text" datetime="2019-09-19T00:00:00">September 19, 2019</time>
 </div>
 </div>
 		</header>
@@ -74,32 +72,248 @@ if (!doNotTrack) {
 	<div class="toc__menu">
 		<nav id="TableOfContents">
 <ul>
-<li><a href="#逻辑图集">逻辑图集</a>
+<li><a href="#0x00逻辑图集">0x00逻辑图集</a>
 <ul>
+<li><a href="#图集标注">图集标注</a></li>
 <li><a href="#登录逻辑">登录逻辑</a></li>
-<li><a href="#过程分解">过程分解</a></li>
+</ul></li>
+<li><a href="#0x01过程分解">0x01过程分解</a></li>
+<li><a href="#0x02过程详解">0x02过程详解</a>
+<ul>
+<li><a href="#1-打开web微信首页">1.打开web微信首页</a></li>
+<li><a href="#2-获取二维码图片">2.获取二维码图片</a></li>
+<li><a href="#3-模拟扫描及确认过程">3.模拟扫描及确认过程</a></li>
+<li><a href="#4-完成登录">4.完成登录</a></li>
+<li><a href="#5-登录后的信息获取">5.登录后的信息获取</a></li>
 </ul></li>
 </ul>
 </nav>
 	</div>
 </div>
 <div class="content post__content clearfix">
-			<h1 id="逻辑图集">逻辑图集</h1>
+			<p>相信各位都有在使用微信，并且也知晓web版微信的存在。今天我们就来讲一下，如何通过模拟web版微信接口来制作一个全自动的微信机器人。本篇是该实战项目的第一篇，主讲如何实现一个登陆过程。整个的分析过程实际上是对<code>https://res.wx.qq.com/a/wx_fed/webwx/res/static/js/index_4f3487a.js</code>文件的解读🐶。</p>
+
+<h1 id="0x00逻辑图集">0x00逻辑图集</h1>
+
+<p>在对一个站点进行逻辑复现前，制作一张逻辑脑图会对整个过程有更好的理解。帮助你理清思路。</p>
+
+<h2 id="图集标注">图集标注</h2>
+
+<p>为了让图像更为整洁，我们将带括号的内容，例如<code>【verb】</code>作为一个变量来表示。</p>
+
+<p>并且为了让逻辑路线更为清晰，我们声明如下几类线以区分下一步的操作。</p>
+
+<p><img src="/img/content_img/webot/logic.png" alt="" /></p>
 
 <h2 id="登录逻辑">登录逻辑</h2>
 
+<p>接下来则是一张通过mindnode画成的网页微信登录过程。</p>
+
+<blockquote>
+<p>其中的session指代该次会话,可以自动处理整个过程中出现的set-cookie事件。</p>
+</blockquote>
+
 <p><img src="/img/content_img/webot/webot_login.png" alt="" /></p>
 
-<h2 id="过程分解">过程分解</h2>
+<h1 id="0x01过程分解">0x01过程分解</h1>
 
-<p>首先我们把web微信的登录过程划分成以下几个步骤。</p>
+<p>而后我们将web微信的登录过程划分成以下几个步骤。</p>
 
 <ul>
-<li>打开web微信首页</li>
-<li>扫描二维码</li>
-<li>手机确认登录</li>
-<li>首页自动跳转进入</li>
+<li>1.打开web微信首页</li>
+<li>2.扫描二维码</li>
+<li>3.手机确认登录</li>
+<li>4.首页自动跳转进入</li>
 </ul>
+
+<h1 id="0x02过程详解">0x02过程详解</h1>
+
+<h2 id="1-打开web微信首页">1.打开web微信首页</h2>
+
+<!--首先根据源码分析我们得知，```appid```为固定内容```wx782c26e4c19acffb```，而 ```deviceid```为```js```代码随机生成。
+
+![](/img/content_img/webot/getDeviceID.png)
+
+这里我们进行复现。
+
+```python
+import random
+def create_device_id():
+    return f"e{str(random.random())[2:17]}"
+    
+create_device_id()
+
+>>> 'e094388356198767'
+
+```-->
+
+<p>首先我们需要获取到二维码以用于扫描。通过观察web请求过程我们发现，<code>https://login.weixin.qq.com/qrcode/【xxx】</code>为其实际地址。而<code>【xxx】</code>的内容取决于对<code>/jslogin</code>的请求结果。</p>
+
+<p><img src="/img/content_img/webot/wechat_main.gif" alt="" /></p>
+
+<p>通过搜索关键字 <strong class='red'> <code>jslogin</code> </strong> 我们发现了些有趣的内容，在这一段位置包含了后续所有请求所需的路径。包括当前关联的 <strong class='red'><code>API_jsLogin</code></strong></p>
+
+<p><img src="/img/content_img/webot/jslogin.png" alt="" /></p>
+
+<p>所以我们得知该路径为如下地址，尾部<code>_</code>的时间戳可忽略。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">https://login.wx.qq.com/jslogin?appid<span style="color:#f92672">=</span>wx782c26e4c19acffb&amp;redirect_uri<span style="color:#f92672">=</span>https%3A%2F%2Fwx.qq.com%2Fcgi-bin%2Fmmwebwx-bin%2Fwebwxnewloginpage&amp;fun<span style="color:#f92672">=</span>new&amp;lang<span style="color:#f92672">=</span>zh_CN</code></pre></div>
+<h2 id="2-获取二维码图片">2.获取二维码图片</h2>
+
+<p>现在我们模拟获取并打印 <strong class='red'><code>QRcode</code></strong>的过程。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> re
+<span style="color:#f92672">from</span> imgcat <span style="color:#f92672">import</span> imgcat
+<span style="color:#f92672">import</span> requests_html
+
+session <span style="color:#f92672">=</span> requests_html<span style="color:#f92672">.</span>HTMLSession()
+API_jsLogin <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;https://login.wx.qq.com/jslogin?appid=wx782c26e4c19acffb&amp;redirect_uri=https%3A</span><span style="color:#e6db74">%2F%2F</span><span style="color:#e6db74">wx.qq.com</span><span style="color:#e6db74">%2F</span><span style="color:#e6db74">cgi-bin</span><span style="color:#e6db74">%2F</span><span style="color:#e6db74">mmwebwx-bin</span><span style="color:#e6db74">%2F</span><span style="color:#e6db74">webwxnewloginpage&amp;fun=new&amp;lang=zh_CN&#39;</span>
+QR_code <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;https://login.weixin.qq.com/qrcode/{}&#39;</span>
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_qrcode_uid</span>():
+    resp <span style="color:#f92672">=</span> session<span style="color:#f92672">.</span>get(API_jsLogin)
+    uid <span style="color:#f92672">=</span> re<span style="color:#f92672">.</span>split(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#39;&#34;|&#34;;&#39;</span>, resp<span style="color:#f92672">.</span>text)[<span style="color:#ae81ff">1</span>]
+    <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#39;uid is {uid}&#39;</span>)
+    <span style="color:#66d9ef">return</span> uid
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_qrcode_img</span>(uid):
+    resp <span style="color:#f92672">=</span> session<span style="color:#f92672">.</span>get(QR_code<span style="color:#f92672">.</span>format(uid))
+    <span style="color:#66d9ef">return</span> imgcat(resp<span style="color:#f92672">.</span>content)
+    
+uid <span style="color:#f92672">=</span> get_qrcode_uid()
+get_qrcode_img(uid)</code></pre></div>
+<p>这边我们使用 <strong class='red'><code>imgcat</code></strong>来直接在命令行中显示图片，注意，此模块只适用于<code>mac</code>。我们将如上代码写入名为<strong class='red'><code>testimg.py</code></strong>中并运行得到如下结果。可见二维码已经被成功打印。</p>
+
+<p><img src="/img/content_img/webot/testimg.png" alt="" /></p>
+
+<h2 id="3-模拟扫描及确认过程">3.模拟扫描及确认过程</h2>
+
+<p>现在我们是不是扫码就登录了呢。可惜并不是，我们需要开启一个超时时间为<strong class='red'><code>25秒</code></strong>的循环请求，总循环时间不超过<strong class='red'><code>5分钟</code></strong>且直到成功为止。🤔或许有同学会问，为什么呢？我们不妨回过头来观察下之前的过程动画。在获取到二维码之前，有一个状态一直为<strong class='red'><code>pedding</code></strong>的请求。</p>
+
+<p><img src="/img/content_img/webot/loginpedding.png" alt="" /></p>
+
+<p>而在我们通过手机微信完成扫描的瞬间，该请求完成了。并且该请求返回的内容包含一张<strong class='red'><code>base64</code></strong>编码的图像即你的头像。</p>
+
+<p>接下来我们要做的是，在客户端进行确认登录的操作。通过观察请求过程我们发现，<strong class='red'>监听二维码扫描</strong>及<strong class='red'>登录确认</strong>几乎为同一个请求，于是我们编写如下代码进行模拟。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 延用上文session及所有import</span>
+mport execjs
+<span style="color:#f92672">import</span> time
+<span style="color:#f92672">import</span> base64
+
+API_login <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;https://wx.qq.com/cgi-bin/mmwebwx-bin/login&#39;</span>
+API_check_login <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;https://login.wx.qq.com/cgi-bin/mmwebwx-bin/login&#39;</span>
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_timestamp</span>(reverse<span style="color:#f92672">=</span>False):
+    <span style="color:#66d9ef">if</span> reverse:
+        <span style="color:#66d9ef">return</span> execjs<span style="color:#f92672">.</span>eval(<span style="color:#e6db74">&#34;~new Date&#34;</span>)
+    <span style="color:#66d9ef">return</span> int(time<span style="color:#f92672">.</span>time() <span style="color:#f92672">*</span> <span style="color:#ae81ff">1e3</span>)
+        
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">login_wait</span>(confirm <span style="color:#f92672">=</span> True):
+    <span style="color:#66d9ef">return</span> session<span style="color:#f92672">.</span>get(
+        API_check_login <span style="color:#66d9ef">if</span> confirm <span style="color:#66d9ef">else</span> API_login,
+        params<span style="color:#f92672">=</span>{
+            <span style="color:#e6db74">&#34;loginicon&#34;</span>: <span style="color:#e6db74">&#34;true&#34;</span>,
+            <span style="color:#e6db74">&#34;uuid&#34;</span>: uid,
+            <span style="color:#e6db74">&#34;tip&#34;</span>: <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">if</span> confirm <span style="color:#66d9ef">else</span> <span style="color:#ae81ff">1</span>,
+            <span style="color:#e6db74">&#34;r&#34;</span>: get_timestamp(True),
+            <span style="color:#e6db74">&#34;_&#34;</span>: get_timestamp()
+        },timeout<span style="color:#f92672">=</span><span style="color:#ae81ff">25</span>)
+        
+nums <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>
+<span style="color:#66d9ef">while</span> nums <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>:
+    <span style="color:#66d9ef">try</span>:
+        <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;等待客户端扫描，剩余次数&#34;</span>, nums)
+        res <span style="color:#f92672">=</span> login_wait()
+        <span style="color:#66d9ef">if</span> <span style="color:#e6db74">&#34;userAvatar&#34;</span> <span style="color:#f92672">in</span> res<span style="color:#f92672">.</span>text:
+            <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;即将打印头像&#34;</span>)
+            imgcat(base64<span style="color:#f92672">.</span>b64decode(re<span style="color:#f92672">.</span>findall(<span style="color:#e6db74">&#34;base64,(.*?)&#39;;&#34;</span>, res<span style="color:#f92672">.</span>text)[<span style="color:#ae81ff">0</span>]))
+            <span style="color:#66d9ef">break</span>
+        nums <span style="color:#f92672">-=</span> <span style="color:#ae81ff">1</span>
+    <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">Exception</span> <span style="color:#66d9ef">as</span> e:
+        <span style="color:#66d9ef">pass</span>
+    
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;等待客户端确认&#34;</span>)
+redirect_uri <span style="color:#f92672">=</span> re<span style="color:#f92672">.</span>findall(<span style="color:#e6db74">&#39;redirect_uri=&#34;(.*?)&#34;&#39;</span>,login_wait(True)<span style="color:#f92672">.</span>text)[<span style="color:#ae81ff">0</span>]
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;即将跳转&#39;</span>,redirect_uri)</code></pre></div>
+<p>运行如上代码后。我们通过手机扫码机确认并成功获取了自己的头像及确认后需跳转的url。</p>
+
+<p><img src="/img/content_img/webot/logincheck.png" alt="" /></p>
+
+<h2 id="4-完成登录">4.完成登录</h2>
+
+<p>在获取<strong class='red'><code>redirect_uri</code></strong>后，我们直接将其进行访问以获取必须票据，其中结果为一个待处理的<strong class='red'><code>xml</code></strong>格式字符串。我们将编写如下代码进行模拟及处理。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_auth_data</span>(resp):
+    <span style="color:#66d9ef">return</span> {
+        key: resp<span style="color:#f92672">.</span>html<span style="color:#f92672">.</span>find(key)[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>text
+        <span style="color:#66d9ef">for</span> key <span style="color:#f92672">in</span> [<span style="color:#e6db74">&#34;skey&#34;</span>, <span style="color:#e6db74">&#34;wxsid&#34;</span>, <span style="color:#e6db74">&#34;wxuin&#34;</span>, <span style="color:#e6db74">&#34;pass_ticket&#34;</span>, <span style="color:#e6db74">&#34;isgrayscale&#34;</span>]
+    }
+
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_ticket</span>():
+    resp <span style="color:#f92672">=</span> session<span style="color:#f92672">.</span>get(
+        redirect_uri, params<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#34;fun&#34;</span>: <span style="color:#e6db74">&#34;new&#34;</span>, <span style="color:#e6db74">&#34;lang&#34;</span>: <span style="color:#e6db74">&#34;zh_CN&#34;</span>, <span style="color:#e6db74">&#34;_&#34;</span>: get_timestamp()}
+    )
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Get Ticket:&#34;</span>, requests_html<span style="color:#f92672">.</span>requests<span style="color:#f92672">.</span>utils<span style="color:#f92672">.</span>dict_from_cookiejar(resp<span style="color:#f92672">.</span>cookies))
+    auth_data <span style="color:#f92672">=</span> get_auth_data(resp)
+    session<span style="color:#f92672">.</span>cookies<span style="color:#f92672">.</span>update(
+        requests_html<span style="color:#f92672">.</span>requests<span style="color:#f92672">.</span>utils<span style="color:#f92672">.</span>cookiejar_from_dict(
+            {<span style="color:#e6db74">&#34;last_wxuin&#34;</span>: auth_data[<span style="color:#e6db74">&#34;wxuin&#34;</span>]}
+        )
+    )
+    <span style="color:#66d9ef">if</span> list(filter(<span style="color:#66d9ef">lambda</span> item: item[<span style="color:#ae81ff">1</span>], auth_data<span style="color:#f92672">.</span>items())):
+        <span style="color:#66d9ef">return</span> auth_data
+
+
+auth_data <span style="color:#f92672">=</span> get_ticket()</code></pre></div>
+<p>现在，我们也成功得取得了票据信息。此处的信息将帮助我们得以成功获取个人实况信息。</p>
+
+<p><img src="/img/content_img/webot/getticket.png" alt="" /></p>
+
+<h2 id="5-登录后的信息获取">5.登录后的信息获取</h2>
+
+<p>接下来我们看到下一个请求的响应体中，已经包含了我的昵称<strong class='red'><code>S045pd</code></strong>。也就是说此刻我们已成功登录，并且该请求获取了当前个人的信息。</p>
+
+<p><img src="/img/content_img/webot/loginsuccess.png" alt="" /></p>
+
+<p>这里挑选了几个较为直观的字段：</p>
+
+<ul>
+<li><code>ChatSet</code> 当前消息对象ID集合若干个（你在和谁聊天top10）</li>
+<li><code>ContactList</code> 当前消息对象集合若干个（你在和谁聊天top10）
+
+<ul>
+<li><code>MemberList</code> 如果为群组，则为群组人员列表</li>
+</ul></li>
+<li><code>MPSubscribeMsgList</code> 公众号列表</li>
+<li><code>SKey</code> 一个重要的参数</li>
+<li><code>SyncKey</code> 一个消息交互的重要参数</li>
+<li><code>SystemTime</code> 系统时间</li>
+<li><code>User</code> 用户信息
+
+<ul>
+<li><code>HeadImgUrl</code> 头像</li>
+<li><code>NickName</code> 昵称</li>
+<li><code>Sex</code> 性别</li>
+<li><code>Signature</code> 个性签名</li>
+<li><code>UserName</code> 当前ID</li>
+</ul></li>
+</ul>
+
+<p>当然这里获取的仅仅是基础信息，好友列表并不是全的。下期将编写关于<strong class='red'> 《Webot微信机器人项目实战【好友导出】》</strong>。</p>
+
+<p>在公众号后台回复：<code>webot_l1</code>即可获得此次文章所用代码。</p>
+
+<p>完整代码欢迎关注开源项目： <a href="```https://github.com/aoii103/Webot```">Webot</a></p>
+
+<hr />
+
+<p>更多精彩尽在公众号：<strong><code>进击的Hunter</code></strong></p>
+
+<p><img src="https://pyocean.com/img/github_icon.jpeg" alt="qrcode" /></p>
+
+<style>
+.red {
+    color:red;
+}
+</style>
 		</div>
 		
 <div class="post__tags tags clearfix">
@@ -115,10 +329,7 @@ if (!doNotTrack) {
 
 <nav class="post-nav flex">
 	<div class="post-nav__item post-nav__item--prev">
-		<a class="post-nav__link" href="/post/2019_07_05_%E5%85%B3%E4%BA%8E%E4%BB%A3%E7%90%86%E5%8C%BF%E5%90%8D%E7%AD%89%E7%BA%A7%E6%A3%80%E6%B5%8B/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">关于代理匿名等级检测</p></a>
-	</div>
-	<div class="post-nav__item post-nav__item--next">
-		<a class="post-nav__link" href="/post/2019_07_20_%E4%B8%80%E4%B8%AA%E7%AE%80%E6%98%93%E7%9A%84celery&#43;sqlite%E6%A1%88%E4%BE%8B/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">一个简易的celery&#43;sqlite案例</p></a>
+		<a class="post-nav__link" href="/post/2019_09_05_%E4%B8%80%E6%AC%A1%E5%AF%B9js%E6%B7%B7%E6%B7%86%E4%BB%A3%E7%A0%81%E7%9A%84%E7%BE%8E%E5%8C%96%E8%BF%87%E7%A8%8B/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">一次对js混淆代码的美化过程</p></a>
 	</div>
 </nav>
 

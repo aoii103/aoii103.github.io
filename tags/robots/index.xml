@@ -6,7 +6,7 @@
     <description>Recent content in Robots on 进击的Robot</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Sat, 06 Jul 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 19 Sep 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://pyocean.com/tags/robots/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,11 +14,10 @@
     <item>
       <title>Webot微信机器人项目实战【登录】</title>
       <link>https://pyocean.com/post/2019_07_06_webot_%E5%BE%AE%E4%BF%A1%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AE%9E%E6%88%981/</link>
-      <pubDate>Sat, 06 Jul 2019 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 19 Sep 2019 00:00:00 +0000</pubDate>
       
       <guid>https://pyocean.com/post/2019_07_06_webot_%E5%BE%AE%E4%BF%A1%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AE%9E%E6%88%981/</guid>
-      <description>逻辑图集 登录逻辑 过程分解 首先我们把web微信的登录过程划分成以下几个步骤。
- 打开web微信首页 扫描二维码 手机确认登录 首页自动跳转进入 </description>
+      <description>&lt;p&gt;相信各位都有在使用微信，并且也知晓web版微信的存在。今天我们就来讲一下，如何通过模拟web版微信接口来制作一个全自动的微信机器人。本篇是该实战项目的第一篇，主讲如何实现一个登陆过程。整个的分析过程实际上是对&lt;code&gt;https://res.wx.qq.com/a/wx_fed/webwx/res/static/js/index_4f3487a.js&lt;/code&gt;文件的解读🐶。&lt;/p&gt;</description>
     </item>
     
   </channel>
