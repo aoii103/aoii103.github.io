@@ -80,7 +80,8 @@
       <pubDate>Sat, 06 Jul 2019 00:00:00 +0000</pubDate>
       
       <guid>https://pyocean.com/post/2019_07_06_webot_%E5%BE%AE%E4%BF%A1%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AE%9E%E6%88%981/</guid>
-      <description></description>
+      <description>逻辑图集 登录逻辑 过程分解 首先我们把web微信的登录过程划分成以下几个步骤。
+ 打开web微信首页 扫描二维码 手机确认登录 首页自动跳转进入 </description>
     </item>
     
     <item>
