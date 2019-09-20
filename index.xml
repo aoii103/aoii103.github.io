@@ -224,7 +224,8 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://pyocean.com/post/up/</guid>
-      <description>&lt;p&gt;相信各位都有在使用微信，并且也知晓web版微信的存在。今天我们就来讲一下，如何通过模拟web版微信接口来制作一个全自动的微信机器人。本篇是该实战项目的第一篇，主讲如何实现一个登陆过程。整个的分析过程实际上是对&lt;code&gt;https://res.wx.qq.com/a/wx_fed/webwx/res/static/js/index_4f3487a.js&lt;/code&gt;文件的解读🐶。&lt;/p&gt;</description>
+      <description>&lt;p&gt;&lt;img src=&#34;https://pyocean.com/img/content_img/webot/WeChatScreen.jpg&#34; alt=&#34;&#34; /&gt;
+相信各位都有在使用微信，并且也知晓web版微信的存在。今天我们就来讲一下，如何通过模拟web版微信接口来制作一个全自动的微信机器人。本篇是该实战项目的第一篇，主讲如何实现一个登陆过程。整个的分析过程实际上是对&lt;code&gt;https://res.wx.qq.com/a/wx_fed/webwx/res/static/js/index_4f3487a.js&lt;/code&gt;文件的解读🐶。&lt;/p&gt;</description>
     </item>
     
   </channel>
