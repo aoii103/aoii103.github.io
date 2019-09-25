@@ -70,6 +70,7 @@ print("即将跳转", redirect_uri)
 
 from pprint import pprint
 
+
 def get_auth_data(resp):
     return {
         key: resp.html.find(key)[0].text
@@ -96,4 +97,3 @@ def get_ticket():
 auth_data = get_ticket()
 print("Get Auth_data:")
 pprint(auth_data)
-

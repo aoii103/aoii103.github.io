@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Webot微信机器人项目实战【通讯录导出与分析】 - 进击的Hunter</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta name="generator" content="Hugo 0.53" />
+	<meta property="og:title" content="Webot微信机器人项目实战【通讯录导出与分析】" />
+<meta property="og:description" content="通过对上篇的阅读，我们已经学习到了对web微信的登录过程分析并成功进行模拟。那今天我们就接着讲，如何将个人通讯录列表导出为一个excel文件。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://pyocean.com/post/2019_09_24_webot_%E5%BE%AE%E4%BF%A1%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AE%9E%E6%88%982/" /><meta property="article:published_time" content="2019-09-24T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2019-09-24T00:00:00&#43;00:00"/>
+
+	<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Webot微信机器人项目实战【通讯录导出与分析】"/>
+<meta name="twitter:description" content="通过对上篇的阅读，我们已经学习到了对web微信的登录过程分析并成功进行模拟。那今天我们就接着讲，如何将个人通讯录列表导出为一个excel文件。"/>
+
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-135738940-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="进击的Hunter" rel="home">
+				<div class="logo__title">进击的Hunter</div>
+				<div class="logo__tagline">Strange new light can be just as frightening as the dark.</div>
+			</a>
+		</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Webot微信机器人项目实战【通讯录导出与分析】</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2019-09-24T00:00:00">September 24, 2019</time>
+</div>
+</div>
+		</header>
+		<figure class="post__thumbnail">
+			<img src="/img/content_img/webot/wechat_output.jpg" alt="Webot微信机器人项目实战【通讯录导出与分析】">
+		</figure>
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+<ul>
+<li><a href="#0x00搜索思路">0x00搜索思路</a>
+<ul>
+<li><a href="#0x01-登录初始化补充">0x01 登录初始化补充</a></li>
+<li><a href="#0x02-获取通讯录详情">0x02 获取通讯录详情</a></li>
+</ul></li>
+<li><a href="#0x03-数据导出">0x03 数据导出</a></li>
+<li><a href="#0x04-数据分析">0x04 数据分析</a>
+<ul>
+<li><a href="#1-好友城市分布">1. 好友城市分布</a></li>
+<li><a href="#2-头像图片墙制作">2. 头像图片墙制作</a></li>
+<li><a href="#3-好友个性签名词云">3. 好友个性签名词云</a></li>
+</ul></li>
+</ul>
+</nav>
+	</div>
+</div>
+<div class="content post__content clearfix">
+			<p>通过对上篇的阅读，我们已经学习到了对web微信的登录过程分析并成功进行模拟。那今天我们就接着讲，如何将个人通讯录列表导出为一个<code>excel</code>文件。</p>
+
+<h1 id="0x00搜索思路">0x00搜索思路</h1>
+
+<p>首先根据常规爬虫的方法，我们会从通讯录栏目开始入手。通过浏览器的开发者工具审查单个好友的头像我们发现，头像所对应的实际地址中有一段关键的get参即<code>username=@9d22fd69c1e6f628da93ba5a06e4aaca</code>成功得引起了我们的注意。</p>
+
+<p><img src="/img/content_img/webot/wechat_contacts.png" alt="wechat_contacts" /></p>
+
+<p>接下来我们通过在<code>Network</code>中进行过滤存在<code>@9d22fd69c1e6f628da93ba5a06e4aaca</code>的请求。成功得截取到几段请求，其中第一段路径结尾为<code>webwxgetcontact</code>且响应结果为一段标准json。</p>
+
+<p>而<code>MemberCount</code>为个人的好友数量，<code>MemberList</code>为全部好友的摘要信息。非常好，现在我们已经成功得找到了获取通讯录概要的请求。</p>
+
+<p><img src="/img/content_img/webot/wechat_contact_req.png" alt="wechat_contact_req" /></p>
+
+<h2 id="0x01-登录初始化补充">0x01 登录初始化补充</h2>
+
+<blockquote>
+<p>在上一篇文章里面我们成功登录，不过在我的大意之下漏掉了获取登录后的初始化信息过程，也就是对 <strong>webwxinit</strong>的模拟，在这里补上。</p>
+</blockquote>
+
+<p>首先我们看到。该请求为一个<code>POST</code>请求，其中包含一个<code>r</code>键<code>param</code>及格式为<code>{BaseRequest: {Uin: &quot;918200740&quot;, Sid: &quot;KucuigStPnvhKEz1&quot;, Skey: &quot;&quot;, DeviceID: &quot;e054282334933604&quot;}}</code>的请求体。通过关键<code>webwxinit</code>搜索，我们发现了该请求的实际组成。</p>
+
+<p><img src="/img/content_img/webot/webwxinit.gif" alt="webwxinit.gif" /></p>
+
+<p>并且经过进一步搜索我们获取了<code>Uin、Sid、Skey、DeviceID</code>四项的获取方式，前三者均从<code>auth_data</code>中获取，而<code>DeviceID</code>为固定生成的随机数据。接下来我们编写脚本模拟登录后初始化。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 承接上文所有import、方法及数据</span>
+
+mport random
+API_webwxinit <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;https://wx.qq.com/cgi-bin/mmwebwx-bin/webwxinit&#34;</span>
+my_id <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">create_device_id</span>():
+    <span style="color:#66d9ef">return</span> f<span style="color:#e6db74">&#34;e{str(random.random())[2:17]}&#34;</span>
+
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_base_request</span>():
+    <span style="color:#66d9ef">return</span> {
+        <span style="color:#e6db74">&#34;BaseRequest&#34;</span>: {
+            <span style="color:#e6db74">&#34;Uin&#34;</span>: auth_data[<span style="color:#e6db74">&#34;wxuin&#34;</span>],
+            <span style="color:#e6db74">&#34;Sid&#34;</span>: auth_data[<span style="color:#e6db74">&#34;wxsid&#34;</span>],
+            <span style="color:#e6db74">&#34;Skey&#34;</span>: auth_data[<span style="color:#e6db74">&#34;skey&#34;</span>],
+            <span style="color:#e6db74">&#34;DeviceID&#34;</span>: create_device_id(),
+        }
+    }
+
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">login_success_init</span>():
+    resp <span style="color:#f92672">=</span> session<span style="color:#f92672">.</span>post(
+        API_webwxinit, params<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#34;r&#34;</span>: get_timestamp(True)}, json<span style="color:#f92672">=</span>get_base_request()
+    )
+    resp<span style="color:#f92672">.</span>encoding <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;utf8&#34;</span>
+    data <span style="color:#f92672">=</span> resp<span style="color:#f92672">.</span>json()
+    my_id <span style="color:#f92672">=</span> data[<span style="color:#e6db74">&#34;User&#34;</span>][<span style="color:#e6db74">&#34;UserName&#34;</span>]
+    <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;{&#39;Welcome&#39;.center(20,&#39;*&#39;)}: [{data[&#39;User&#39;][&#39;NickName&#39;]}]&#34;</span>)
+    <span style="color:#66d9ef">return</span> data
+
+
+person_data <span style="color:#f92672">=</span> login_success_init()</code></pre></div>
+<p>接下来，我们运行脚本。可以看到我的昵称<code>S045pd</code>成功得打印在了屏幕上。</p>
+
+<p><img src="/img/content_img/webot/success_init.png" alt="success_init.png" /></p>
+
+<h2 id="0x02-获取通讯录详情">0x02 获取通讯录详情</h2>
+
+<p>在完成登录初始化之后，我们开始编写获取通讯的代码。首先我们查看该请求附带了4个参数且都可以在在现有数据中获取到，例如<code>skey</code>就包含在<code>auth_data</code>中。</p>
+
+<p><img src="/img/content_img/webot/getcontacts.png" alt="getcontacts.png" /></p>
+
+<p>我们将其转变为如下代码。并将获取到的好友数量进行打印，整个结果赋值给<code>contacts</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 承接上文所有import、方法及数据</span>
+
+API_webwxgetcontact <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;https://wx.qq.com/cgi-bin/mmwebwx-bin/webwxgetcontact&#34;</span>
+
+contacts <span style="color:#f92672">=</span> {}
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_contact</span>():
+    resp <span style="color:#f92672">=</span> session<span style="color:#f92672">.</span>get(
+        API_webwxgetcontact,
+        params<span style="color:#f92672">=</span>{
+            <span style="color:#e6db74">&#34;lang&#34;</span>: <span style="color:#e6db74">&#34;zh_CN&#34;</span>,
+            <span style="color:#e6db74">&#34;r&#34;</span>: get_timestamp(),
+            <span style="color:#e6db74">&#34;seq&#34;</span>: <span style="color:#ae81ff">0</span>,
+            <span style="color:#e6db74">&#34;skey&#34;</span>: auth_data[<span style="color:#e6db74">&#34;skey&#34;</span>],
+        },
+    )
+    data <span style="color:#f92672">=</span> resp<span style="color:#f92672">.</span>json()
+    <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;Get friends: [{data[&#39;MemberCount&#39;]}]&#34;</span>)
+    <span style="color:#66d9ef">return</span> data
+
+
+contacts <span style="color:#f92672">=</span> get_contact()</code></pre></div>
+<p>获取到了616个好友，比前几十分钟前多了俩。</p>
+
+<p><img src="/img/content_img/webot/getfriends.png" alt="getfriends.png" /></p>
+
+<p>我们将结果存入了<code>contacts</code>变量中以作备用。这边随机选取了一段内容 可以看到其中有很多字段可以直接根据键名知道大概的意思。</p>
+
+<p><img src="/img/content_img/webot/simple.png" alt="simple.png" /></p>
+
+<p>例如:</p>
+
+<ul>
+<li><code>Signature</code> 个性签名</li>
+<li><code>Sex</code> 性别</li>
+<li><code>NickName</code> 昵称</li>
+<li><code>Province</code> 所在省</li>
+</ul>
+
+<p>&hellip;等等我就不一一列举了</p>
+
+<h1 id="0x03-数据导出">0x03 数据导出</h1>
+
+<p>contacts以字典的方式保存着个人通讯录的数据，而现在就到了将它转换成一个excel的时候了。为了不让结果内容更直观，我们决定将每个人的头像一并获取到。</p>
+
+<p>首先我们设定好主域名链接<code>MAIN_URI</code>及媒体文件存放目录对象<code>MEDIA_PATH</code>备用。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 承接上文所有import、方法及数据</span>
+<span style="color:#f92672">import</span> progressbar
+<span style="color:#f92672">import</span> string
+<span style="color:#f92672">import</span> pathlib
+<span style="color:#f92672">from</span> io <span style="color:#f92672">import</span> BytesIO
+<span style="color:#f92672">from</span> openpyxl <span style="color:#f92672">import</span> Workbook
+<span style="color:#f92672">from</span> openpyxl.drawing.image <span style="color:#f92672">import</span> Image <span style="color:#66d9ef">as</span> openpyxlImage
+<span style="color:#f92672">from</span> PIL <span style="color:#f92672">import</span> Image
+<span style="color:#f92672">from</span> urllib.parse <span style="color:#f92672">import</span> urljoin
+
+
+MAIN_URI <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;https://wx.qq.com/&#34;</span>
+MEDIA_PATH <span style="color:#f92672">=</span> pathlib<span style="color:#f92672">.</span>Path(<span style="color:#e6db74">&#34;images&#34;</span>)</code></pre></div>
+<p>继而通过预设一个<code>get_pic</code>作为头像抓取的方法。结果以用户昵称拼音缩写作为文件名存入<code>images</code>当中并返回图像二进制内容。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_pic</span>(data):
+    <span style="color:#66d9ef">try</span>:
+        img <span style="color:#f92672">=</span> session<span style="color:#f92672">.</span>get(urljoin(MAIN_URI, data[<span style="color:#e6db74">&#34;HeadImgUrl&#34;</span>]))<span style="color:#f92672">.</span>content
+        <span style="color:#66d9ef">with</span> (MEDIA_PATH <span style="color:#f92672">/</span> f<span style="color:#e6db74">&#34;{data[&#39;PYInitial&#39;]}_{data[&#39;VerifyFlag&#39;]}.png&#34;</span>)<span style="color:#f92672">.</span>open(<span style="color:#e6db74">&#34;wb&#34;</span>) <span style="color:#66d9ef">as</span> file:
+            file<span style="color:#f92672">.</span>write(img)
+        <span style="color:#66d9ef">return</span> img
+    <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">Exception</span> <span style="color:#66d9ef">as</span> e:
+        <span style="color:#66d9ef">print</span>(e)</code></pre></div>
+<p>最后我们编写了<code>export_all_contact</code>作为生成并导出为excel文件的方法。由于要插入图片，所以我们选用了<code>openpyxl</code>而不是常见的<code>pandas</code>。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">export_all_contact</span>():
+    wb <span style="color:#f92672">=</span> Workbook()
+    sheet <span style="color:#f92672">=</span> wb<span style="color:#f92672">.</span>active
+    keys <span style="color:#f92672">=</span> contacts[<span style="color:#e6db74">&#34;MemberList&#34;</span>][<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>keys()
+
+    <span style="color:#66d9ef">for</span> x, key <span style="color:#f92672">in</span> enumerate(keys):  <span style="color:#75715e"># 将列名写入第一行</span>
+        sheet<span style="color:#f92672">.</span>cell(row<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, column<span style="color:#f92672">=</span>x <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>, value<span style="color:#f92672">=</span>key)
+
+    <span style="color:#75715e"># 逐行写入数据</span>
+    <span style="color:#66d9ef">for</span> y, item <span style="color:#f92672">in</span> progressbar<span style="color:#f92672">.</span>progressbar(enumerate(contacts[<span style="color:#e6db74">&#34;MemberList&#34;</span>])):
+        y <span style="color:#f92672">=</span> y <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span>
+        <span style="color:#66d9ef">for</span> x, key <span style="color:#f92672">in</span> enumerate(keys):  <span style="color:#75715e"># 每行逐列写入数据</span>
+            x <span style="color:#f92672">=</span> x <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
+            value <span style="color:#f92672">=</span> item[key]  <span style="color:#75715e"># 待填充值</span>
+
+            <span style="color:#66d9ef">if</span> key <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;HeadImgUrl&#34;</span>:  <span style="color:#75715e"># 判断是否不为图片路径字段</span>
+                <span style="color:#66d9ef">if</span> key <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;MemberList&#34;</span>:
+                    value <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">.</span>join(value)
+                sheet<span style="color:#f92672">.</span>cell(row<span style="color:#f92672">=</span>y, column<span style="color:#f92672">=</span>x, value<span style="color:#f92672">=</span>value)  <span style="color:#75715e"># 常规插入</span>
+            <span style="color:#66d9ef">else</span>:
+                <span style="color:#75715e"># 如果是图片路径那么就取到图片二进制流</span>
+                pic <span style="color:#f92672">=</span> get_pic(item)
+                <span style="color:#66d9ef">if</span> pic:  <span style="color:#75715e"># 确认确实有内容</span>
+                    x <span style="color:#f92672">=</span> x <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>
+                    index_code <span style="color:#f92672">=</span> string<span style="color:#f92672">.</span>ascii_uppercase[x]  <span style="color:#75715e"># 获取到对应列的字母</span>
+                    size <span style="color:#f92672">=</span> (<span style="color:#ae81ff">50</span>, <span style="color:#ae81ff">50</span>)  <span style="color:#75715e"># 指定图片的大小</span>
+                    sheet<span style="color:#f92672">.</span>column_dimensions[index_code]<span style="color:#f92672">.</span>width, sheet<span style="color:#f92672">.</span>row_dimensions[
+                        y
+                    ]<span style="color:#f92672">.</span>height <span style="color:#f92672">=</span> size  <span style="color:#75715e"># 指定将单元格长宽</span>
+                    img <span style="color:#f92672">=</span> openpyxlImage(BytesIO(pic))  <span style="color:#75715e"># 转换为行内可用图像</span>
+                    img<span style="color:#f92672">.</span>width, img<span style="color:#f92672">.</span>height <span style="color:#f92672">=</span> size  <span style="color:#75715e"># 指定图像大小</span>
+                    sheet<span style="color:#f92672">.</span>add_image(img, f<span style="color:#e6db74">&#34;{index_code}{y}&#34;</span>)  <span style="color:#75715e"># 插入该图</span>
+                <span style="color:#66d9ef">else</span>:
+                    sheet<span style="color:#f92672">.</span>cell(row<span style="color:#f92672">=</span>y, column<span style="color:#f92672">=</span>x, value<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span>)  <span style="color:#75715e"># 没有图就空着</span>
+    wb<span style="color:#f92672">.</span>save(<span style="color:#e6db74">&#34;contacts.xlsx&#34;</span>)</code></pre></div>
+<p>运行前我们先判断下媒体目录是否存在，如果不存在就创建，然后再运行导出程序。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> MEDIA_PATH<span style="color:#f92672">.</span>exists():
+    MEDIA_PATH<span style="color:#f92672">.</span>mkdir()
+export_all_contact()</code></pre></div>
+<p>可以看到每个人的数据被不断的读取并获取头像，最终生成了<code>contacts.xlsx</code>文件</p>
+
+<p><img src="/img/content_img/webot/get_excel.gif" alt="get_excel.gif" /></p>
+
+<p>现在我们打开该文件，结果就像下图。</p>
+
+<p><img src="/img/content_img/webot/xlsx.png" alt="xlsx.png" /></p>
+
+<h1 id="0x04-数据分析">0x04 数据分析</h1>
+
+<h2 id="1-好友城市分布">1. 好友城市分布</h2>
+
+<p>我们将使用pyechart模块作为基础并以旭日图的方式来展现好友地区分布关系。这边我们将把数据转移至<code>jupter-notebook</code>做更好得展现。</p>
+
+<p>首先我们引入必备的模块，并设定一个<code>random_color</code>作为旭日图单块区域的随机色以增强对比。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 承接上文所有import、方法及数据</span>
+
+<span style="color:#f92672">from</span> pyecharts <span style="color:#f92672">import</span> options <span style="color:#66d9ef">as</span> opts
+<span style="color:#f92672">from</span> pyecharts.charts <span style="color:#f92672">import</span> Sunburst
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">random_color</span>(): <span style="color:#75715e"># 随机颜色</span>
+    <span style="color:#66d9ef">return</span>  <span style="color:#e6db74">&#34;#&#34;</span><span style="color:#f92672">+</span><span style="color:#e6db74">&#39;&#39;</span><span style="color:#f92672">.</span>join([random<span style="color:#f92672">.</span>choice(<span style="color:#e6db74">&#39;0123456789abcdef&#39;</span>) <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">6</span>)])</code></pre></div>
+<p>继而我们需要吧<code>contacts</code>数据转换为如下格式，例如<code>parent1</code>为北京，<code>child1</code>为朝阳区。<code>colorN</code>则为随机色。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+    <span style="color:#f92672">&#34;name&#34;</span> : <span style="color:#e6db74">&#34;[parent1]&#34;</span>,
+    <span style="color:#f92672">&#34;itemStyle&#34;</span>: {
+        <span style="color:#f92672">&#34;color&#34;</span>: <span style="color:#e6db74">&#34;[colorN]&#34;</span>
+    },
+    <span style="color:#f92672">&#34;children&#34;</span>: [
+        {
+            <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;[child1]&#34;</span>,
+            <span style="color:#f92672">&#34;value&#34;</span>: <span style="color:#ae81ff">1</span>,
+            <span style="color:#f92672">&#34;itemStyle&#34;</span>: {
+            <span style="color:#f92672">&#34;color&#34;</span>: <span style="color:#e6db74">&#34;[colorN]&#34;</span>
+        },
+        <span style="color:#960050;background-color:#1e0010">...</span>
+    },
+    <span style="color:#960050;background-color:#1e0010">...</span>
+    ]
+}</code></pre></div>
+<p>于是我们使用如下<code>format_sunburst_city</code>方法将其整理为所需格式。需要注意的是，web微信所给出的数据中有部分<code>province</code>较长的值，这边我们通过一个长度判断<code>len(province)&gt;5</code>给过滤掉了。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">format_sunburst_city</span>(data): <span style="color:#75715e"># 整理好友城市数据，将其变为一个可以直接使用的字典</span>
+    datas <span style="color:#f92672">=</span> {}
+    <span style="color:#66d9ef">for</span> item <span style="color:#f92672">in</span> data[<span style="color:#e6db74">&#34;MemberList&#34;</span>]:
+        province <span style="color:#f92672">=</span> item[<span style="color:#e6db74">&#39;Province&#39;</span>]
+        city <span style="color:#f92672">=</span> item[<span style="color:#e6db74">&#39;City&#39;</span>]
+        <span style="color:#66d9ef">if</span> len(province) <span style="color:#f92672">&gt;</span><span style="color:#ae81ff">5</span>:
+            <span style="color:#66d9ef">continue</span>
+        <span style="color:#66d9ef">if</span> province <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> datas:
+            datas[province] <span style="color:#f92672">=</span> {}
+        <span style="color:#66d9ef">if</span> city <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> datas[province]:
+            datas[province][city] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+        <span style="color:#66d9ef">else</span>:
+            datas[province][city] <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+
+    result <span style="color:#f92672">=</span> []
+    <span style="color:#66d9ef">for</span> province,pitem <span style="color:#f92672">in</span> datas<span style="color:#f92672">.</span>items():
+        result<span style="color:#f92672">.</span>append({
+            <span style="color:#e6db74">&#39;name&#39;</span>: province,
+            <span style="color:#e6db74">&#39;itemStyle&#39;</span>: {
+                <span style="color:#e6db74">&#39;color&#39;</span>: random_color()
+            },
+            <span style="color:#e6db74">&#39;children&#39;</span>: [{
+                <span style="color:#e6db74">&#39;name&#39;</span>: city,
+                <span style="color:#e6db74">&#39;value&#39;</span>: citem,
+                <span style="color:#e6db74">&#39;itemStyle&#39;</span>: {
+                    <span style="color:#e6db74">&#39;color&#39;</span>: random_color()
+                }
+            } <span style="color:#66d9ef">for</span> city,citem  <span style="color:#f92672">in</span> pitem<span style="color:#f92672">.</span>items()]})
+    <span style="color:#66d9ef">return</span> result
+
+contacts_formated <span style="color:#f92672">=</span> format_sunburst_city(contacts)</code></pre></div>
+<p>在成功整理好数据之后，我们通过<code>sunburst_city</code>将数据载入画布，生成交互式图像。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">sunburst_city</span>(data) <span style="color:#f92672">-&gt;</span> Sunburst: <span style="color:#75715e">#直接带入固定格式数据生成图像</span>
+    <span style="color:#66d9ef">return</span> (
+        Sunburst(init_opts<span style="color:#f92672">=</span>opts<span style="color:#f92672">.</span>InitOpts(width<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;1000px&#34;</span>, height<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;600px&#34;</span>)) <span style="color:#75715e"># 设定画布长宽</span>
+        <span style="color:#f92672">.</span>add(
+            <span style="color:#e6db74">&#34;&#34;</span>,
+            data_pair<span style="color:#f92672">=</span>data, <span style="color:#75715e"># 载入数据</span>
+            highlight_policy<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;ancestor&#34;</span>,
+            radius<span style="color:#f92672">=</span>[<span style="color:#ae81ff">0</span>, <span style="color:#e6db74">&#34;95%&#34;</span>],
+            sort_<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;null&#34;</span>,
+            levels<span style="color:#f92672">=</span>[
+                {}, <span style="color:#75715e"># 第一圈样式，如果有国家的话就不会空着</span>
+                {
+                    <span style="color:#e6db74">&#34;r0&#34;</span>: <span style="color:#e6db74">&#34;15%&#34;</span>,
+                    <span style="color:#e6db74">&#34;r&#34;</span>: <span style="color:#e6db74">&#34;45%&#34;</span>,
+                    <span style="color:#e6db74">&#34;itemStyle&#34;</span>: {<span style="color:#e6db74">&#34;borderWidth&#34;</span>: <span style="color:#ae81ff">2</span>},
+                    <span style="color:#e6db74">&#34;label&#34;</span>: {<span style="color:#e6db74">&#34;rotate&#34;</span>: <span style="color:#e6db74">&#34;tangential&#34;</span>},
+                }, <span style="color:#75715e"># 第二圈样式，对标省</span>
+                {
+                    <span style="color:#e6db74">&#34;r0&#34;</span>: <span style="color:#e6db74">&#34;35%&#34;</span>,
+                    <span style="color:#e6db74">&#34;r&#34;</span>: <span style="color:#e6db74">&#34;70%&#34;</span>,
+                    <span style="color:#e6db74">&#34;label&#34;</span>: {<span style="color:#e6db74">&#34;position&#34;</span>: <span style="color:#e6db74">&#34;outside&#34;</span>, <span style="color:#e6db74">&#34;padding&#34;</span>: <span style="color:#ae81ff">3</span>, <span style="color:#e6db74">&#34;silent&#34;</span>: False}, 
+                    <span style="color:#e6db74">&#34;itemStyle&#34;</span>: {<span style="color:#e6db74">&#34;borderWidth&#34;</span>: <span style="color:#ae81ff">1</span>}
+                }, <span style="color:#75715e"># 最外圈样式，对标市</span>
+            ],
+        )
+        <span style="color:#f92672">.</span>set_global_opts(title_opts<span style="color:#f92672">=</span>opts<span style="color:#f92672">.</span>TitleOpts(title<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Sunburst-城市分布&#34;</span>)) <span style="color:#75715e"># 设定标题</span>
+        <span style="color:#f92672">.</span>set_series_opts(label_opts<span style="color:#f92672">=</span>opts<span style="color:#f92672">.</span>LabelOpts(formatter<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;{b}&#34;</span>)) <span style="color:#75715e">#设定名称</span>
+    )
+
+sunburst_city(contacts_formated)<span style="color:#f92672">.</span>render_notebook()</code></pre></div>
+<p>一切都进行得非常顺利，可以看到最多的果然是浙江的朋友。这边我们需要注意的是，如果我们并不是在<code>jupter_notebook</code>中处理，则需要将其替换为<code>.reader()</code>方法。</p>
+
+<p><img src="/img/content_img/webot/citys_sunburst.gif" alt="citys_sunburst.gif" /></p>
+
+<h2 id="2-头像图片墙制作">2. 头像图片墙制作</h2>
+
+<p>我们将所有的头像都存入了<code>image</code>文件夹中，现在就拿它们来搞点事情吧。制作一张精美的图片墙。</p>
+
+<p>首先我们分析下图片墙的原理。</p>
+
+<ol>
+<li>建立一张长为A 宽为B大小的图像作为画布，长宽比<code>16:9</code>较为合适</li>
+<li>获得抓取到的头像数量</li>
+<li>通过面积计算每张头像需要被压缩到多少</li>
+<li>将每张头像逐行填充到画布中，完成制作</li>
+</ol>
+
+<p>我们设定画布大小为<code>1024*768</code>，并制定一个<code>check_if_can_open</code>作为检查png是否正常的方法。这边已经完成了第一个步骤。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> itertools <span style="color:#f92672">import</span> product
+
+length, weight <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1024</span>, <span style="color:#ae81ff">768</span>)
+
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">check_if_can_open</span>(path):
+    <span style="color:#66d9ef">try</span>:
+        <span style="color:#66d9ef">return</span> Image<span style="color:#f92672">.</span>open(path)
+    <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">Exception</span> <span style="color:#66d9ef">as</span> e:
+        <span style="color:#66d9ef">pass</span></code></pre></div>
+<p>然后我们进行2、3、4步骤的操作，详见行间注释。</p>
+
+<blockquote>
+<p><strong>pathlib</strong>提供了一个很好的方法glob可以直接过滤出所需要的图片。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">make_friends_icon_wall</span>():
+    images <span style="color:#f92672">=</span> list(filter(check_if_can_open, MEDIA_PATH<span style="color:#f92672">.</span>glob(<span style="color:#e6db74">&#34;*_0.png&#34;</span>))) <span style="color:#75715e"># 搜索并过滤为个人的微信号</span>
+    images_length <span style="color:#f92672">=</span> len(images) <span style="color:#75715e"># 计算长度</span>
+    per_size <span style="color:#f92672">=</span> int(math<span style="color:#f92672">.</span>sqrt(length <span style="color:#f92672">*</span> weight <span style="color:#f92672">/</span> images_length)) <span style="color:#75715e"># 计算平均尺寸，正方形</span>
+    image <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>new(<span style="color:#e6db74">&#34;RGBA&#34;</span>, (length, weight)) <span style="color:#75715e"># 设定画布</span>
+    <span style="color:#66d9ef">for</span> indexs, (x, y) <span style="color:#f92672">in</span> enumerate(product(range(int(length <span style="color:#f92672">/</span> per_size)), range(int(weight <span style="color:#f92672">/</span> per_size)))): <span style="color:#75715e"># 迭代全部图像及XY坐标</span>
+        <span style="color:#66d9ef">if</span> indexs <span style="color:#f92672">&gt;=</span> images_length:
+            <span style="color:#66d9ef">break</span>
+        img <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>open(images[indexs]) <span style="color:#75715e"># 打开图像</span>
+        img <span style="color:#f92672">=</span> img<span style="color:#f92672">.</span>resize((per_size, per_size), Image<span style="color:#f92672">.</span>ANTIALIAS) <span style="color:#75715e"># 重新指定头像尺寸</span>
+        image<span style="color:#f92672">.</span>paste(img, (x <span style="color:#f92672">*</span> per_size, y <span style="color:#f92672">*</span> per_size)) <span style="color:#75715e"># 指定对应行列起始点，并粘贴头像</span>
+    image<span style="color:#f92672">.</span>save(<span style="color:#e6db74">&#34;all.png&#34;</span>) <span style="color:#75715e"># 保存结果</span>
+
+
+make_friends_icon_wall()</code></pre></div>
+<p>现在我们得到了所有个人微信好友的图片墙，🤔好多国旗。。这里需要提一下，为什么我要使用<code>*_0.png</code>作为过滤规则。在先前存储头像的时候，我们特定得加上了其<code>VerifyFlag</code>字段，而这个字段就是对于微信号的属性。例如<code>公众号、订阅号、个人、企业微信号</code>等等。</p>
+
+<p><img src="/img/content_img/webot/image_wall.png" alt="image_wall.png" /></p>
+
+<h2 id="3-好友个性签名词云">3. 好友个性签名词云</h2>
+
+<p>在观察源数据的时候我们发现，较少部分的个签存在一些html代码，所以我们通过设定<code>filter_html</code>作为过滤方法。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> jieba
+<span style="color:#f92672">from</span> wordcloud <span style="color:#f92672">import</span> WordCloud
+<span style="color:#f92672">from</span> pyquery <span style="color:#f92672">import</span> PyQuery <span style="color:#66d9ef">as</span> jq
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">filter_html</span>(text):
+    <span style="color:#66d9ef">try</span>:
+        <span style="color:#66d9ef">return</span> jq(text)<span style="color:#f92672">.</span>text()
+    <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">Exception</span> <span style="color:#66d9ef">as</span> e:
+        <span style="color:#66d9ef">return</span> text</code></pre></div>
+<p>而后我们就开始生成词云，由于大部分签名都为中文会导致乱码，所以我们引入了中文字体库<code>HYQiHei-25J.ttf</code>来解决这个问题。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">make_friends_signature_word_cloud</span>():
+    words <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>join([filter_html(item[<span style="color:#e6db74">&#34;Signature&#34;</span>]) <span style="color:#66d9ef">for</span> item <span style="color:#f92672">in</span> contacts[<span style="color:#e6db74">&#34;MemberList&#34;</span>]]) <span style="color:#75715e"># 整合签名</span>
+    jiebares <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34; &#34;</span><span style="color:#f92672">.</span>join(jieba<span style="color:#f92672">.</span>cut(words)) <span style="color:#75715e"># 中文分词</span>
+    wc <span style="color:#f92672">=</span> WordCloud(
+        background_color<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;white&#34;</span>,
+        font_path<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;HYQiHei-25J.ttf&#34;</span>,
+        max_words<span style="color:#f92672">=</span><span style="color:#ae81ff">300</span>,
+        max_font_size<span style="color:#f92672">=</span><span style="color:#ae81ff">40</span>,
+        random_state<span style="color:#f92672">=</span><span style="color:#ae81ff">45</span>,
+    ) <span style="color:#75715e"># 词云配置信息</span>
+    wc<span style="color:#f92672">.</span>generate(jiebares) <span style="color:#75715e"># 生成词云</span>
+    wc<span style="color:#f92672">.</span>to_file(<span style="color:#e6db74">&#34;friends_signature_word_cloud.png&#34;</span>) <span style="color:#75715e"># 保存</span>
+
+make_friends_signature_word_cloud()</code></pre></div>
+<p>通过结果我们不难看出，但凡你生活活跃在上面圈子里头，身边的人就会和你有着类似的标签与共同的爱好。</p>
+
+<p><img src="/img/content_img/webot/friends_signature_word_cloud.png" alt="friends_signature_word_cloud.png" /></p>
+
+<p>下期将编写关于<strong class='red'> 《Webot微信机器人项目实战【消息的传送与接收】》</strong>。</p>
+
+<p>在我的公众号后台回复：<code>微信机器人导出与分析</code>即可获得此次文章所用代码。</p>
+
+<p>完整代码欢迎关注开源项目： <a href="```https://github.com/aoii103/Webot```">Webot</a></p>
+
+<hr />
+
+<p>更多精彩尽在公众号：<strong><code>进击的Hunter</code></strong></p>
+
+<p><img src="https://pyocean.com/img/github_icon.jpeg" alt="qrcode" /></p>
+
+<style>
+.red {
+    color:red;
+}
+</style>
+		</div>
+		
+<div class="post__tags tags clearfix">
+	<svg class="icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="/tags/wechat/" rel="tag">wechat</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/robots/" rel="tag">robots</a></li>
+	</ul>
+</div>
+	</article>
+</main>
+
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/post/2019_09_12_%E9%BB%91%E5%AE%A2%E5%B7%A5%E5%85%B7%E5%A6%82%E4%BD%95%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AA%E9%AB%98%E6%80%A7%E8%83%BD%E7%9A%84title%E6%89%AB%E6%8F%8F%E5%99%A8/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">[黑客工具]如何编写一个异步的批量网站标题扫描器</p></a>
+	</div>
+</nav>
+
+<section class="comments">
+	<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "https-pyocean-com" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2019 s045pd.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script></body>
+</html>

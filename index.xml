@@ -6,17 +6,44 @@
     <description>Recent content on 进击的Hunter</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Thu, 19 Sep 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 24 Sep 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://pyocean.com/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>Webot微信机器人项目实战【通讯录导出与分析】</title>
+      <link>https://pyocean.com/post/2019_09_24_webot_%E5%BE%AE%E4%BF%A1%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AE%9E%E6%88%982/</link>
+      <pubDate>Tue, 24 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://pyocean.com/post/2019_09_24_webot_%E5%BE%AE%E4%BF%A1%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AE%9E%E6%88%982/</guid>
+      <description>&lt;p&gt;通过对上篇的阅读，我们已经学习到了对web微信的登录过程分析并成功进行模拟。那今天我们就接着讲，如何将个人通讯录列表导出为一个&lt;code&gt;excel&lt;/code&gt;文件。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>[黑客工具]如何编写一个异步的批量网站标题扫描器</title>
+      <link>https://pyocean.com/post/2019_09_12_%E9%BB%91%E5%AE%A2%E5%B7%A5%E5%85%B7%E5%A6%82%E4%BD%95%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AA%E9%AB%98%E6%80%A7%E8%83%BD%E7%9A%84title%E6%89%AB%E6%8F%8F%E5%99%A8/</link>
+      <pubDate>Mon, 23 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://pyocean.com/post/2019_09_12_%E9%BB%91%E5%AE%A2%E5%B7%A5%E5%85%B7%E5%A6%82%E4%BD%95%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AA%E9%AB%98%E6%80%A7%E8%83%BD%E7%9A%84title%E6%89%AB%E6%8F%8F%E5%99%A8/</guid>
+      <description>&lt;p&gt;异步编程是一种并行编程，其中允许一个工作单元与主应用程序线程分开运行。而其效率往往比同步代码高出数十倍。今天我就拿前段时间给朋友写的扫描器作为一个案例，带大家进入异步的世界。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>[黑客工具]如何编写一个异步的批量网站标题扫描器</title>
+      <link>https://pyocean.com/post/2019_09_23_%E9%BB%91%E5%AE%A2%E5%B7%A5%E5%85%B7%E5%A6%82%E4%BD%95%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AA%E9%AB%98%E6%80%A7%E8%83%BD%E7%9A%84title%E6%89%AB%E6%8F%8F%E5%99%A8/</link>
+      <pubDate>Mon, 23 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://pyocean.com/post/2019_09_23_%E9%BB%91%E5%AE%A2%E5%B7%A5%E5%85%B7%E5%A6%82%E4%BD%95%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AA%E9%AB%98%E6%80%A7%E8%83%BD%E7%9A%84title%E6%89%AB%E6%8F%8F%E5%99%A8/</guid>
+      <description>&lt;p&gt;异步编程是一种并行编程，其中允许一个工作单元与主应用程序线程分开运行。而其效率往往比同步代码高出数十倍。今天我就拿前段时间给朋友写的扫描器作为一个案例，带大家进入异步的世界。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>Webot微信机器人项目实战【登录】</title>
-      <link>https://pyocean.com/post/2019_07_06_webot_%E5%BE%AE%E4%BF%A1%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AE%9E%E6%88%981/</link>
+      <link>https://pyocean.com/post/2019_09_19_webot_%E5%BE%AE%E4%BF%A1%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AE%9E%E6%88%981/</link>
       <pubDate>Thu, 19 Sep 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://pyocean.com/post/2019_07_06_webot_%E5%BE%AE%E4%BF%A1%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AE%9E%E6%88%981/</guid>
+      <guid>https://pyocean.com/post/2019_09_19_webot_%E5%BE%AE%E4%BF%A1%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AE%9E%E6%88%981/</guid>
       <description>&lt;p&gt;相信各位都有在使用微信，并且也知晓web版微信的存在。今天我们就来讲一下，如何通过模拟web版微信接口来制作一个全自动的微信机器人。本篇是该实战项目的第一篇，主讲如何实现一个登陆过程。整个的分析过程实际上是对&lt;code&gt;https://res.wx.qq.com/a/wx_fed/webwx/res/static/js/index_4f3487a.js&lt;/code&gt;文件的解读🐶。&lt;/p&gt;</description>
     </item>
     
@@ -36,15 +63,6 @@
       
       <guid>https://pyocean.com/post/2019_09_02_python%E4%B8%8A%E7%9A%84%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6/</guid>
       <description>&lt;p&gt;在计算机科学中，算法的时间复杂度（Time complexity）是一个函数，它定性描述该算法的运行时间。 这是一个代表算法输入值的字符串的长度的函数。&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>[黑客工具]如何编写一个高性能的批量网站title扫描器</title>
-      <link>https://pyocean.com/post/2019_09_12_%E9%BB%91%E5%AE%A2%E5%B7%A5%E5%85%B7%E5%A6%82%E4%BD%95%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AA%E9%AB%98%E6%80%A7%E8%83%BD%E7%9A%84title%E6%89%AB%E6%8F%8F%E5%99%A8/</link>
-      <pubDate>Thu, 22 Aug 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://pyocean.com/post/2019_09_12_%E9%BB%91%E5%AE%A2%E5%B7%A5%E5%85%B7%E5%A6%82%E4%BD%95%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AA%E9%AB%98%E6%80%A7%E8%83%BD%E7%9A%84title%E6%89%AB%E6%8F%8F%E5%99%A8/</guid>
-      <description></description>
     </item>
     
     <item>
@@ -198,6 +216,40 @@
       
       <guid>https://pyocean.com/post/2018_11_29_%E5%8A%A8%E5%8A%A8%E6%89%8B%E5%81%9A%E4%B8%80%E4%B8%AAuseragent%E5%BA%93/</guid>
       <description>&lt;p&gt;作为一个爬虫脚本，基本的伪装是很必要的。而User-Agent头这个看似不起眼的元素，却起着至关重要的作用。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>【项目实战】入门教学，如何发送你的第一段异步请求。</title>
+      <link>https://pyocean.com/post/2019_09_20_%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AA%E9%AB%98%E6%80%A7%E8%83%BD%E7%9A%84%E5%BC%82%E6%AD%A5%E7%88%AC%E8%99%AB/</link>
+      <pubDate>Wed, 24 Oct 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://pyocean.com/post/2019_09_20_%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AA%E9%AB%98%E6%80%A7%E8%83%BD%E7%9A%84%E5%BC%82%E6%AD%A5%E7%88%AC%E8%99%AB/</guid>
+      <description>&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; requests
+
+tasks &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; [&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;http://www.baidu.com&amp;#39;&lt;/span&gt;]&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;20&lt;/span&gt;
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; url &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; tasks:
+    requests&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;get(url)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; aiohttp
+&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; asyncio
+
+
+async &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;fetch&lt;/span&gt;(url):
+    async &lt;span style=&#34;color:#66d9ef&#34;&gt;with&lt;/span&gt; aiohttp&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;ClientSession() &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; session:
+        await session&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;get(url)
+
+async &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;run_all&lt;/span&gt;():
+    await asyncio&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;gather(&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;[fetch(url) &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; url &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; tasks ])
+
+asyncio&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;run(run_all())&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>【项目实战】入门教学，如何发送你的第一段异步请求。</title>
+      <link>https://pyocean.com/post/2019_09_21_%E5%A6%82%E4%BD%95%E5%90%8C%E6%97%B6%E5%AF%B9%E6%95%B0%E7%99%BE%E4%B8%AAyoutubechannel%E8%BF%9B%E8%A1%8C%E8%A8%80%E8%AE%BA%E7%9B%91%E6%8E%A7/</link>
+      <pubDate>Wed, 24 Oct 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://pyocean.com/post/2019_09_21_%E5%A6%82%E4%BD%95%E5%90%8C%E6%97%B6%E5%AF%B9%E6%95%B0%E7%99%BE%E4%B8%AAyoutubechannel%E8%BF%9B%E8%A1%8C%E8%A8%80%E8%AE%BA%E7%9B%91%E6%8E%A7/</guid>
+      <description>import requests tasks = [&amp;#39;http://www.baidu.com&amp;#39;]*20 for url in tasks: requests.get(url)import aiohttp import asyncio async def fetch(url): async with aiohttp.ClientSession() as session: await session.get(url) async def run_all(): await asyncio.gather(*[fetch(url) for url in tasks ]) asyncio.run(run_all()) 更多及时资讯欢迎关注我的公众号</description>
     </item>
     
     <item>

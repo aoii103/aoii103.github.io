@@ -6,17 +6,26 @@
     <description>Recent content in Robots on 进击的Hunter</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Thu, 19 Sep 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 24 Sep 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://pyocean.com/tags/robots/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>Webot微信机器人项目实战【通讯录导出与分析】</title>
+      <link>https://pyocean.com/post/2019_09_24_webot_%E5%BE%AE%E4%BF%A1%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AE%9E%E6%88%982/</link>
+      <pubDate>Tue, 24 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://pyocean.com/post/2019_09_24_webot_%E5%BE%AE%E4%BF%A1%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AE%9E%E6%88%982/</guid>
+      <description>&lt;p&gt;通过对上篇的阅读，我们已经学习到了对web微信的登录过程分析并成功进行模拟。那今天我们就接着讲，如何将个人通讯录列表导出为一个&lt;code&gt;excel&lt;/code&gt;文件。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>Webot微信机器人项目实战【登录】</title>
-      <link>https://pyocean.com/post/2019_07_06_webot_%E5%BE%AE%E4%BF%A1%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AE%9E%E6%88%981/</link>
+      <link>https://pyocean.com/post/2019_09_19_webot_%E5%BE%AE%E4%BF%A1%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AE%9E%E6%88%981/</link>
       <pubDate>Thu, 19 Sep 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://pyocean.com/post/2019_07_06_webot_%E5%BE%AE%E4%BF%A1%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AE%9E%E6%88%981/</guid>
+      <guid>https://pyocean.com/post/2019_09_19_webot_%E5%BE%AE%E4%BF%A1%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AE%9E%E6%88%981/</guid>
       <description>&lt;p&gt;相信各位都有在使用微信，并且也知晓web版微信的存在。今天我们就来讲一下，如何通过模拟web版微信接口来制作一个全自动的微信机器人。本篇是该实战项目的第一篇，主讲如何实现一个登陆过程。整个的分析过程实际上是对&lt;code&gt;https://res.wx.qq.com/a/wx_fed/webwx/res/static/js/index_4f3487a.js&lt;/code&gt;文件的解读🐶。&lt;/p&gt;</description>
     </item>
     

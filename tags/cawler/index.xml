@@ -12,6 +12,40 @@
     
     
     <item>
+      <title>【项目实战】入门教学，如何发送你的第一段异步请求。</title>
+      <link>https://pyocean.com/post/2019_09_20_%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AA%E9%AB%98%E6%80%A7%E8%83%BD%E7%9A%84%E5%BC%82%E6%AD%A5%E7%88%AC%E8%99%AB/</link>
+      <pubDate>Wed, 24 Oct 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://pyocean.com/post/2019_09_20_%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AA%E9%AB%98%E6%80%A7%E8%83%BD%E7%9A%84%E5%BC%82%E6%AD%A5%E7%88%AC%E8%99%AB/</guid>
+      <description>&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; requests
+
+tasks &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; [&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;http://www.baidu.com&amp;#39;&lt;/span&gt;]&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;20&lt;/span&gt;
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; url &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; tasks:
+    requests&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;get(url)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; aiohttp
+&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; asyncio
+
+
+async &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;fetch&lt;/span&gt;(url):
+    async &lt;span style=&#34;color:#66d9ef&#34;&gt;with&lt;/span&gt; aiohttp&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;ClientSession() &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; session:
+        await session&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;get(url)
+
+async &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;run_all&lt;/span&gt;():
+    await asyncio&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;gather(&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;[fetch(url) &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; url &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; tasks ])
+
+asyncio&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;run(run_all())&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>【项目实战】入门教学，如何发送你的第一段异步请求。</title>
+      <link>https://pyocean.com/post/2019_09_21_%E5%A6%82%E4%BD%95%E5%90%8C%E6%97%B6%E5%AF%B9%E6%95%B0%E7%99%BE%E4%B8%AAyoutubechannel%E8%BF%9B%E8%A1%8C%E8%A8%80%E8%AE%BA%E7%9B%91%E6%8E%A7/</link>
+      <pubDate>Wed, 24 Oct 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://pyocean.com/post/2019_09_21_%E5%A6%82%E4%BD%95%E5%90%8C%E6%97%B6%E5%AF%B9%E6%95%B0%E7%99%BE%E4%B8%AAyoutubechannel%E8%BF%9B%E8%A1%8C%E8%A8%80%E8%AE%BA%E7%9B%91%E6%8E%A7/</guid>
+      <description>import requests tasks = [&amp;#39;http://www.baidu.com&amp;#39;]*20 for url in tasks: requests.get(url)import aiohttp import asyncio async def fetch(url): async with aiohttp.ClientSession() as session: await session.get(url) async def run_all(): await asyncio.gather(*[fetch(url) for url in tasks ]) asyncio.run(run_all()) 更多及时资讯欢迎关注我的公众号</description>
+    </item>
+    
+    <item>
       <title>一个Tor代理绕过访问限制的典型案例</title>
       <link>https://pyocean.com/post/2018_10_24_%E4%B8%80%E4%B8%AAtor%E4%BB%A3%E7%90%86%E7%BB%95%E8%BF%87%E8%AE%BF%E9%97%AE%E9%99%90%E5%88%B6%E7%9A%84%E5%85%B8%E5%9E%8B%E6%A1%88%E4%BE%8B/</link>
       <pubDate>Wed, 24 Oct 2018 00:00:00 +0000</pubDate>

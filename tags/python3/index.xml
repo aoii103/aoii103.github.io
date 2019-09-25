@@ -6,10 +6,28 @@
     <description>Recent content in Python3 on 进击的Hunter</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Thu, 05 Sep 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 23 Sep 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://pyocean.com/tags/python3/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>[黑客工具]如何编写一个异步的批量网站标题扫描器</title>
+      <link>https://pyocean.com/post/2019_09_12_%E9%BB%91%E5%AE%A2%E5%B7%A5%E5%85%B7%E5%A6%82%E4%BD%95%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AA%E9%AB%98%E6%80%A7%E8%83%BD%E7%9A%84title%E6%89%AB%E6%8F%8F%E5%99%A8/</link>
+      <pubDate>Mon, 23 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://pyocean.com/post/2019_09_12_%E9%BB%91%E5%AE%A2%E5%B7%A5%E5%85%B7%E5%A6%82%E4%BD%95%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AA%E9%AB%98%E6%80%A7%E8%83%BD%E7%9A%84title%E6%89%AB%E6%8F%8F%E5%99%A8/</guid>
+      <description>&lt;p&gt;异步编程是一种并行编程，其中允许一个工作单元与主应用程序线程分开运行。而其效率往往比同步代码高出数十倍。今天我就拿前段时间给朋友写的扫描器作为一个案例，带大家进入异步的世界。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>[黑客工具]如何编写一个异步的批量网站标题扫描器</title>
+      <link>https://pyocean.com/post/2019_09_23_%E9%BB%91%E5%AE%A2%E5%B7%A5%E5%85%B7%E5%A6%82%E4%BD%95%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AA%E9%AB%98%E6%80%A7%E8%83%BD%E7%9A%84title%E6%89%AB%E6%8F%8F%E5%99%A8/</link>
+      <pubDate>Mon, 23 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://pyocean.com/post/2019_09_23_%E9%BB%91%E5%AE%A2%E5%B7%A5%E5%85%B7%E5%A6%82%E4%BD%95%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AA%E9%AB%98%E6%80%A7%E8%83%BD%E7%9A%84title%E6%89%AB%E6%8F%8F%E5%99%A8/</guid>
+      <description>&lt;p&gt;异步编程是一种并行编程，其中允许一个工作单元与主应用程序线程分开运行。而其效率往往比同步代码高出数十倍。今天我就拿前段时间给朋友写的扫描器作为一个案例，带大家进入异步的世界。&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>一次对js混淆代码的美化过程</title>
@@ -27,15 +45,6 @@
       
       <guid>https://pyocean.com/post/2019_09_02_python%E4%B8%8A%E7%9A%84%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6/</guid>
       <description>&lt;p&gt;在计算机科学中，算法的时间复杂度（Time complexity）是一个函数，它定性描述该算法的运行时间。 这是一个代表算法输入值的字符串的长度的函数。&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>[黑客工具]如何编写一个高性能的批量网站title扫描器</title>
-      <link>https://pyocean.com/post/2019_09_12_%E9%BB%91%E5%AE%A2%E5%B7%A5%E5%85%B7%E5%A6%82%E4%BD%95%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AA%E9%AB%98%E6%80%A7%E8%83%BD%E7%9A%84title%E6%89%AB%E6%8F%8F%E5%99%A8/</link>
-      <pubDate>Thu, 22 Aug 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://pyocean.com/post/2019_09_12_%E9%BB%91%E5%AE%A2%E5%B7%A5%E5%85%B7%E5%A6%82%E4%BD%95%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AA%E9%AB%98%E6%80%A7%E8%83%BD%E7%9A%84title%E6%89%AB%E6%8F%8F%E5%99%A8/</guid>
-      <description></description>
     </item>
     
     <item>
