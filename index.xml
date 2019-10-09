@@ -22,10 +22,10 @@
     
     <item>
       <title>vue路径栏中?号与#号问题</title>
-      <link>https://pyocean.com/post/2019_10_07_%E7%88%AC%E5%9D%91_vue%E8%B7%AF%E5%BE%84%E6%A0%8F%E4%B8%AD%E7%9A%84%E5%8F%B7%E5%92%8C#%E5%8F%B7/</link>
+      <link>https://pyocean.com/post/2019_10_07_%E7%88%AC%E5%9D%91_vue%E8%B7%AF%E5%BE%84%E6%A0%8F%E4%B8%AD%E7%9A%84%E9%97%AE%E5%8F%B7%E5%92%8C%E4%BA%95%E5%8F%B7/</link>
       <pubDate>Mon, 07 Oct 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://pyocean.com/post/2019_10_07_%E7%88%AC%E5%9D%91_vue%E8%B7%AF%E5%BE%84%E6%A0%8F%E4%B8%AD%E7%9A%84%E5%8F%B7%E5%92%8C#%E5%8F%B7/</guid>
+      <guid>https://pyocean.com/post/2019_10_07_%E7%88%AC%E5%9D%91_vue%E8%B7%AF%E5%BE%84%E6%A0%8F%E4%B8%AD%E7%9A%84%E9%97%AE%E5%8F%B7%E5%92%8C%E4%BA%95%E5%8F%B7/</guid>
       <description>&lt;p&gt;在vue项目开发过程中，发现了这两个问题。一个不美观，另一个会导致界面刷新，在这里记录一下。&lt;/p&gt;</description>
     </item>
     
