@@ -5,27 +5,18 @@
     <link>https://pyocean.com/tags/python3/</link>
     <description>Recent content in Python3 on 进击的Hunter</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>zh-CN</language>
-    <lastBuildDate>Mon, 23 Sep 2019 00:00:00 +0000</lastBuildDate>
+    <language>zh</language>
+    <lastBuildDate>Tue, 08 Oct 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://pyocean.com/tags/python3/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>[黑客工具]如何编写一个异步的批量网站标题扫描器</title>
-      <link>https://pyocean.com/post/2019_09_12_%E9%BB%91%E5%AE%A2%E5%B7%A5%E5%85%B7%E5%A6%82%E4%BD%95%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AA%E9%AB%98%E6%80%A7%E8%83%BD%E7%9A%84title%E6%89%AB%E6%8F%8F%E5%99%A8/</link>
-      <pubDate>Mon, 23 Sep 2019 00:00:00 +0000</pubDate>
+      <title>入门, 如何发送你的第一段异步请求</title>
+      <link>https://pyocean.com/post/2019_10_08_%E5%85%A5%E9%97%A8%E6%95%99%E5%AD%A6_%E5%A6%82%E4%BD%95%E5%8F%91%E9%80%81%E4%BD%A0%E7%9A%84%E7%AC%AC%E4%B8%80%E6%AE%B5%E5%BC%82%E6%AD%A5%E8%AF%B7%E6%B1%82/</link>
+      <pubDate>Tue, 08 Oct 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://pyocean.com/post/2019_09_12_%E9%BB%91%E5%AE%A2%E5%B7%A5%E5%85%B7%E5%A6%82%E4%BD%95%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AA%E9%AB%98%E6%80%A7%E8%83%BD%E7%9A%84title%E6%89%AB%E6%8F%8F%E5%99%A8/</guid>
-      <description>&lt;p&gt;异步编程是一种并行编程，其中允许一个工作单元与主应用程序线程分开运行。而其效率往往比同步代码高出数十倍。今天我就拿前段时间给朋友写的扫描器作为一个案例，带大家进入异步的世界。&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>[黑客工具]如何编写一个异步的批量网站标题扫描器</title>
-      <link>https://pyocean.com/post/2019_09_23_%E9%BB%91%E5%AE%A2%E5%B7%A5%E5%85%B7%E5%A6%82%E4%BD%95%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AA%E9%AB%98%E6%80%A7%E8%83%BD%E7%9A%84title%E6%89%AB%E6%8F%8F%E5%99%A8/</link>
-      <pubDate>Mon, 23 Sep 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://pyocean.com/post/2019_09_23_%E9%BB%91%E5%AE%A2%E5%B7%A5%E5%85%B7%E5%A6%82%E4%BD%95%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AA%E9%AB%98%E6%80%A7%E8%83%BD%E7%9A%84title%E6%89%AB%E6%8F%8F%E5%99%A8/</guid>
+      <guid>https://pyocean.com/post/2019_10_08_%E5%85%A5%E9%97%A8%E6%95%99%E5%AD%A6_%E5%A6%82%E4%BD%95%E5%8F%91%E9%80%81%E4%BD%A0%E7%9A%84%E7%AC%AC%E4%B8%80%E6%AE%B5%E5%BC%82%E6%AD%A5%E8%AF%B7%E6%B1%82/</guid>
       <description>&lt;p&gt;异步编程是一种并行编程，其中允许一个工作单元与主应用程序线程分开运行。而其效率往往比同步代码高出数十倍。今天我就拿前段时间给朋友写的扫描器作为一个案例，带大家进入异步的世界。&lt;/p&gt;</description>
     </item>
     

@@ -5,7 +5,7 @@
     <link>https://pyocean.com/tags/</link>
     <description>Recent content in Tags on 进击的Hunter</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>zh-CN</language>
+    <language>zh</language>
     <lastBuildDate>Tue, 02 Apr 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://pyocean.com/tags/index.xml" rel="self" type="application/rss+xml" />
@@ -17,6 +17,15 @@
       <pubDate>Tue, 02 Apr 2019 00:00:00 +0000</pubDate>
       
       <guid>https://pyocean.com/tags/anonymous/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Async</title>
+      <link>https://pyocean.com/tags/async/</link>
+      <pubDate>Tue, 08 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://pyocean.com/tags/async/</guid>
       <description></description>
     </item>
     
@@ -107,15 +116,6 @@
       <pubDate>Fri, 29 Mar 2019 00:00:00 +0000</pubDate>
       
       <guid>https://pyocean.com/tags/github/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Hacktool</title>
-      <link>https://pyocean.com/tags/hacktool/</link>
-      <pubDate>Mon, 23 Sep 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://pyocean.com/tags/hacktool/</guid>
       <description></description>
     </item>
     
@@ -212,7 +212,7 @@
     <item>
       <title>Python3</title>
       <link>https://pyocean.com/tags/python3/</link>
-      <pubDate>Mon, 23 Sep 2019 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 08 Oct 2019 00:00:00 +0000</pubDate>
       
       <guid>https://pyocean.com/tags/python3/</guid>
       <description></description>
@@ -221,7 +221,7 @@
     <item>
       <title>Robots</title>
       <link>https://pyocean.com/tags/robots/</link>
-      <pubDate>Tue, 24 Sep 2019 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 07 Oct 2019 00:00:00 +0000</pubDate>
       
       <guid>https://pyocean.com/tags/robots/</guid>
       <description></description>
@@ -251,6 +251,15 @@
       <pubDate>Sat, 20 Jul 2019 00:00:00 +0000</pubDate>
       
       <guid>https://pyocean.com/tags/sqlite/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Sync</title>
+      <link>https://pyocean.com/tags/sync/</link>
+      <pubDate>Tue, 08 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://pyocean.com/tags/sync/</guid>
       <description></description>
     </item>
     
@@ -293,7 +302,7 @@
     <item>
       <title>Wechat</title>
       <link>https://pyocean.com/tags/wechat/</link>
-      <pubDate>Tue, 24 Sep 2019 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 07 Oct 2019 00:00:00 +0000</pubDate>
       
       <guid>https://pyocean.com/tags/wechat/</guid>
       <description></description>
