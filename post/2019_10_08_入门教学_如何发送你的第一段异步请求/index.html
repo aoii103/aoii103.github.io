@@ -47,13 +47,21 @@ if (!doNotTrack) {
 				<div class="logo__tagline">Uneasy lies the head that wears the crown.</div>
 			</a>
 		</div>
-		<a href="https://github.com/aoii103/every_day_cmd"><div id="every_day_cmd" class="every_day_cmd" title="字字珠玑，每日一记。" ></div></a>
+		<a href="https://github.com/aoii103/every_day_cmd"><div style="
+	height: 30px;
+	display: inline-block;
+	line-height:30px;
+	padding:0 20px;
+	color:rgb(73, 80, 87);
+	font-size:13px;
+	text-decoration:none;
+	font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;" id="every_day_cmd" class="every_day_cmd" title="字字珠玑，每日一记。" ></div></a>
 <div class="divider"></div>
 
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
 	axios.get('https://pyocean.com/every_day_cmd').then(resp => {
-		document.getElementById('every_day_cmd').innerHTML = `🍺 ${resp.data.description}: <code>${resp.data.code}</code>`
+		document.getElementById('every_day_cmd').innerHTML = `🍺 ${resp.data.description}: <code  style="color: rgb(232, 62, 140);background:none;border:none;">${resp.data.code}</code>`
 	})
 </script>
 	</div>
