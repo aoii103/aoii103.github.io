@@ -61,7 +61,7 @@ if (!doNotTrack) {
 
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
-	axios.get('https://pyocean.com/every_day_cmd').then(resp => {
+	axios.get('https://pyocean.com/every_day_cmd?os=osx,window,common').then(resp => {
 		document.getElementById('every_day_cmd').innerHTML = `🍺 ${resp.data.description}: <code  style="color: rgb(232, 62, 140);background:none;border:none;">${resp.data.code}</code>`
 	})
 </script>
