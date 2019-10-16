@@ -47,7 +47,15 @@ if (!doNotTrack) {
 				<div class="logo__tagline">Uneasy lies the head that wears the crown.</div>
 			</a>
 		</div>
-		<div class="divider"></div>
+		<a href="https://github.com/aoii103/every_day_cmd"><div id="every_day_cmd" class="every_day_cmd" title="字字珠玑，每日一记。" ></div></a>
+<div class="divider"></div>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+	axios.get('https://pyocean.com/every_day_cmd').then(resp => {
+		document.getElementById('every_day_cmd').innerHTML = `🍺 ${resp.data.description}: <code>${resp.data.code}</code>`
+	})
+</script>
 	</div>
 </header>
 		<div class="wrapper flex">
