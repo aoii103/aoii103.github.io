@@ -6,10 +6,19 @@
     <description>Recent content in Posts on 进击的Hunter</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
-    <lastBuildDate>Wed, 16 Oct 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 17 Oct 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://pyocean.com/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>python3.8正式发布，这些特性令人眼前一亮</title>
+      <link>https://pyocean.com/post/2019_10_17_python38%E7%9A%84%E8%BF%99%E4%BA%9B%E7%89%B9%E6%80%A7%E4%BB%A4%E4%BA%BA%E7%9C%BC%E5%89%8D%E4%B8%80%E4%BA%AE/</link>
+      <pubDate>Thu, 17 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://pyocean.com/post/2019_10_17_python38%E7%9A%84%E8%BF%99%E4%BA%9B%E7%89%B9%E6%80%A7%E4%BB%A4%E4%BA%BA%E7%9C%BC%E5%89%8D%E4%B8%80%E4%BA%AE/</guid>
+      <description>&lt;p&gt;在2019年10月14号，python38第一版以正式发布。所以屏幕面前的各位2.7忠粉，你们到底还在等什么❓那么3.8版本能给大家带来怎样的全新体验，让我们一起看看吧。&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>【项目实战】如何同时对数百个Youtube Channel进行言论监控</title>
