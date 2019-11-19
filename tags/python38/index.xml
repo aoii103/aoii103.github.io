@@ -6,10 +6,19 @@
     <description>Recent content in Python38 on 进击的Hunter</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
-    <lastBuildDate>Thu, 31 Oct 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 19 Nov 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://pyocean.com/tags/python38/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>如何获取celery任务的ID号并在必要的时候进行关闭</title>
+      <link>https://pyocean.com/post/2019_11_19_%E5%A6%82%E4%BD%95%E8%8E%B7%E5%8F%96celery%E4%BB%BB%E5%8A%A1%E7%9A%84id%E5%8F%B7%E5%B9%B6%E5%9C%A8%E5%BF%85%E8%A6%81%E7%9A%84%E6%97%B6%E5%80%99%E8%BF%9B%E8%A1%8C%E5%85%B3%E9%97%AD/</link>
+      <pubDate>Tue, 19 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://pyocean.com/post/2019_11_19_%E5%A6%82%E4%BD%95%E8%8E%B7%E5%8F%96celery%E4%BB%BB%E5%8A%A1%E7%9A%84id%E5%8F%B7%E5%B9%B6%E5%9C%A8%E5%BF%85%E8%A6%81%E7%9A%84%E6%97%B6%E5%80%99%E8%BF%9B%E8%A1%8C%E5%85%B3%E9%97%AD/</guid>
+      <description>&lt;p&gt;我们都知道celery常用于异步任务，而当我在工作中尝试在方法内获取其任务ID的时候，遇到了难题，在这里简单记录下。&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>一键即取，那些你保存在chrome上的密码</title>
@@ -18,15 +27,6 @@
       
       <guid>https://pyocean.com/post/2019_10_31_chrome_password_exporter/</guid>
       <description>&lt;p&gt;本期搬运 &lt;a href=&#34;https://github.com/x899/chrome_password_grabber&#34;&gt;【github】Chrome-Password-Grabber&lt;/a&gt;，一款可以快速导出存储在chrome浏览器中密码的工具。支持 &lt;code&gt;Mac&lt;/code&gt; &lt;code&gt;Linux&lt;/code&gt; &lt;code&gt;Windows&lt;/code&gt; 三平台。&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>如何获取celery任务的ID号并在必要的时候进行关闭</title>
-      <link>https://pyocean.com/post/2019_11_19_%E5%A6%82%E4%BD%95%E8%8E%B7%E5%8F%96celery%E4%BB%BB%E5%8A%A1%E7%9A%84id%E5%8F%B7%E5%B9%B6%E5%9C%A8%E5%BF%85%E8%A6%81%E7%9A%84%E6%97%B6%E5%80%99%E8%BF%9B%E8%A1%8C%E5%85%B3%E9%97%AD/</link>
-      <pubDate>Thu, 31 Oct 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://pyocean.com/post/2019_11_19_%E5%A6%82%E4%BD%95%E8%8E%B7%E5%8F%96celery%E4%BB%BB%E5%8A%A1%E7%9A%84id%E5%8F%B7%E5%B9%B6%E5%9C%A8%E5%BF%85%E8%A6%81%E7%9A%84%E6%97%B6%E5%80%99%E8%BF%9B%E8%A1%8C%E5%85%B3%E9%97%AD/</guid>
-      <description>&lt;p&gt;我们都知道celery常用于异步任务，而当我在工作中尝试在方法内获取其任务ID的时候，遇到了难题，在这里简单记录下。&lt;/p&gt;</description>
     </item>
     
     <item>
