@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Chrome on 进击的Hunter</title>
+    <link>https://pyocean.com/tags/chrome/</link>
+    <description>Recent content in Chrome on 进击的Hunter</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <lastBuildDate>Thu, 31 Oct 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://pyocean.com/tags/chrome/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>一键即取，那些你保存在chrome上的密码</title>
+      <link>https://pyocean.com/post/2019_10_31_chrome_password_exporter/</link>
+      <pubDate>Thu, 31 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://pyocean.com/post/2019_10_31_chrome_password_exporter/</guid>
+      <description>&lt;p&gt;本期搬运 &lt;a href=&#34;https://github.com/x899/chrome_password_grabber&#34;&gt;【github】Chrome-Password-Grabber&lt;/a&gt;，一款可以快速导出存储在chrome浏览器中密码的工具。支持 &lt;code&gt;Mac&lt;/code&gt; &lt;code&gt;Linux&lt;/code&gt; &lt;code&gt;Windows&lt;/code&gt; 三平台。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
