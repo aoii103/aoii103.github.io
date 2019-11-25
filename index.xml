@@ -6,10 +6,19 @@
     <description>Recent content on 进击的Hunter</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
-    <lastBuildDate>Thu, 21 Nov 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 24 Nov 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://pyocean.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>如何动态导入模块之imp</title>
+      <link>https://pyocean.com/post/2019_11_24_%E5%A6%82%E4%BD%95%E5%8A%A8%E6%80%81%E5%AF%BC%E5%85%A5%E6%A8%A1%E5%9D%97/</link>
+      <pubDate>Sun, 24 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://pyocean.com/post/2019_11_24_%E5%A6%82%E4%BD%95%E5%8A%A8%E6%80%81%E5%AF%BC%E5%85%A5%E6%A8%A1%E5%9D%97/</guid>
+      <description>&lt;p&gt;在我定制poc漏扫的开发过程成，需要动态从数据导出并添加某些模块，记录下这个过程&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>HTTP状态码 201,202,302,405 ... 傻傻分不清，看这一个项目就够啦</title>
