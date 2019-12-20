@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Aiohttp on 进击的Hunter</title>
+    <link>https://pyocean.com/tags/aiohttp/</link>
+    <description>Recent content in Aiohttp on 进击的Hunter</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <lastBuildDate>Tue, 10 Dec 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://pyocean.com/tags/aiohttp/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>uvloop写的爬虫真的很快么</title>
+      <link>https://pyocean.com/post/2019_12_12_uvloop%E5%86%99%E7%9A%84%E7%88%AC%E8%99%AB%E7%9C%9F%E7%9A%84%E5%BE%88%E5%BF%AB%E4%B9%88/</link>
+      <pubDate>Tue, 10 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://pyocean.com/post/2019_12_12_uvloop%E5%86%99%E7%9A%84%E7%88%AC%E8%99%AB%E7%9C%9F%E7%9A%84%E5%BE%88%E5%BF%AB%E4%B9%88/</guid>
+      <description>&lt;p&gt;近来看到了一个叫做&lt;code&gt;uvloop&lt;/code&gt;的库，通过&lt;code&gt;Cpython&lt;/code&gt;编写，基于&lt;code&gt;libuv&lt;/code&gt;，并声称可以让&lt;code&gt;asyncio&lt;/code&gt;超过&lt;code&gt;node&lt;/code&gt;、&lt;code&gt;gevent&lt;/code&gt;甚至&lt;code&gt;golang&lt;/code&gt;的速度&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

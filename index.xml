@@ -6,10 +6,46 @@
     <description>Recent content on 进击的Hunter</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
-    <lastBuildDate>Sun, 24 Nov 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 19 Dec 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://pyocean.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>如何在mac上一键生成复杂口令</title>
+      <link>https://pyocean.com/post/2019_12_19_%E5%A6%82%E4%BD%95%E9%80%9A%E8%BF%87%E5%91%BD%E4%BB%A4%E8%A1%8C%E4%B8%80%E9%94%AE%E7%94%9F%E6%88%90%E5%A4%8D%E6%9D%82%E5%8F%A3%E4%BB%A4/</link>
+      <pubDate>Thu, 19 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://pyocean.com/post/2019_12_19_%E5%A6%82%E4%BD%95%E9%80%9A%E8%BF%87%E5%91%BD%E4%BB%A4%E8%A1%8C%E4%B8%80%E9%94%AE%E7%94%9F%E6%88%90%E5%A4%8D%E6%9D%82%E5%8F%A3%E4%BB%A4/</guid>
+      <description>&lt;p&gt;很多场景我们需要使用到 ”复杂口令“, 也就是哪些包含了字母大小写数字及符号的口令。自己想也可以，但总归麻烦。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>django笔记_ORM批量处理</title>
+      <link>https://pyocean.com/post/2019_12_10_django%E7%AC%94%E8%AE%B0_orm%E6%89%B9%E9%87%8F%E5%A4%84%E7%90%86/</link>
+      <pubDate>Tue, 10 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://pyocean.com/post/2019_12_10_django%E7%AC%94%E8%AE%B0_orm%E6%89%B9%E9%87%8F%E5%A4%84%E7%90%86/</guid>
+      <description>&lt;p&gt;假设现在需要将一批数据通过&lt;code&gt;django&lt;/code&gt;统统录入，如果你一直都是写个for循环然后批量create，那你就真该点开看看了。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>uvloop写的爬虫真的很快么</title>
+      <link>https://pyocean.com/post/2019_12_12_uvloop%E5%86%99%E7%9A%84%E7%88%AC%E8%99%AB%E7%9C%9F%E7%9A%84%E5%BE%88%E5%BF%AB%E4%B9%88/</link>
+      <pubDate>Tue, 10 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://pyocean.com/post/2019_12_12_uvloop%E5%86%99%E7%9A%84%E7%88%AC%E8%99%AB%E7%9C%9F%E7%9A%84%E5%BE%88%E5%BF%AB%E4%B9%88/</guid>
+      <description>&lt;p&gt;近来看到了一个叫做&lt;code&gt;uvloop&lt;/code&gt;的库，通过&lt;code&gt;Cpython&lt;/code&gt;编写，基于&lt;code&gt;libuv&lt;/code&gt;，并声称可以让&lt;code&gt;asyncio&lt;/code&gt;超过&lt;code&gt;node&lt;/code&gt;、&lt;code&gt;gevent&lt;/code&gt;甚至&lt;code&gt;golang&lt;/code&gt;的速度&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>django笔记_migrate异常处理</title>
+      <link>https://pyocean.com/post/2019_12_07_django%E7%AC%94%E8%AE%B0_migrate%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/</link>
+      <pubDate>Sat, 07 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://pyocean.com/post/2019_12_07_django%E7%AC%94%E8%AE%B0_migrate%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/</guid>
+      <description>&lt;p&gt;migrate即数据迁移，是Django将你对模型所做的更改（添加字段，删除模型等）同步到数据库的一种方式。它们的设计基本上是自动的，但是你需要知道何时进行迁移，何时运行它们以及可能遇到的常见问题。&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>如何动态导入模块之imp</title>

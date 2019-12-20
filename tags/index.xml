@@ -6,10 +6,19 @@
     <description>Recent content in Tags on 进击的Hunter</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
-    <lastBuildDate>Tue, 02 Apr 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 10 Dec 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://pyocean.com/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Aiohttp</title>
+      <link>https://pyocean.com/tags/aiohttp/</link>
+      <pubDate>Tue, 10 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://pyocean.com/tags/aiohttp/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Anonymous</title>
@@ -23,9 +32,18 @@
     <item>
       <title>Async</title>
       <link>https://pyocean.com/tags/async/</link>
-      <pubDate>Tue, 08 Oct 2019 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 10 Dec 2019 00:00:00 +0000</pubDate>
       
       <guid>https://pyocean.com/tags/async/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Asyncio</title>
+      <link>https://pyocean.com/tags/asyncio/</link>
+      <pubDate>Tue, 10 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://pyocean.com/tags/asyncio/</guid>
       <description></description>
     </item>
     
@@ -122,7 +140,7 @@
     <item>
       <title>Django</title>
       <link>https://pyocean.com/tags/django/</link>
-      <pubDate>Thu, 28 Mar 2019 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 10 Dec 2019 00:00:00 +0000</pubDate>
       
       <guid>https://pyocean.com/tags/django/</guid>
       <description></description>
@@ -219,6 +237,15 @@
     </item>
     
     <item>
+      <title>Mac</title>
+      <link>https://pyocean.com/tags/mac/</link>
+      <pubDate>Thu, 19 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://pyocean.com/tags/mac/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Ocr</title>
       <link>https://pyocean.com/tags/ocr/</link>
       <pubDate>Mon, 24 Jun 2019 00:00:00 +0000</pubDate>
@@ -266,7 +293,7 @@
     <item>
       <title>Python3</title>
       <link>https://pyocean.com/tags/python3/</link>
-      <pubDate>Sun, 24 Nov 2019 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 10 Dec 2019 00:00:00 +0000</pubDate>
       
       <guid>https://pyocean.com/tags/python3/</guid>
       <description></description>
@@ -363,6 +390,15 @@
     </item>
     
     <item>
+      <title>Uvloop</title>
+      <link>https://pyocean.com/tags/uvloop/</link>
+      <pubDate>Tue, 10 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://pyocean.com/tags/uvloop/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>V2ray</title>
       <link>https://pyocean.com/tags/v2ray/</link>
       <pubDate>Wed, 01 May 2019 00:00:00 +0000</pubDate>
@@ -404,6 +440,15 @@
       <pubDate>Wed, 16 Oct 2019 00:00:00 +0000</pubDate>
       
       <guid>https://pyocean.com/tags/youtube/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Zsh</title>
+      <link>https://pyocean.com/tags/zsh/</link>
+      <pubDate>Thu, 19 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://pyocean.com/tags/zsh/</guid>
       <description></description>
     </item>
     
