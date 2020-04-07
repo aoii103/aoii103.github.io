@@ -98,6 +98,7 @@ if (!doNotTrack) {
 <li><a href="#预设任务方法-task-py">预设任务方法  <code>task.py</code></a></li>
 <li><a href="#发布任务执行">发布任务执行</a></li>
 <li><a href="#使用效果">使用效果</a></li>
+<li><a href="#一键bash">一键bash</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -122,7 +123,9 @@ if (!doNotTrack) {
 <h3 id="预设任务方法-task-py">预设任务方法  <code>task.py</code></h3>
 
 <p>通过设定<code>broker</code>参数为<code>sqla+sqlite:///xxx</code>来已连接sqlite的方式实例化<code>Celery</code></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> sqlite3
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> datetime <span style="color:#f92672">import</span> timedelta
+<span style="color:#f92672">from</span> celery.schedules <span style="color:#f92672">import</span> crontab
+<span style="color:#f92672">import</span> sqlite3
 <span style="color:#f92672">from</span> requests_html <span style="color:#f92672">import</span> HTMLSession
 <span style="color:#f92672">from</span> celery <span style="color:#f92672">import</span> Celery
 
@@ -132,6 +135,22 @@ app <span style="color:#f92672">=</span> Celery(<span style="color:#e6db74">&#34
 app<span style="color:#f92672">.</span>conf<span style="color:#f92672">.</span>update(
     task_serializer<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;pickle&#34;</span>, result_serializer<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;pickle&#34;</span>, accept_content<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;pickle&#34;</span>]
 )  <span style="color:#75715e"># 设定为可以传输对象</span>
+
+<span style="color:#75715e"># 设定定时任务</span>
+app<span style="color:#f92672">.</span>conf<span style="color:#f92672">.</span>update(
+    beat_schedule<span style="color:#f92672">=</span>{
+        <span style="color:#e6db74">&#34;延迟检测&#34;</span>: {
+            <span style="color:#e6db74">&#34;task&#34;</span>:<span style="color:#e6db74">&#34;task.check_poc&#34;</span>,
+            <span style="color:#e6db74">&#34;schedule&#34;</span>:timedelta(seconds<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>),
+            <span style="color:#e6db74">&#34;args&#34;</span>:((<span style="color:#ae81ff">0</span>,<span style="color:#e6db74">&#39;http://baidu.com&#39;</span>))
+        },
+        <span style="color:#e6db74">&#34;定时检测&#34;</span>: {
+            <span style="color:#e6db74">&#34;task&#34;</span>:<span style="color:#e6db74">&#34;task.check_poc&#34;</span>,
+            <span style="color:#e6db74">&#34;schedule&#34;</span>:crontab(hour<span style="color:#f92672">=</span><span style="color:#ae81ff">8</span>,minute<span style="color:#f92672">=</span><span style="color:#ae81ff">30</span>),
+            <span style="color:#e6db74">&#34;args&#34;</span>:((<span style="color:#ae81ff">2</span>,<span style="color:#e6db74">&#39;http://qq.com&#39;</span>))
+        }
+    }
+)
 
 
 <span style="color:#a6e22e">@app.task</span>()  <span style="color:#75715e"># celery方法写法</span>
@@ -149,12 +168,22 @@ urls <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;http
     check_poc<span style="color:#f92672">.</span>delay(index,url) <span style="color:#75715e"># 异步调用</span></code></pre></div>
 <h3 id="使用效果">使用效果</h3>
 
-<p>最后使用<code>celery -B -A task worker -l info</code>命令启动<code>celery</code></p>
+<p>最后使用<code>celery worker -A task --pool=solo -l info</code>命令启动<code>celery</code>的<code>worker</code></p>
 
 <video controls="controls">
   <source type="video/mp4" src="/img/content_img/celery/test.mp4"></source>
   <p>Your browser does not support the video element.</p>
 </video>
+
+<p><code>celery beat -A task -l INFO</code> 启动定时任务</p>
+
+<h3 id="一键bash">一键bash</h3>
+
+<p>也可以通过如下脚本快速重启<code>celery</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kill -9 <span style="color:#e6db74">`</span>ps -ef|grep celery |awk <span style="color:#e6db74">&#39;{print $2}&#39;</span><span style="color:#e6db74">`</span>
+
+nohup celery worker -A task --pool<span style="color:#f92672">=</span>solo -l INFO &gt;&gt; celery_worker.log <span style="color:#ae81ff">2</span>&gt;&amp;<span style="color:#ae81ff">1</span> &amp;
+nohup celery beat -A task -l INFO &gt;&gt; celery_beats.log <span style="color:#ae81ff">2</span>&gt;&amp;<span style="color:#ae81ff">1</span> &amp;</code></pre></div>
 		</div>
 		
 <div class="post__tags tags clearfix">
@@ -210,7 +239,7 @@ urls <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;http
 	<div class="container footer__container flex">
 		
 		<div class="footer__copyright">
-			&copy; 2019 s045pd.
+			&copy; 2020 s045pd.
 			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
 		</div>
 	</div>

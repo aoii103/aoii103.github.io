@@ -12,7 +12,7 @@
 <meta property="og:description" content="python,github,tor,spider,crawler,tools,js,爬虫,数据抓取,脚本,工具,渗透测试" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://pyocean.com/" />
-<meta property="og:updated_time" content="2019-12-19T00:00:00&#43;00:00"/>
+<meta property="og:updated_time" content="2020-02-13T00:00:00&#43;00:00"/>
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="进击的Hunter"/>
@@ -71,6 +71,75 @@ if (!doNotTrack) {
 			<div class="primary">
 			
 <main class="main list" role="main"><article class="list__item post">
+	<figure class="list__thumbnail">
+		<a href="https://pyocean.com/post/2020_02_13_%E5%AD%A6%E7%82%B9nlp-twitter%E8%88%86%E6%83%85lda%E5%BB%BA%E6%A8%A1/">
+			<img src="/img/content_img/twitter/twitter.png" alt="【项目实战】针对Twitter舆情进行LDA建模" />
+		</a>
+	</figure>
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/post/2020_02_13_%E5%AD%A6%E7%82%B9nlp-twitter%E8%88%86%E6%83%85lda%E5%BB%BA%E6%A8%A1/" rel="bookmark">
+			【项目实战】针对Twitter舆情进行LDA建模
+			</a>
+		</h3>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2020-02-13T00:00:00">February 13, 2020</time>
+</div>
+</div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		2020年的开局确实比较悲惨，特别是在这几天，全球convid-19患者已超百万。那么现在。我们就通过推特抓取了350万条与virus相关的推文，看看墙外人民怎么看。
+ 本文章共需4分钟来阅读，之后您将学到：
+ 如何善用强大的Colab
+ Twitter API流式过滤器的使用方法
+ 部分数据清洗的方法
+ Normalization
+ Tokenization
+ Stop words
+ Stemming
+ Lemmatization
+  快速生成LDA主题模型的方法
+ 在处理时我们该如何节约资源
+  首先我们来看看社交媒体对于病毒有着怎么样的描述🤔
+0x01 Colab改变生活 和以往的不同，为什么这次的任务推荐使用Colab呢。理由如下：
+ 我们将使用到一个Jupyter般的友好编写环境
+ 它本身拥有国外的IP，抓取Twitter数据会更省力
+ 云端跑脚本可以节省你本地的计算及网络资源
+ 可将抓取的数据实时存入GoogleDrive
+ 它是免费的，并且可以额外安装其他库
+  0x02 Tweets的实时抓取 推特官方API本身提供实时推文的抓取接口，详见https://developer.twitter.com/en/docs/tutorials/consuming-streaming-data#consuming-the-stream ，具体细节不是本文的重点，不赘述。
+所以我们将借助[tweepy](http://docs.tweepy.org/en/latest/index.html)项目来编写我们的抓取器。
+1. 获取开发者账号 再者我们需要一个开发者账户，由于申请过程比较麻烦；且很多开发者喜欢把包含这类的内容传到Github，索引我们就去合理利用下。
+2. 编写抓取器 通过上述过程拿到API账户后开始编写抓取器，首先我们需要经过认证方法。毕竟无用的账户是无法抓取到数据的
+from tweepy import OAuthHandler AUTH = OAuthHandler(API_KEY,API_SECRET) AUTH.set_access_token(ACCESS_TOKEN,ACCESS_SECRET) 预设一个队列用于存储推文，我们给其设定了最大长度为1000w条，并且每获取1000条数据将追加保存open(file,'a')数据
+ 最后实际抓了350w条 - - 太慢了。
+ from collections import deque MAX_TWEETS = 1000*10000 CURRENT_TWEETS = 0 SAVE_NUMS = 1000 TWEETS = deque(maxlen=SAVE_NUMS) 预设一个进度条用于进度监控，就怕不耐心得你以为是程序卡住了。。
+	</div>
+</article><article class="list__item post">
+	<figure class="list__thumbnail">
+		<a href="https://pyocean.com/post/2020_01_14_%E6%B5%81%E7%95%85%E7%9A%84mac%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8C%97_%E5%86%8D%E4%B9%9F%E4%B8%8D%E7%94%A8%E7%BF%BB%E8%AF%91%E6%8F%92%E4%BB%B6/">
+			<img src="/img/content_img/mac/dict/mac_dictionary.png" alt="【Mac配置指北】流畅的内建词典" />
+		</a>
+	</figure>
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/post/2020_01_14_%E6%B5%81%E7%95%85%E7%9A%84mac%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8C%97_%E5%86%8D%E4%B9%9F%E4%B8%8D%E7%94%A8%E7%BF%BB%E8%AF%91%E6%8F%92%E4%BB%B6/" rel="bookmark">
+			【Mac配置指北】流畅的内建词典
+			</a>
+		</h3>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2020-01-14T00:00:00">January 14, 2020</time>
+</div>
+</div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		<p>个人认为，在<code>Mac</code>下办公所提供的效率提升皆是因人而异，且一个普通人可以用到其自带功能的10%就已经很不错了。今天就给大家讲一讲它所自带的翻译功能。</p>
+	</div>
+</article><article class="list__item post">
 	<figure class="list__thumbnail">
 		<a href="https://pyocean.com/post/2019_12_19_%E5%A6%82%E4%BD%95%E9%80%9A%E8%BF%87%E5%91%BD%E4%BB%A4%E8%A1%8C%E4%B8%80%E9%94%AE%E7%94%9F%E6%88%90%E5%A4%8D%E6%9D%82%E5%8F%A3%E4%BB%A4/">
 			<img src="/img/content_img/pwgen/random.jpeg" alt="如何在mac上一键生成复杂口令" />
@@ -246,50 +315,6 @@ if (!doNotTrack) {
 	<div class="content list__excerpt post__content clearfix">
 		<p>本期搬运 <a href="https://github.com/x899/chrome_password_grabber">【github】Chrome-Password-Grabber</a>，一款可以快速导出存储在chrome浏览器中密码的工具。支持 <code>Mac</code> <code>Linux</code> <code>Windows</code> 三平台。</p>
 	</div>
-</article><article class="list__item post">
-	<figure class="list__thumbnail">
-		<a href="https://pyocean.com/post/2019_10_17_python38%E7%9A%84%E8%BF%99%E4%BA%9B%E7%89%B9%E6%80%A7%E4%BB%A4%E4%BA%BA%E7%9C%BC%E5%89%8D%E4%B8%80%E4%BA%AE/">
-			<img src="/img/content_img/python/python38.png" alt="python3.8正式发布，这些特性令人眼前一亮" />
-		</a>
-	</figure>
-	<header class="list__header">
-		<h3 class="list__title post__title ">
-			<a href="/post/2019_10_17_python38%E7%9A%84%E8%BF%99%E4%BA%9B%E7%89%B9%E6%80%A7%E4%BB%A4%E4%BA%BA%E7%9C%BC%E5%89%8D%E4%B8%80%E4%BA%AE/" rel="bookmark">
-			python3.8正式发布，这些特性令人眼前一亮
-			</a>
-		</h3>
-		<div class="list__meta meta">
-<div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
-	<time class="meta__text" datetime="2019-10-17T00:00:00">October 17, 2019</time>
-</div>
-</div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		<p>在2019年10月14号，Python3.8第一版以正式发布。所以屏幕面前的各位2.7忠粉，你们到底还在等什么❓那么它能给大家带来怎样的全新体验，让我们一起看看吧。</p>
-	</div>
-</article><article class="list__item post">
-	<figure class="list__thumbnail">
-		<a href="https://pyocean.com/post/2019_10_12_%E5%A6%82%E4%BD%95%E5%90%8C%E6%97%B6%E5%AF%B9%E6%95%B0%E7%99%BE%E4%B8%AAyoutubechannel%E8%BF%9B%E8%A1%8C%E8%A8%80%E8%AE%BA%E7%9B%91%E6%8E%A7/">
-			<img src="/img/content_img/youtube/youtube_all.png" alt="【项目实战】如何同时对数百个Youtube Channel进行言论监控" />
-		</a>
-	</figure>
-	<header class="list__header">
-		<h3 class="list__title post__title ">
-			<a href="/post/2019_10_12_%E5%A6%82%E4%BD%95%E5%90%8C%E6%97%B6%E5%AF%B9%E6%95%B0%E7%99%BE%E4%B8%AAyoutubechannel%E8%BF%9B%E8%A1%8C%E8%A8%80%E8%AE%BA%E7%9B%91%E6%8E%A7/" rel="bookmark">
-			【项目实战】如何同时对数百个Youtube Channel进行言论监控
-			</a>
-		</h3>
-		<div class="list__meta meta">
-<div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
-	<time class="meta__text" datetime="2019-10-16T00:00:00">October 16, 2019</time>
-</div>
-</div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		<p>这篇教程来源于前段时间的一个项目，现在已经过了私有期。故拿出来给大家讲讲，涨涨实战经验。</p>
-	</div>
 </article>
 </main>
 
@@ -320,11 +345,11 @@ if (!doNotTrack) {
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/2020_02_13_%E5%AD%A6%E7%82%B9nlp-twitter%E8%88%86%E6%83%85lda%E5%BB%BA%E6%A8%A1/">【项目实战】针对Twitter舆情进行LDA建模</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/2020_01_14_%E6%B5%81%E7%95%85%E7%9A%84mac%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8C%97_%E5%86%8D%E4%B9%9F%E4%B8%8D%E7%94%A8%E7%BF%BB%E8%AF%91%E6%8F%92%E4%BB%B6/">【Mac配置指北】流畅的内建词典</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/2019_12_19_%E5%A6%82%E4%BD%95%E9%80%9A%E8%BF%87%E5%91%BD%E4%BB%A4%E8%A1%8C%E4%B8%80%E9%94%AE%E7%94%9F%E6%88%90%E5%A4%8D%E6%9D%82%E5%8F%A3%E4%BB%A4/">如何在mac上一键生成复杂口令</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/2019_12_10_django%E7%AC%94%E8%AE%B0_orm%E6%89%B9%E9%87%8F%E5%A4%84%E7%90%86/">django笔记_ORM批量处理</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/2019_12_12_uvloop%E5%86%99%E7%9A%84%E7%88%AC%E8%99%AB%E7%9C%9F%E7%9A%84%E5%BE%88%E5%BF%AB%E4%B9%88/">uvloop写的爬虫真的很快么</a></li>
-			<li class="widget__item"><a class="widget__link" href="/post/2019_12_07_django%E7%AC%94%E8%AE%B0_migrate%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/">django笔记_migrate异常处理</a></li>
-			<li class="widget__item"><a class="widget__link" href="/post/2019_11_24_%E5%A6%82%E4%BD%95%E5%8A%A8%E6%80%81%E5%AF%BC%E5%85%A5%E6%A8%A1%E5%9D%97/">如何动态导入模块之imp</a></li>
 		</ul>
 	</div>
 </div>
@@ -355,6 +380,7 @@ if (!doNotTrack) {
 		<a class="widget-taglist__link widget__link btn" href="/tags/darknet" title="Darknet">Darknet (2)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/debug" title="Debug">Debug (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/decryption" title="Decryption">Decryption (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/dict" title="Dict">Dict (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/django" title="Django">Django (4)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/email" title="Email">Email (2)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/entware" title="Entware">Entware (1)</a>
@@ -365,8 +391,10 @@ if (!doNotTrack) {
 		<a class="widget-taglist__link widget__link btn" href="/tags/jsfuck" title="Jsfuck">Jsfuck (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/jwt" title="Jwt">Jwt (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/koolshare" title="Koolshare">Koolshare (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/lda" title="Lda">Lda (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/lede" title="Lede">Lede (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/mac" title="Mac">Mac (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/mac" title="Mac">Mac (2)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/nlp" title="Nlp">Nlp (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/ocr" title="Ocr">Ocr (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/openwrt" title="Openwrt">Openwrt (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/orm" title="Orm">Orm (1)</a>
@@ -382,10 +410,12 @@ if (!doNotTrack) {
 		<a class="widget-taglist__link widget__link btn" href="/tags/sync" title="Sync">Sync (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/timecomplexity" title="Timecomplexity">Timecomplexity (2)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/tor" title="Tor">Tor (3)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/twitter" title="Twitter">Twitter (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/user-agent" title="User agent">User agent (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/uvloop" title="Uvloop">Uvloop (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/v2ray" title="V2ray">V2ray (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/video" title="Video">Video (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/virus" title="Virus">Virus (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/vue" title="Vue">Vue (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/wechat" title="Wechat">Wechat (2)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/youtube" title="Youtube">Youtube (1)</a>
@@ -422,7 +452,7 @@ if (!doNotTrack) {
 	<div class="container footer__container flex">
 		
 		<div class="footer__copyright">
-			&copy; 2019 s045pd.
+			&copy; 2020 s045pd.
 			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
 		</div>
 	</div>

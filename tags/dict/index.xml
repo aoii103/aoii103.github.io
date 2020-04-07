@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Dict on 进击的Hunter</title>
+    <link>https://pyocean.com/tags/dict/</link>
+    <description>Recent content in Dict on 进击的Hunter</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <lastBuildDate>Tue, 14 Jan 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://pyocean.com/tags/dict/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>【Mac配置指北】流畅的内建词典</title>
+      <link>https://pyocean.com/post/2020_01_14_%E6%B5%81%E7%95%85%E7%9A%84mac%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8C%97_%E5%86%8D%E4%B9%9F%E4%B8%8D%E7%94%A8%E7%BF%BB%E8%AF%91%E6%8F%92%E4%BB%B6/</link>
+      <pubDate>Tue, 14 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://pyocean.com/post/2020_01_14_%E6%B5%81%E7%95%85%E7%9A%84mac%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8C%97_%E5%86%8D%E4%B9%9F%E4%B8%8D%E7%94%A8%E7%BF%BB%E8%AF%91%E6%8F%92%E4%BB%B6/</guid>
+      <description>&lt;p&gt;个人认为，在&lt;code&gt;Mac&lt;/code&gt;下办公所提供的效率提升皆是因人而异，且一个普通人可以用到其自带功能的10%就已经很不错了。今天就给大家讲一讲它所自带的翻译功能。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

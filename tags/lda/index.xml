@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Lda on 进击的Hunter</title>
+    <link>https://pyocean.com/tags/lda/</link>
+    <description>Recent content in Lda on 进击的Hunter</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <lastBuildDate>Thu, 13 Feb 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://pyocean.com/tags/lda/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>【项目实战】针对Twitter舆情进行LDA建模</title>
+      <link>https://pyocean.com/post/2020_02_13_%E5%AD%A6%E7%82%B9nlp-twitter%E8%88%86%E6%83%85lda%E5%BB%BA%E6%A8%A1/</link>
+      <pubDate>Thu, 13 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://pyocean.com/post/2020_02_13_%E5%AD%A6%E7%82%B9nlp-twitter%E8%88%86%E6%83%85lda%E5%BB%BA%E6%A8%A1/</guid>
+      <description>2020年的开局确实比较悲惨，特别是在这几天，全球convid-19患者已超百万。那么现在。我们就通过推特抓取了350万条与virus相关的推文，看看墙外人民怎么看。
+ 本文章共需4分钟来阅读，之后您将学到：
+ 如何善用强大的Colab
+ Twitter API流式过滤器的使用方法
+ 部分数据清洗的方法
+ Normalization
+ Tokenization
+ Stop words
+ Stemming
+ Lemmatization
+  快速生成LDA主题模型的方法
+ 在处理时我们该如何节约资源
+  首先我们来看看社交媒体对于病毒有着怎么样的描述🤔
+0x01 Colab改变生活 和以往的不同，为什么这次的任务推荐使用Colab呢。理由如下：
+ 我们将使用到一个Jupyter般的友好编写环境
+ 它本身拥有国外的IP，抓取Twitter数据会更省力
+ 云端跑脚本可以节省你本地的计算及网络资源
+ 可将抓取的数据实时存入GoogleDrive
+ 它是免费的，并且可以额外安装其他库
+  0x02 Tweets的实时抓取 推特官方API本身提供实时推文的抓取接口，详见https://developer.twitter.com/en/docs/tutorials/consuming-streaming-data#consuming-the-stream ，具体细节不是本文的重点，不赘述。
+所以我们将借助[tweepy](http://docs.tweepy.org/en/latest/index.html)项目来编写我们的抓取器。
+1. 获取开发者账号 再者我们需要一个开发者账户，由于申请过程比较麻烦；且很多开发者喜欢把包含这类的内容传到Github，索引我们就去合理利用下。
+2. 编写抓取器 通过上述过程拿到API账户后开始编写抓取器，首先我们需要经过认证方法。毕竟无用的账户是无法抓取到数据的
+from tweepy import OAuthHandler AUTH = OAuthHandler(API_KEY,API_SECRET) AUTH.set_access_token(ACCESS_TOKEN,ACCESS_SECRET) 预设一个队列用于存储推文，我们给其设定了最大长度为1000w条，并且每获取1000条数据将追加保存open(file,&#39;a&#39;)数据
+ 最后实际抓了350w条 - - 太慢了。
+ from collections import deque MAX_TWEETS = 1000*10000 CURRENT_TWEETS = 0 SAVE_NUMS = 1000 TWEETS = deque(maxlen=SAVE_NUMS) 预设一个进度条用于进度监控，就怕不耐心得你以为是程序卡住了。。</description>
+    </item>
+    
+  </channel>
+</rss>

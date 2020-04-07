@@ -138,6 +138,15 @@
     </item>
     
     <item>
+      <title>Dict</title>
+      <link>https://pyocean.com/tags/dict/</link>
+      <pubDate>Tue, 14 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://pyocean.com/tags/dict/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Django</title>
       <link>https://pyocean.com/tags/django/</link>
       <pubDate>Tue, 10 Dec 2019 00:00:00 +0000</pubDate>
@@ -228,6 +237,15 @@
     </item>
     
     <item>
+      <title>Lda</title>
+      <link>https://pyocean.com/tags/lda/</link>
+      <pubDate>Thu, 13 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://pyocean.com/tags/lda/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Lede</title>
       <link>https://pyocean.com/tags/lede/</link>
       <pubDate>Wed, 24 Jul 2019 00:00:00 +0000</pubDate>
@@ -239,9 +257,18 @@
     <item>
       <title>Mac</title>
       <link>https://pyocean.com/tags/mac/</link>
-      <pubDate>Thu, 19 Dec 2019 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 14 Jan 2020 00:00:00 +0000</pubDate>
       
       <guid>https://pyocean.com/tags/mac/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Nlp</title>
+      <link>https://pyocean.com/tags/nlp/</link>
+      <pubDate>Thu, 13 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://pyocean.com/tags/nlp/</guid>
       <description></description>
     </item>
     
@@ -381,6 +408,15 @@
     </item>
     
     <item>
+      <title>Twitter</title>
+      <link>https://pyocean.com/tags/twitter/</link>
+      <pubDate>Thu, 13 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://pyocean.com/tags/twitter/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>User Agent</title>
       <link>https://pyocean.com/tags/user-agent/</link>
       <pubDate>Thu, 29 Nov 2018 00:00:00 +0000</pubDate>
@@ -413,6 +449,15 @@
       <pubDate>Tue, 08 Oct 2019 00:00:00 +0000</pubDate>
       
       <guid>https://pyocean.com/tags/video/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Virus</title>
+      <link>https://pyocean.com/tags/virus/</link>
+      <pubDate>Thu, 13 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://pyocean.com/tags/virus/</guid>
       <description></description>
     </item>
     
