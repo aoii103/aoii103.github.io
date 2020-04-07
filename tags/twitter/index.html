@@ -12,7 +12,7 @@
 <meta property="og:description" content="python,github,tor,spider,crawler,tools,js,爬虫,数据抓取,脚本,工具,渗透测试" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://pyocean.com/tags/twitter/" />
-<meta property="og:updated_time" content="2020-02-13T00:00:00&#43;00:00"/>
+<meta property="og:updated_time" content="2020-04-07T00:00:00&#43;00:00"/>
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Twitter"/>
@@ -75,50 +75,25 @@ if (!doNotTrack) {
 		<h1 class="main__title">Twitter</h1>
 	</header><article class="list__item post">
 	<figure class="list__thumbnail">
-		<a href="https://pyocean.com/post/2020_02_13_%E5%AD%A6%E7%82%B9nlp-twitter%E8%88%86%E6%83%85lda%E5%BB%BA%E6%A8%A1/">
+		<a href="https://pyocean.com/post/2020_04_07_%E5%AD%A6%E7%82%B9nlp-twitter%E8%88%86%E6%83%85lda%E5%BB%BA%E6%A8%A1/">
 			<img src="/img/content_img/twitter/twitter.png" alt="【项目实战】针对Twitter舆情进行LDA建模" />
 		</a>
 	</figure>
 	<header class="list__header">
 		<h3 class="list__title post__title ">
-			<a href="/post/2020_02_13_%E5%AD%A6%E7%82%B9nlp-twitter%E8%88%86%E6%83%85lda%E5%BB%BA%E6%A8%A1/" rel="bookmark">
+			<a href="/post/2020_04_07_%E5%AD%A6%E7%82%B9nlp-twitter%E8%88%86%E6%83%85lda%E5%BB%BA%E6%A8%A1/" rel="bookmark">
 			【项目实战】针对Twitter舆情进行LDA建模
 			</a>
 		</h3>
 		<div class="list__meta meta">
 <div class="meta__item-datetime meta__item">
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
-	<time class="meta__text" datetime="2020-02-13T00:00:00">February 13, 2020</time>
+	<time class="meta__text" datetime="2020-04-07T00:00:00">April 07, 2020</time>
 </div>
 </div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
-		2020年的开局确实比较悲惨，特别是在这几天，全球convid-19患者已超百万。那么现在。我们就通过推特抓取了350万条与virus相关的推文，看看墙外人民怎么看。
- 本文章共需4分钟来阅读，之后您将学到：
- 如何善用强大的Colab
- Twitter API流式过滤器的使用方法
- 部分数据清洗的方法
- Normalization
- Tokenization
- Stop words
- Stemming
- Lemmatization
-  快速生成LDA主题模型的方法
- 在处理时我们该如何节约资源
-  首先我们来看看社交媒体对于病毒有着怎么样的描述🤔
-0x01 Colab改变生活 和以往的不同，为什么这次的任务推荐使用Colab呢。理由如下：
- 我们将使用到一个Jupyter般的友好编写环境
- 它本身拥有国外的IP，抓取Twitter数据会更省力
- 云端跑脚本可以节省你本地的计算及网络资源
- 可将抓取的数据实时存入GoogleDrive
- 它是免费的，并且可以额外安装其他库
-  0x02 Tweets的实时抓取 推特官方API本身提供实时推文的抓取接口，详见https://developer.twitter.com/en/docs/tutorials/consuming-streaming-data#consuming-the-stream ，具体细节不是本文的重点，不赘述。
-所以我们将借助[tweepy](http://docs.tweepy.org/en/latest/index.html)项目来编写我们的抓取器。
-1. 获取开发者账号 再者我们需要一个开发者账户，由于申请过程比较麻烦；且很多开发者喜欢把包含这类的内容传到Github，索引我们就去合理利用下。
-2. 编写抓取器 通过上述过程拿到API账户后开始编写抓取器，首先我们需要经过认证方法。毕竟无用的账户是无法抓取到数据的
-from tweepy import OAuthHandler AUTH = OAuthHandler(API_KEY,API_SECRET) AUTH.set_access_token(ACCESS_TOKEN,ACCESS_SECRET) 预设一个队列用于存储推文，我们给其设定了最大长度为1000w条，并且每获取1000条数据将追加保存open(file,'a')数据
- 最后实际抓了350w条 - - 太慢了。
- from collections import deque MAX_TWEETS = 1000*10000 CURRENT_TWEETS = 0 SAVE_NUMS = 1000 TWEETS = deque(maxlen=SAVE_NUMS) 预设一个进度条用于进度监控，就怕不耐心得你以为是程序卡住了。。
+		<p>2020年的开局确实比较悲惨，特别是在这几天，全球<code>convid-19</code>患者已超百万。那么现在。我们就通过推特抓取了350万条与<code>virus</code>相关的推文，看看墙外人民怎么看。</p>
 	</div>
 </article>
 </main>
@@ -146,7 +121,7 @@ from tweepy import OAuthHandler AUTH = OAuthHandler(API_KEY,API_SECRET) AUTH.set
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
-			<li class="widget__item"><a class="widget__link" href="/post/2020_02_13_%E5%AD%A6%E7%82%B9nlp-twitter%E8%88%86%E6%83%85lda%E5%BB%BA%E6%A8%A1/">【项目实战】针对Twitter舆情进行LDA建模</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/2020_04_07_%E5%AD%A6%E7%82%B9nlp-twitter%E8%88%86%E6%83%85lda%E5%BB%BA%E6%A8%A1/">【项目实战】针对Twitter舆情进行LDA建模</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/2020_01_14_%E6%B5%81%E7%95%85%E7%9A%84mac%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8C%97_%E5%86%8D%E4%B9%9F%E4%B8%8D%E7%94%A8%E7%BF%BB%E8%AF%91%E6%8F%92%E4%BB%B6/">【Mac配置指北】流畅的内建词典</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/2019_12_19_%E5%A6%82%E4%BD%95%E9%80%9A%E8%BF%87%E5%91%BD%E4%BB%A4%E8%A1%8C%E4%B8%80%E9%94%AE%E7%94%9F%E6%88%90%E5%A4%8D%E6%9D%82%E5%8F%A3%E4%BB%A4/">如何在mac上一键生成复杂口令</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/2019_12_10_django%E7%AC%94%E8%AE%B0_orm%E6%89%B9%E9%87%8F%E5%A4%84%E7%90%86/">django笔记_ORM批量处理</a></li>

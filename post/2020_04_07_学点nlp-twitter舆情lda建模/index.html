@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>【项目实战】针对Twitter舆情进行LDA建模 - 进击的Hunter</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta name="generator" content="Hugo 0.53" />
+	<meta property="og:title" content="【项目实战】针对Twitter舆情进行LDA建模" />
+<meta property="og:description" content="2020年的开局确实比较悲惨，特别是在这几天，全球convid-19患者已超百万。那么现在。我们就通过推特抓取了350万条与virus相关的推文，看看墙外人民怎么看。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://pyocean.com/post/2020_04_07_%E5%AD%A6%E7%82%B9nlp-twitter%E8%88%86%E6%83%85lda%E5%BB%BA%E6%A8%A1/" /><meta property="article:published_time" content="2020-04-07T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2020-04-07T00:00:00&#43;00:00"/>
+
+	<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="【项目实战】针对Twitter舆情进行LDA建模"/>
+<meta name="twitter:description" content="2020年的开局确实比较悲惨，特别是在这几天，全球convid-19患者已超百万。那么现在。我们就通过推特抓取了350万条与virus相关的推文，看看墙外人民怎么看。"/>
+
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-135738940-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="进击的Hunter" rel="home">
+				<div class="logo__title">进击的Hunter</div>
+				<div class="logo__tagline">Uneasy lies the head that wears the crown.</div>
+			</a>
+		</div>
+		<a href="https://github.com/aoii103/every_day_cmd"><div style="
+	height: 30px;
+	display: inline-block;
+	line-height:30px;
+	padding:0 20px;
+	color:rgb(73, 80, 87);
+	font-size:13px;
+	text-decoration:none;
+	font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;" id="every_day_cmd" class="every_day_cmd" title="字字珠玑，每日一记。" ></div></a>
+<div class="divider"></div>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+	axios.get('https://pyocean.com/every_day_cmd?os=osx,window,common').then(resp => {
+		document.getElementById('every_day_cmd').innerHTML = `🍺 ${resp.data.description}: <code  style="color: rgb(232, 62, 140);background:none;border:none;">${resp.data.code}</code>`
+	})
+</script>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">【项目实战】针对Twitter舆情进行LDA建模</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2020-04-07T00:00:00">April 07, 2020</time>
+</div>
+</div>
+		</header>
+		<figure class="post__thumbnail">
+			<img src="/img/content_img/twitter/twitter.png" alt="【项目实战】针对Twitter舆情进行LDA建模">
+		</figure>
+
+
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#0x01-colab改变生活">0x01 Colab改变生活</a></li>
+<li><a href="#0x02-tweets的实时抓取">0x02 Tweets的实时抓取</a>
+<ul>
+<li>
+<ul>
+<li><a href="#1-获取开发者账号">1. 获取开发者账号</a></li>
+<li><a href="#2-编写抓取器">2. 编写抓取器</a></li>
+<li><a href="#3-挂载googledrive">3. 挂载GoogleDrive</a></li>
+<li><a href="#3-编写过滤规则">3. 编写过滤规则</a></li>
+<li><a href="#4-数据抓取">4. 数据抓取</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#0x03-数据清洗">0x03 数据清洗</a>
+<ul>
+<li>
+<ul>
+<li><a href="#1-标准化-normalization">1.标准化(Normalization)</a></li>
+<li><a href="#2-分词-tokenization-stop-words">2. 分词(Tokenization&amp;Stop words)</a></li>
+<li><a href="#3-还原-lemmatization">3. 还原(Lemmatization)</a></li>
+<li><a href="#4-推文处理方法">4. 推文处理方法</a></li>
+<li><a href="#5-处理">5. 处理</a></li>
+<li><a href="#6-概要查看">6. 概要查看</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#0x04-模型生成">0x04 模型生成</a></li>
+</ul></li>
+</ul>
+</nav>
+	</div>
+</div>
+<div class="content post__content clearfix">
+			<p>2020年的开局确实比较悲惨，特别是在这几天，全球<code>convid-19</code>患者已超百万。那么现在。我们就通过推特抓取了350万条与<code>virus</code>相关的推文，看看墙外人民怎么看。</p>
+
+<p>本文章共需4分钟来阅读，之后您将学到：</p>
+
+<ul>
+<li><p>如何善用强大的<code>Colab</code></p></li>
+
+<li><p><code>Twitter API</code>流式过滤器的使用方法</p></li>
+
+<li><p>部分数据清洗的方法</p>
+
+<ul>
+<li><p>Normalization</p></li>
+
+<li><p>Tokenization</p></li>
+
+<li><p>Stop words</p></li>
+
+<li><p>Stemming</p></li>
+
+<li><p>Lemmatization</p></li>
+</ul></li>
+
+<li><p>快速生成<code>LDA</code>主题模型的方法</p></li>
+
+<li><p>在处理时我们该如何节约资源</p></li>
+</ul>
+
+<p>首先我们来看看社交媒体对于病毒有着怎么样的描述🤔</p>
+
+<p><img src="https://raw.githubusercontent.com/aoii103/BlogImages/master/2020/04/07-11-14-50-2020-04-03-10-30-38-image.png" alt="" /></p>
+
+<h2 id="0x01-colab改变生活">0x01 Colab改变生活</h2>
+
+<p><img src="https://raw.githubusercontent.com/aoii103/BlogImages/master/2020/04/07-11-15-26-2020-04-03-11-25-44-image.png" alt="" /></p>
+
+<p>和以往的不同，为什么这次的任务推荐使用Colab呢。理由如下：</p>
+
+<ul>
+<li><p>我们将使用到一个<code>Jupyter</code>般的友好编写环境</p></li>
+
+<li><p>它本身拥有国外的IP，抓取<code>Twitter</code>数据会更省力</p></li>
+
+<li><p>云端跑脚本可以节省你本地的计算及网络资源</p></li>
+
+<li><p>可将抓取的数据实时存入<code>GoogleDrive</code></p></li>
+
+<li><p>它是免费的，并且可以额外安装其他库</p></li>
+</ul>
+
+<h2 id="0x02-tweets的实时抓取">0x02 Tweets的实时抓取</h2>
+
+<p>推特官方API本身提供实时推文的抓取接口，详见<a href="https://developer.twitter.com/en/docs/tutorials/consuming-streaming-data#consuming-the-stream">https://developer.twitter.com/en/docs/tutorials/consuming-streaming-data#consuming-the-stream</a> ，具体细节不是本文的重点，不赘述。</p>
+
+<p>所以我们将借助<code>[tweepy](http://docs.tweepy.org/en/latest/index.html)</code>项目来编写我们的抓取器。</p>
+
+<h4 id="1-获取开发者账号">1. 获取开发者账号</h4>
+
+<p>再者我们需要一个开发者账户，由于申请过程比较麻烦；且很多开发者喜欢把包含这类的内容传到Github，索引我们就去合理利用下。</p>
+
+<p><img title="" src="https://raw.githubusercontent.com/aoii103/BlogImages/master/2020/04/07-11-19-39-5505f675ad525a4d971cee92e87348904ca4cd63.gif" alt="" data-align="center"></p>
+
+<h4 id="2-编写抓取器">2. 编写抓取器</h4>
+
+<p>通过上述过程拿到API账户后开始编写抓取器，首先我们需要经过认证方法。毕竟无用的账户是无法抓取到数据的</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> tweepy <span style="color:#f92672">import</span> OAuthHandler
+
+AUTH <span style="color:#f92672">=</span> OAuthHandler(API_KEY,API_SECRET)
+AUTH<span style="color:#f92672">.</span>set_access_token(ACCESS_TOKEN,ACCESS_SECRET)</code></pre></div>
+<p>预设一个队列用于存储推文，我们给其设定了最大长度为1000w条，并且每获取1000条数据将追加保存<code>open(file,'a')</code>数据</p>
+
+<blockquote>
+<p>最后实际抓了350w条 - - 太慢了。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> collections <span style="color:#f92672">import</span> deque
+
+MAX_TWEETS <span style="color:#f92672">=</span> <span style="color:#ae81ff">1000</span><span style="color:#f92672">*</span><span style="color:#ae81ff">10000</span>
+CURRENT_TWEETS <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+SAVE_NUMS <span style="color:#f92672">=</span> <span style="color:#ae81ff">1000</span>
+TWEETS <span style="color:#f92672">=</span> deque(maxlen<span style="color:#f92672">=</span>SAVE_NUMS)</code></pre></div>
+<p>预设一个进度条用于进度监控，就怕不耐心得你以为是程序卡住了。。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> progressbar
+TWEETS_BAR <span style="color:#f92672">=</span> progressbar<span style="color:#f92672">.</span>ProgressBar(max_value<span style="color:#f92672">=</span>MAX_TWEETS)</code></pre></div>
+<h4 id="3-挂载googledrive">3. 挂载GoogleDrive</h4>
+
+<p><img src="https://9to5google.com/wp-content/uploads/sites/4/2020/01/google_drive_logo.jpg?quality=82&strip=all&w=1600" title="" alt="It's not just you, Google Drive is down for some today - 9to5Google" data-align="center"></p>
+
+<p>我们使用如下代码来挂载，并设定了数据保存的位置<code>datasets_path</code>及推文文件<code>tweets_file</code>。这样一来你就不必担心数据没地方存啦</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> pathlib
+<span style="color:#f92672">from</span> google.colab <span style="color:#f92672">import</span> drive
+
+root_google_path <span style="color:#f92672">=</span> pathlib<span style="color:#f92672">.</span>Path(<span style="color:#e6db74">&#39;/content/drive&#39;</span>)
+drive<span style="color:#f92672">.</span>mount(str(root_google_path), force_remount<span style="color:#f92672">=</span>True)
+
+
+datasets_path <span style="color:#f92672">=</span> root_google_path <span style="color:#f92672">/</span> <span style="color:#e6db74">&#39;My Drive/Datasets&#39;</span>
+<span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> datasets_path<span style="color:#f92672">.</span>exists():
+    datasets_path<span style="color:#f92672">.</span>mkdir()
+tweets_file <span style="color:#f92672">=</span> datasets_path <span style="color:#f92672">/</span> f<span style="color:#e6db74">&#39;Stream_tweets_virus_{MAX_TWEETS}.csv&#39;</span></code></pre></div>
+<blockquote>
+<p>注意，期间在执行框中会出现要求输入认证口令。你只需要点击其链接，然后会认证你的账户并给出口令并粘贴到口令框即可。</p>
+</blockquote>
+
+<p><img src="/Users/s045pd/Library/Application%20Support/marktext/images/2020-04-03-12-07-43-image.png" title="" alt="" data-align="center"></p>
+
+<h4 id="3-编写过滤规则">3. 编写过滤规则</h4>
+
+<p>我们这里判断结束或者当前数量被整除的时候将进行保存。并且每次保存后情况TWEETS以节省有限的资源。并且我们将保存文字内容的repr，有人会问为啥呢？因为保存原本的text真的是太乱了。。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> json
+<span style="color:#f92672">from</span> tweepy.streaming <span style="color:#f92672">import</span> StreamListener
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Monitor</span>(StreamListener):
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">on_data</span>(self, data):
+        <span style="color:#66d9ef">global</span> CURRENT_TWEETS
+        <span style="color:#66d9ef">if</span> len(TWEETS) <span style="color:#f92672">%</span> SAVE_NUMS <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">or</span> CURRENT_TWEETS <span style="color:#f92672">&gt;=</span> MAX_TWEETS:
+            pd<span style="color:#f92672">.</span>DataFrame(TWEETS)<span style="color:#f92672">.</span>to_csv(
+                str(tweets_file),
+                mode<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;a&#34;</span>,
+                index<span style="color:#f92672">=</span>False,
+                header<span style="color:#f92672">=</span>(<span style="color:#f92672">not</span> tweets_file<span style="color:#f92672">.</span>exists()),
+            )
+            <span style="color:#66d9ef">if</span> CURRENT_TWEETS <span style="color:#f92672">&gt;=</span> MAX_TWEETS:
+                <span style="color:#66d9ef">return</span> False
+            TWEETS<span style="color:#f92672">.</span>clear()
+
+        <span style="color:#66d9ef">try</span>:
+            TWEETS<span style="color:#f92672">.</span>append(
+                {
+                    <span style="color:#e6db74">&#34;text&#34;</span>: repr(json<span style="color:#f92672">.</span>loads(data)[<span style="color:#e6db74">&#34;text&#34;</span>]<span style="color:#f92672">.</span>strip()),
+                }
+            )
+            CURRENT_TWEETS <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+            TWEETS_BAR<span style="color:#f92672">.</span>update(CURRENT_TWEETS)
+        <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">Exception</span> <span style="color:#66d9ef">as</span> e:
+            <span style="color:#66d9ef">pass</span>
+        <span style="color:#66d9ef">return</span> True</code></pre></div>
+<h4 id="4-数据抓取">4. 数据抓取</h4>
+
+<p>然后我们设定关键字为<code>virus</code>。由于本次分析主要针对英语所以我们将语言为<code>en</code>就可以开始抓取了。过程应该会比较长，建议时不时瞄下进度条，有能力的可以加个邮件提醒啥的也是很棒棒的</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> tweepy <span style="color:#f92672">import</span> Stream
+
+worker <span style="color:#f92672">=</span> Monitor()
+stream <span style="color:#f92672">=</span> Stream(AUTH,worker)
+stream<span style="color:#f92672">.</span>filter(track<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;virus&#39;</span>,<span style="color:#e6db74">&#39;convid-19&#39;</span>],languages<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;en&#39;</span>])</code></pre></div>
+<h2 id="0x03-数据清洗">0x03 数据清洗</h2>
+
+<p>首先我们导入所需要的模块，并需要部分包需下载。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> nltk
+nltk<span style="color:#f92672">.</span>download(<span style="color:#e6db74">&#34;words&#34;</span>) 
+nltk<span style="color:#f92672">.</span>download(<span style="color:#e6db74">&#34;punkt&#34;</span>)
+nltk<span style="color:#f92672">.</span>download(<span style="color:#e6db74">&#34;wordnet&#34;</span>)
+nltk<span style="color:#f92672">.</span>download(<span style="color:#e6db74">&#34;stopwords&#34;</span>)
+
+<span style="color:#f92672">from</span> nltk.corpus <span style="color:#f92672">import</span> stopwords
+<span style="color:#f92672">from</span> nltk.stem.porter <span style="color:#f92672">import</span> PorterStemmer
+<span style="color:#f92672">from</span> nltk.stem.wordnet <span style="color:#f92672">import</span> WordNetLemmatizer
+<span style="color:#f92672">from</span> nltk.tokenize <span style="color:#f92672">import</span> word_tokenize
+stopwords <span style="color:#f92672">=</span> set(stopwords<span style="color:#f92672">.</span>words(<span style="color:#e6db74">&#34;english&#34;</span>))</code></pre></div>
+<p>然后我们就需要进行清洗，就拿下图举个例子。</p>
+
+<p><img src="https://raw.githubusercontent.com/aoii103/BlogImages/master/2020/04/07-11-16-24-2020-04-06-22-11-36-image.png" alt="" /></p>
+
+<h4 id="1-标准化-normalization">1.标准化(Normalization)</h4>
+
+<p>一般推文中会出现些许emoji表情，而这对此次的主题生成作用不大，于是我们定义方法将其过滤。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">clean_emoji</span>(text):
+    <span style="color:#66d9ef">return</span> text<span style="color:#f92672">.</span>encode(<span style="color:#e6db74">&#34;ascii&#34;</span>, <span style="color:#e6db74">&#34;ignore&#34;</span>)<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;ascii&#34;</span>)</code></pre></div>
+<p>而后我们需要将所整条推文最小化并过滤掉，例如<code>#topic</code> 、<code>@xxx</code>、链接等等无用内容。</p>
+
+<p>由于推文数量较大，我们通过<code>re.compile</code>提前生成规则以保证效率</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> re
+
+reg_map <span style="color:#f92672">=</span> {
+    re<span style="color:#f92672">.</span>compile(<span style="color:#e6db74">&#34;rt [@0-9a-z_]{0,10}:&#34;</span>),
+    re<span style="color:#f92672">.</span>compile(<span style="color:#e6db74">&#34;http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&amp;+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+&#34;</span>),
+    re<span style="color:#f92672">.</span>compile(<span style="color:#e6db74">&#34;#[0-9a-z]+&#34;</span>),
+    re<span style="color:#f92672">.</span>compile(<span style="color:#e6db74">&#34;@[0-9a-z]+&#34;</span>),
+}
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">lower_and_remove_with_reg</span>(text: str) <span style="color:#f92672">-&gt;</span> str:
+    text <span style="color:#f92672">=</span> text<span style="color:#f92672">.</span>lower()
+    <span style="color:#66d9ef">for</span> v <span style="color:#f92672">in</span> reg_map:
+        text <span style="color:#f92672">=</span> v<span style="color:#f92672">.</span>sub(<span style="color:#e6db74">&#34;&#34;</span>, text)
+    <span style="color:#66d9ef">return</span> text</code></pre></div>
+<h4 id="2-分词-tokenization-stop-words">2. 分词(Tokenization&amp;Stop words)</h4>
+
+<p>简单的解释就是把句子分成一个个的单词，类似<code>text.split()</code>，但我们有更合理的方式，顺带在分词后把停顿词及杂词删去</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">tokenize_and_remove_stopwords</span>(text: str) <span style="color:#f92672">-&gt;</span> str:
+    <span style="color:#66d9ef">for</span> word <span style="color:#f92672">in</span> word_tokenize(text):
+        <span style="color:#66d9ef">if</span> word<span style="color:#f92672">.</span>isalnum() <span style="color:#f92672">and</span> word <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> stopwords:
+            <span style="color:#66d9ef">yield</span> word</code></pre></div>
+<p>当然部分结果任然不是我们需要的，例如字母、空内容等</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">word_check</span>(word: str) <span style="color:#f92672">-&gt;</span> bool:
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> word:
+        <span style="color:#66d9ef">return</span>
+
+    <span style="color:#66d9ef">if</span> word<span style="color:#f92672">.</span>__len__() <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">2</span>:
+        <span style="color:#66d9ef">return</span>
+
+    <span style="color:#66d9ef">return</span> True</code></pre></div>
+<h4 id="3-还原-lemmatization">3. 还原(Lemmatization)</h4>
+
+<p>单词中会一些变形，而这些对计算机来说不太友好，所以我们通过此方法例如将 better 变成 good。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">lemmatizing</span>(word: str) <span style="color:#f92672">-&gt;</span> str:
+    <span style="color:#66d9ef">return</span> WordNetLemmatizer()<span style="color:#f92672">.</span>lemmatize(word, pos<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;v&#34;</span>)</code></pre></div>
+<h4 id="4-推文处理方法">4. 推文处理方法</h4>
+
+<p>我们预设一个方法以组合上述几个方式处理每条推文。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">pre_proccess</span>(line: str) <span style="color:#f92672">-&gt;</span> list:
+    line <span style="color:#f92672">=</span> clean_emoji(line)
+    line <span style="color:#f92672">=</span> lower_and_remove_with_reg(line)
+    words <span style="color:#f92672">=</span> filter(word_check, tokenize_and_remove_stopwords(line))
+    words <span style="color:#f92672">=</span> map(lemmatizing, words)
+    <span style="color:#66d9ef">return</span> list(words)</code></pre></div>
+<h4 id="5-处理">5. 处理</h4>
+
+<p>然后我们开始预处理这3.5m条推文。为了节约内存，我们通过每10k条作为一个chunk的方式来读取。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">READ_ROWS <span style="color:#f92672">=</span> <span style="color:#ae81ff">350</span><span style="color:#f92672">*</span><span style="color:#ae81ff">10000</span>
+CHUNK_SIZE <span style="color:#f92672">=</span> <span style="color:#ae81ff">10000</span></code></pre></div>
+<p>同时为了方便查看进度，我们设定一个<code>ProccessBar</code>来监控。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> math
+
+PROCCESS_TIMES <span style="color:#f92672">=</span> math<span style="color:#f92672">.</span>floor(READ_ROWS <span style="color:#f92672">/</span> CHUNK_SIZE)
+PRE_PROCCESS_BAR <span style="color:#f92672">=</span> progressbar<span style="color:#f92672">.</span>ProgressBar(max_value<span style="color:#f92672">=</span>PROCCESS_TIMES)
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">work_and_update_bar</span>(item, func, indexs):
+    result <span style="color:#f92672">=</span> item<span style="color:#f92672">.</span>apply(func)
+    PRE_PROCCESS_BAR<span style="color:#f92672">.</span>update(indexs <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>)
+    <span style="color:#66d9ef">return</span> result</code></pre></div>
+<p>并在最后合并(<code>concat</code>)所有<code>Dataframe</code>。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>concat(
+    (
+        work_and_update_bar(item[<span style="color:#e6db74">&#34;text&#34;</span>], pre_proccess, indexs)
+        <span style="color:#66d9ef">for</span> indexs, item <span style="color:#f92672">in</span> enumerate(
+            pd<span style="color:#f92672">.</span>read_csv(
+                str(tweets_file),
+                nrows<span style="color:#f92672">=</span>READ_ROWS,
+                chunksize<span style="color:#f92672">=</span>CHUNK_SIZE,
+                iterator<span style="color:#f92672">=</span>True,
+                names<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;text&#34;</span>, <span style="color:#e6db74">&#34;geo&#34;</span>],
+            )
+        )
+    )
+)</code></pre></div>
+<h4 id="6-概要查看">6. 概要查看</h4>
+
+<p>在处理完成后我们无聊得统计下词频，看看有些啥玩意儿。这里我们将使用<code>chain</code>将二维数组转成一位数组，并使用可视化技术更直观得展示。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">%</span>pip <span style="color:#f92672">-</span>q install stylecloud
+<span style="color:#f92672">import</span> stylecloud
+<span style="color:#f92672">from</span> itertools <span style="color:#f92672">import</span> chain
+
+words <span style="color:#f92672">=</span> chain<span style="color:#f92672">.</span>from_iterable(df<span style="color:#f92672">.</span>to_list())
+stylecloud<span style="color:#f92672">.</span>gen_stylecloud(<span style="color:#e6db74">&#39; &#39;</span><span style="color:#f92672">.</span>join(words),icon_name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;fab fa-twitter&#34;</span>)</code></pre></div>
+<p>然后结果如下，AMP是啥??</p>
+
+<p><img title="" src="https://raw.githubusercontent.com/aoii103/BlogImages/master/2020/04/07-11-17-40-2020-04-07-01-35-27-image.png" alt="" data-align="center"></p>
+
+<h2 id="0x04-模型生成">0x04 模型生成</h2>
+
+<p>最后我们开始生成模型，当然我们这里会使用较为快速的方法，不会太深究</p>
+
+<p>首先我们生成词典过滤掉低频词并构建向量</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> gensim
+
+tweets_dicts <span style="color:#f92672">=</span> gensim<span style="color:#f92672">.</span>corpora<span style="color:#f92672">.</span>Dictionary(df)
+tweets_dicts<span style="color:#f92672">.</span>filter_extremes(no_below<span style="color:#f92672">=</span><span style="color:#ae81ff">15</span>)
+
+corpus_result <span style="color:#f92672">=</span> [tweets_dicts<span style="color:#f92672">.</span>doc2bow(data) <span style="color:#66d9ef">for</span> data <span style="color:#f92672">in</span> df]</code></pre></div>
+<p>这里为了最大限度调用计算资源，我们使用<code>LdaMulticore</code>方法来生成模型（也不用期望会很快）。之后我们将打印20个相关的结果主题</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">lda_model <span style="color:#f92672">=</span> gensim<span style="color:#f92672">.</span>models<span style="color:#f92672">.</span>LdaMulticore(
+    corpus_result, num_topics<span style="color:#f92672">=</span><span style="color:#ae81ff">20</span>, id2word<span style="color:#f92672">=</span>tweets_dicts, passes<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>
+)
+<span style="color:#66d9ef">for</span> indexs, topic <span style="color:#f92672">in</span> lda_model<span style="color:#f92672">.</span>print_topics():
+    <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;Topic: {indexs} Words: {topic}&#34;</span>)</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">Topic: <span style="color:#ae81ff">0</span> Words: <span style="color:#ae81ff">0</span>.048*<span style="color:#e6db74">&#34;yes&#34;</span> + <span style="color:#ae81ff">0</span>.046*<span style="color:#e6db74">&#34;call&#34;</span> + <span style="color:#ae81ff">0</span>.027*<span style="color:#e6db74">&#34;trump&#34;</span> + <span style="color:#ae81ff">0</span>.024*<span style="color:#e6db74">&#34;amp&#34;</span> + <span style="color:#ae81ff">0</span>.024*<span style="color:#e6db74">&#34;name&#34;</span> + <span style="color:#ae81ff">0</span>.018*<span style="color:#e6db74">&#34;yet&#34;</span> + <span style="color:#ae81ff">0</span>.013*<span style="color:#e6db74">&#34;president&#34;</span> + <span style="color:#ae81ff">0</span>.013*<span style="color:#e6db74">&#34;omg&#34;</span> + <span style="color:#ae81ff">0</span>.011*<span style="color:#e6db74">&#34;haha&#34;</span> + <span style="color:#ae81ff">0</span>.010*<span style="color:#e6db74">&#34;say&#34;</span>
+Topic: <span style="color:#ae81ff">1</span> Words: <span style="color:#ae81ff">0</span>.045*<span style="color:#e6db74">&#34;take&#34;</span> + <span style="color:#ae81ff">0</span>.039*<span style="color:#e6db74">&#34;great&#34;</span> + <span style="color:#ae81ff">0</span>.037*<span style="color:#e6db74">&#34;think&#34;</span> + <span style="color:#ae81ff">0</span>.031*<span style="color:#e6db74">&#34;better&#34;</span> + <span style="color:#ae81ff">0</span>.030*<span style="color:#e6db74">&#34;morning&#34;</span> + <span style="color:#ae81ff">0</span>.029*<span style="color:#e6db74">&#34;keep&#34;</span> + <span style="color:#ae81ff">0</span>.020*<span style="color:#e6db74">&#34;really&#34;</span> + <span style="color:#ae81ff">0</span>.018*<span style="color:#e6db74">&#34;end&#34;</span> + <span style="color:#ae81ff">0</span>.015*<span style="color:#e6db74">&#34;face&#34;</span> + <span style="color:#ae81ff">0</span>.015*<span style="color:#e6db74">&#34;lose&#34;</span>
+Topic: <span style="color:#ae81ff">2</span> Words: <span style="color:#ae81ff">0</span>.061*<span style="color:#e6db74">&#34;watch&#34;</span> + <span style="color:#ae81ff">0</span>.054*<span style="color:#e6db74">&#34;shit&#34;</span> + <span style="color:#ae81ff">0</span>.026*<span style="color:#e6db74">&#34;week&#34;</span> + <span style="color:#ae81ff">0</span>.024*<span style="color:#e6db74">&#34;game&#34;</span> + <span style="color:#ae81ff">0</span>.023*<span style="color:#e6db74">&#34;next&#34;</span> + <span style="color:#ae81ff">0</span>.020*<span style="color:#e6db74">&#34;aint&#34;</span> + <span style="color:#ae81ff">0</span>.019*<span style="color:#e6db74">&#34;already&#34;</span> + <span style="color:#ae81ff">0</span>.019*<span style="color:#e6db74">&#34;year&#34;</span> + <span style="color:#ae81ff">0</span>.018*<span style="color:#e6db74">&#34;listen&#34;</span> + <span style="color:#ae81ff">0</span>.018*<span style="color:#e6db74">&#34;news&#34;</span>
+Topic: <span style="color:#ae81ff">3</span> Words: <span style="color:#ae81ff">0</span>.086*<span style="color:#e6db74">&#34;one&#34;</span> + <span style="color:#ae81ff">0</span>.085*<span style="color:#e6db74">&#34;know&#34;</span> + <span style="color:#ae81ff">0</span>.064*<span style="color:#e6db74">&#34;thank&#34;</span> + <span style="color:#ae81ff">0</span>.045*<span style="color:#e6db74">&#34;lol&#34;</span> + <span style="color:#ae81ff">0</span>.029*<span style="color:#e6db74">&#34;never&#34;</span> + <span style="color:#ae81ff">0</span>.029*<span style="color:#e6db74">&#34;much&#34;</span> + <span style="color:#ae81ff">0</span>.028*<span style="color:#e6db74">&#34;cant&#34;</span> + <span style="color:#ae81ff">0</span>.021*<span style="color:#e6db74">&#34;mean&#34;</span> + <span style="color:#ae81ff">0</span>.018*<span style="color:#e6db74">&#34;sleep&#34;</span> + <span style="color:#ae81ff">0</span>.015*<span style="color:#e6db74">&#34;ill&#34;</span>
+Topic: <span style="color:#ae81ff">4</span> Words: <span style="color:#ae81ff">0</span>.090*<span style="color:#e6db74">&#34;like&#34;</span> + <span style="color:#ae81ff">0</span>.061*<span style="color:#e6db74">&#34;look&#34;</span> + <span style="color:#ae81ff">0</span>.040*<span style="color:#e6db74">&#34;live&#34;</span> + <span style="color:#ae81ff">0</span>.024*<span style="color:#e6db74">&#34;always&#34;</span> + <span style="color:#ae81ff">0</span>.022*<span style="color:#e6db74">&#34;leave&#34;</span> + <span style="color:#ae81ff">0</span>.022*<span style="color:#e6db74">&#34;something&#34;</span> + <span style="color:#ae81ff">0</span>.019*<span style="color:#e6db74">&#34;wish&#34;</span> + <span style="color:#ae81ff">0</span>.019*<span style="color:#e6db74">&#34;drink&#34;</span> + <span style="color:#ae81ff">0</span>.017*<span style="color:#e6db74">&#34;house&#34;</span> + <span style="color:#ae81ff">0</span>.015*<span style="color:#e6db74">&#34;damn&#34;</span>
+Topic: <span style="color:#ae81ff">5</span> Words: <span style="color:#ae81ff">0</span>.039*<span style="color:#e6db74">&#34;job&#34;</span> + <span style="color:#ae81ff">0</span>.027*<span style="color:#e6db74">&#34;ca&#34;</span> + <span style="color:#ae81ff">0</span>.023*<span style="color:#e6db74">&#34;true&#34;</span> + <span style="color:#ae81ff">0</span>.022*<span style="color:#e6db74">&#34;bless&#34;</span> + <span style="color:#ae81ff">0</span>.022*<span style="color:#e6db74">&#34;tonight&#34;</span> + <span style="color:#ae81ff">0</span>.021*<span style="color:#e6db74">&#34;lockdown&#34;</span> + <span style="color:#ae81ff">0</span>.018*<span style="color:#e6db74">&#34;link&#34;</span> + <span style="color:#ae81ff">0</span>.018*<span style="color:#e6db74">&#34;social&#34;</span> + <span style="color:#ae81ff">0</span>.017*<span style="color:#e6db74">&#34;open&#34;</span> + <span style="color:#ae81ff">0</span>.015*<span style="color:#e6db74">&#34;distance&#34;</span>
+Topic: <span style="color:#ae81ff">6</span> Words: <span style="color:#ae81ff">0</span>.118*<span style="color:#e6db74">&#34;good&#34;</span> + <span style="color:#ae81ff">0</span>.031*<span style="color:#e6db74">&#34;ask&#34;</span> + <span style="color:#ae81ff">0</span>.025*<span style="color:#e6db74">&#34;beautiful&#34;</span> + <span style="color:#ae81ff">0</span>.020*<span style="color:#e6db74">&#34;song&#34;</span> + <span style="color:#ae81ff">0</span>.019*<span style="color:#e6db74">&#34;agree&#34;</span> + <span style="color:#ae81ff">0</span>.017*<span style="color:#e6db74">&#34;state&#34;</span> + <span style="color:#ae81ff">0</span>.017*<span style="color:#e6db74">&#34;team&#34;</span> + <span style="color:#ae81ff">0</span>.017*<span style="color:#e6db74">&#34;question&#34;</span> + <span style="color:#ae81ff">0</span>.015*<span style="color:#e6db74">&#34;full&#34;</span> + <span style="color:#ae81ff">0</span>.013*<span style="color:#e6db74">&#34;government&#34;</span>
+Topic: <span style="color:#ae81ff">7</span> Words: <span style="color:#ae81ff">0</span>.125*<span style="color:#e6db74">&#34;im&#34;</span> + <span style="color:#ae81ff">0</span>.104*<span style="color:#e6db74">&#34;love&#34;</span> + <span style="color:#ae81ff">0</span>.041*<span style="color:#e6db74">&#34;miss&#34;</span> + <span style="color:#ae81ff">0</span>.039*<span style="color:#e6db74">&#34;say&#34;</span> + <span style="color:#ae81ff">0</span>.038*<span style="color:#e6db74">&#34;thats&#34;</span> + <span style="color:#ae81ff">0</span>.026*<span style="color:#e6db74">&#34;hear&#34;</span> + <span style="color:#ae81ff">0</span>.018*<span style="color:#e6db74">&#34;lmao&#34;</span> + <span style="color:#ae81ff">0</span>.017*<span style="color:#e6db74">&#34;sorry&#34;</span> + <span style="color:#ae81ff">0</span>.017*<span style="color:#e6db74">&#34;see&#34;</span> + <span style="color:#ae81ff">0</span>.015*<span style="color:#e6db74">&#34;nothing&#34;</span>
+Topic: <span style="color:#ae81ff">8</span> Words: <span style="color:#ae81ff">0</span>.030*<span style="color:#e6db74">&#34;gt&#34;</span> + <span style="color:#ae81ff">0</span>.028*<span style="color:#e6db74">&#34;money&#34;</span> + <span style="color:#ae81ff">0</span>.027*<span style="color:#e6db74">&#34;help&#34;</span> + <span style="color:#ae81ff">0</span>.019*<span style="color:#e6db74">&#34;order&#34;</span> + <span style="color:#ae81ff">0</span>.018*<span style="color:#e6db74">&#34;school&#34;</span> + <span style="color:#ae81ff">0</span>.017*<span style="color:#e6db74">&#34;hell&#34;</span> + <span style="color:#ae81ff">0</span>.016*<span style="color:#e6db74">&#34;food&#34;</span> + <span style="color:#ae81ff">0</span>.016*<span style="color:#e6db74">&#34;tho&#34;</span> + <span style="color:#ae81ff">0</span>.016*<span style="color:#e6db74">&#34;free&#34;</span> + <span style="color:#ae81ff">0</span>.015*<span style="color:#e6db74">&#34;high&#34;</span>
+Topic: <span style="color:#ae81ff">9</span> Words: <span style="color:#ae81ff">0</span>.042*<span style="color:#e6db74">&#34;world&#34;</span> + <span style="color:#ae81ff">0</span>.030*<span style="color:#e6db74">&#34;baby&#34;</span> + <span style="color:#ae81ff">0</span>.028*<span style="color:#e6db74">&#34;test&#34;</span> + <span style="color:#ae81ff">0</span>.023*<span style="color:#e6db74">&#34;movie&#34;</span> + <span style="color:#ae81ff">0</span>.022*<span style="color:#e6db74">&#34;close&#34;</span> + <span style="color:#ae81ff">0</span>.021*<span style="color:#e6db74">&#34;coronavirus&#34;</span> + <span style="color:#ae81ff">0</span>.020*<span style="color:#e6db74">&#34;case&#34;</span> + <span style="color:#ae81ff">0</span>.018*<span style="color:#e6db74">&#34;via&#34;</span> + <span style="color:#ae81ff">0</span>.018*<span style="color:#e6db74">&#34;pandemic&#34;</span> + <span style="color:#ae81ff">0</span>.015*<span style="color:#e6db74">&#34;least&#34;</span>
+Topic: <span style="color:#ae81ff">10</span> Words: <span style="color:#ae81ff">0</span>.054*<span style="color:#e6db74">&#34;tell&#34;</span> + <span style="color:#ae81ff">0</span>.036*<span style="color:#e6db74">&#34;stop&#34;</span> + <span style="color:#ae81ff">0</span>.031*<span style="color:#e6db74">&#34;real&#34;</span> + <span style="color:#ae81ff">0</span>.029*<span style="color:#e6db74">&#34;do&#34;</span> + <span style="color:#ae81ff">0</span>.027*<span style="color:#e6db74">&#34;sunday&#34;</span> + <span style="color:#ae81ff">0</span>.027*<span style="color:#e6db74">&#34;girl&#34;</span> + <span style="color:#ae81ff">0</span>.024*<span style="color:#e6db74">&#34;virus&#34;</span> + <span style="color:#ae81ff">0</span>.024*<span style="color:#e6db74">&#34;everything&#34;</span> + <span style="color:#ae81ff">0</span>.021*<span style="color:#e6db74">&#34;must&#34;</span> + <span style="color:#ae81ff">0</span>.020*<span style="color:#e6db74">&#34;amaze&#34;</span>
+Topic: <span style="color:#ae81ff">11</span> Words: <span style="color:#ae81ff">0</span>.055*<span style="color:#e6db74">&#34;want&#34;</span> + <span style="color:#ae81ff">0</span>.048*<span style="color:#e6db74">&#34;dont&#34;</span> + <span style="color:#ae81ff">0</span>.042*<span style="color:#e6db74">&#34;na&#34;</span> + <span style="color:#ae81ff">0</span>.041*<span style="color:#e6db74">&#34;right&#34;</span> + <span style="color:#ae81ff">0</span>.030*<span style="color:#e6db74">&#34;go&#34;</span> + <span style="color:#ae81ff">0</span>.026*<span style="color:#e6db74">&#34;life&#34;</span> + <span style="color:#ae81ff">0</span>.023*<span style="color:#e6db74">&#34;thing&#34;</span> + <span style="color:#ae81ff">0</span>.022*<span style="color:#e6db74">&#34;get&#34;</span> + <span style="color:#ae81ff">0</span>.021*<span style="color:#e6db74">&#34;yall&#34;</span> + <span style="color:#ae81ff">0</span>.020*<span style="color:#e6db74">&#34;play&#34;</span>
+Topic: <span style="color:#ae81ff">12</span> Words: <span style="color:#ae81ff">0</span>.065*<span style="color:#e6db74">&#34;fuck&#34;</span> + <span style="color:#ae81ff">0</span>.028*<span style="color:#e6db74">&#34;sure&#34;</span> + <span style="color:#ae81ff">0</span>.025*<span style="color:#e6db74">&#34;send&#34;</span> + <span style="color:#ae81ff">0</span>.024*<span style="color:#e6db74">&#34;big&#34;</span> + <span style="color:#ae81ff">0</span>.024*<span style="color:#e6db74">&#34;eat&#34;</span> + <span style="color:#ae81ff">0</span>.024*<span style="color:#e6db74">&#34;make&#34;</span> + <span style="color:#ae81ff">0</span>.020*<span style="color:#e6db74">&#34;anyone&#34;</span> + <span style="color:#ae81ff">0</span>.017*<span style="color:#e6db74">&#34;kill&#34;</span> + <span style="color:#ae81ff">0</span>.015*<span style="color:#e6db74">&#34;music&#34;</span> + <span style="color:#ae81ff">0</span>.014*<span style="color:#e6db74">&#34;else&#34;</span>
+Topic: <span style="color:#ae81ff">13</span> Words: <span style="color:#ae81ff">0</span>.061*<span style="color:#e6db74">&#34;would&#34;</span> + <span style="color:#ae81ff">0</span>.043*<span style="color:#e6db74">&#34;man&#34;</span> + <span style="color:#ae81ff">0</span>.033*<span style="color:#e6db74">&#34;god&#34;</span> + <span style="color:#ae81ff">0</span>.020*<span style="color:#e6db74">&#34;like&#34;</span> + <span style="color:#ae81ff">0</span>.020*<span style="color:#e6db74">&#34;run&#34;</span> + <span style="color:#ae81ff">0</span>.019*<span style="color:#e6db74">&#34;put&#34;</span> + <span style="color:#ae81ff">0</span>.016*<span style="color:#e6db74">&#34;point&#34;</span> + <span style="color:#ae81ff">0</span>.016*<span style="color:#e6db74">&#34;head&#34;</span> + <span style="color:#ae81ff">0</span>.014*<span style="color:#e6db74">&#34;turn&#34;</span> + <span style="color:#ae81ff">0</span>.014*<span style="color:#e6db74">&#34;ok&#34;</span>
+Topic: <span style="color:#ae81ff">14</span> Words: <span style="color:#ae81ff">0</span>.068*<span style="color:#e6db74">&#34;back&#34;</span> + <span style="color:#ae81ff">0</span>.049*<span style="color:#e6db74">&#34;please&#34;</span> + <span style="color:#ae81ff">0</span>.031*<span style="color:#e6db74">&#34;post&#34;</span> + <span style="color:#ae81ff">0</span>.029*<span style="color:#e6db74">&#34;follow&#34;</span> + <span style="color:#ae81ff">0</span>.025*<span style="color:#e6db74">&#34;bitch&#34;</span> + <span style="color:#ae81ff">0</span>.023*<span style="color:#e6db74">&#34;video&#34;</span> + <span style="color:#ae81ff">0</span>.021*<span style="color:#e6db74">&#34;nice&#34;</span> + <span style="color:#ae81ff">0</span>.019*<span style="color:#e6db74">&#34;us&#34;</span> + <span style="color:#ae81ff">0</span>.017*<span style="color:#e6db74">&#34;forget&#34;</span> + <span style="color:#ae81ff">0</span>.015*<span style="color:#e6db74">&#34;photo&#34;</span>
+Topic: <span style="color:#ae81ff">15</span> Words: <span style="color:#ae81ff">0</span>.078*<span style="color:#e6db74">&#34;day&#34;</span> + <span style="color:#ae81ff">0</span>.031*<span style="color:#e6db74">&#34;every&#34;</span> + <span style="color:#ae81ff">0</span>.031*<span style="color:#e6db74">&#34;night&#34;</span> + <span style="color:#ae81ff">0</span>.025*<span style="color:#e6db74">&#34;quarantine&#34;</span> + <span style="color:#ae81ff">0</span>.024*<span style="color:#e6db74">&#34;last&#34;</span> + <span style="color:#ae81ff">0</span>.022*<span style="color:#e6db74">&#34;hate&#34;</span> + <span style="color:#ae81ff">0</span>.020*<span style="color:#e6db74">&#34;die&#34;</span> + <span style="color:#ae81ff">0</span>.019*<span style="color:#e6db74">&#34;break&#34;</span> + <span style="color:#ae81ff">0</span>.014*<span style="color:#e6db74">&#34;heart&#34;</span> + <span style="color:#ae81ff">0</span>.014*<span style="color:#e6db74">&#34;believe&#34;</span>
+Topic: <span style="color:#ae81ff">16</span> Words: <span style="color:#ae81ff">0</span>.069*<span style="color:#e6db74">&#34;work&#34;</span> + <span style="color:#ae81ff">0</span>.053*<span style="color:#e6db74">&#34;home&#34;</span> + <span style="color:#ae81ff">0</span>.045*<span style="color:#e6db74">&#34;stay&#34;</span> + <span style="color:#ae81ff">0</span>.042*<span style="color:#e6db74">&#34;new&#34;</span> + <span style="color:#ae81ff">0</span>.039*<span style="color:#e6db74">&#34;happy&#34;</span> + <span style="color:#ae81ff">0</span>.033*<span style="color:#e6db74">&#34;birthday&#34;</span> + <span style="color:#ae81ff">0</span>.027*<span style="color:#e6db74">&#34;everyone&#34;</span> + <span style="color:#ae81ff">0</span>.022*<span style="color:#e6db74">&#34;care&#34;</span> + <span style="color:#ae81ff">0</span>.021*<span style="color:#e6db74">&#34;safe&#34;</span> + <span style="color:#ae81ff">0</span>.021*<span style="color:#e6db74">&#34;check&#34;</span>
+Topic: <span style="color:#ae81ff">17</span> Words: <span style="color:#ae81ff">0</span>.029*<span style="color:#e6db74">&#34;time&#34;</span> + <span style="color:#ae81ff">0</span>.026*<span style="color:#e6db74">&#34;youre&#34;</span> + <span style="color:#ae81ff">0</span>.026*<span style="color:#e6db74">&#34;wait&#34;</span> + <span style="color:#ae81ff">0</span>.023*<span style="color:#e6db74">&#34;ass&#34;</span> + <span style="color:#ae81ff">0</span>.021*<span style="color:#e6db74">&#34;lot&#34;</span> + <span style="color:#ae81ff">0</span>.021*<span style="color:#e6db74">&#34;tweet&#34;</span> + <span style="color:#ae81ff">0</span>.019*<span style="color:#e6db74">&#34;long&#34;</span> + <span style="color:#ae81ff">0</span>.019*<span style="color:#e6db74">&#34;get&#34;</span> + <span style="color:#ae81ff">0</span>.018*<span style="color:#e6db74">&#34;go&#34;</span> + <span style="color:#ae81ff">0</span>.017*<span style="color:#e6db74">&#34;bro&#34;</span>
+Topic: <span style="color:#ae81ff">18</span> Words: <span style="color:#ae81ff">0</span>.049*<span style="color:#e6db74">&#34;feel&#34;</span> + <span style="color:#ae81ff">0</span>.037*<span style="color:#e6db74">&#34;way&#34;</span> + <span style="color:#ae81ff">0</span>.037*<span style="color:#e6db74">&#34;best&#34;</span> + <span style="color:#ae81ff">0</span>.028*<span style="color:#e6db74">&#34;find&#34;</span> + <span style="color:#ae81ff">0</span>.026*<span style="color:#e6db74">&#34;like&#34;</span> + <span style="color:#ae81ff">0</span>.023*<span style="color:#e6db74">&#34;years&#34;</span> + <span style="color:#ae81ff">0</span>.023*<span style="color:#e6db74">&#34;ever&#34;</span> + <span style="color:#ae81ff">0</span>.021*<span style="color:#e6db74">&#34;read&#34;</span> + <span style="color:#ae81ff">0</span>.020*<span style="color:#e6db74">&#34;little&#34;</span> + <span style="color:#ae81ff">0</span>.020*<span style="color:#e6db74">&#34;old&#34;</span>
+Topic: <span style="color:#ae81ff">19</span> Words: <span style="color:#ae81ff">0</span>.070*<span style="color:#e6db74">&#34;get&#34;</span> + <span style="color:#ae81ff">0</span>.053*<span style="color:#e6db74">&#34;well&#34;</span> + <span style="color:#ae81ff">0</span>.049*<span style="color:#e6db74">&#34;let&#34;</span> + <span style="color:#ae81ff">0</span>.035*<span style="color:#e6db74">&#34;guy&#34;</span> + <span style="color:#ae81ff">0</span>.035*<span style="color:#e6db74">&#34;hope&#34;</span> + <span style="color:#ae81ff">0</span>.033*<span style="color:#e6db74">&#34;talk&#34;</span> + <span style="color:#ae81ff">0</span>.025*<span style="color:#e6db74">&#34;oh&#34;</span> + <span style="color:#ae81ff">0</span>.019*<span style="color:#e6db74">&#34;kid&#34;</span> + <span style="color:#ae81ff">0</span>.018*<span style="color:#e6db74">&#34;go&#34;</span> + <span style="color:#ae81ff">0</span>.017*<span style="color:#e6db74">&#34;come&#34;</span></code></pre></div>
+<p>有人可能会问是否需要用到<code>TFIDF</code>，看看这里吧 <a href="https://stackoverflow.com/questions/44781047/necessary-to-apply-tf-idf-to-new-documents-in-gensim-lda-model/44789327#44789327">Necessary to apply TF-IDF to new documents in gensim LDA model? - Stack Overflow</a></p>
+
+<p>为了更好得观察模型，我们通过<code>pyLDAvis</code>生成了可视化图表。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#960050;background-color:#1e0010">!</span>pip <span style="color:#f92672">-</span>q install pyLDAvis
+<span style="color:#f92672">import</span> pyLDAvis.gensim
+
+lda_display <span style="color:#f92672">=</span> pyLDAvis<span style="color:#f92672">.</span>gensim<span style="color:#f92672">.</span>prepare(
+    lda_model, corpus_result, tweets_dicts, sort_topics<span style="color:#f92672">=</span>True
+)
+pyLDAvis<span style="color:#f92672">.</span>display(lda_display)</code></pre></div>
+<p>下图是图表大致的样子，附带部分交互式按钮。</p>
+
+<p><img title="" src="https://raw.githubusercontent.com/aoii103/BlogImages/master/2020/04/07-11-19-18-42103e8c44954709bbb4127d7be9003362b194d9.gif" alt="" data-align="center"></p>
+
+<p>当然也别忘记了保存Model，毕竟这处理过程，时间也不短吧。借助强大的<code>pathlib</code>我们直接按照如下写法将其保存至GoogleDrive</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">lda_model_file <span style="color:#f92672">=</span> datasets_path <span style="color:#f92672">/</span> f<span style="color:#e6db74">&#39;Stream_tweets_lda_model&#39;</span>
+lda_model<span style="color:#f92672">.</span>save(str(lda_model_file))</code></pre></div>
+<p>最后的话，用墙外人民的话来总结就是：<em>Gods bless humanity</em></p>
+		</div>
+		
+<div class="post__tags tags clearfix">
+	<svg class="icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="/tags/twitter/" rel="tag">Twitter</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/nlp/" rel="tag">NLP</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/lda/" rel="tag">LDA</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/virus/" rel="tag">Virus</a></li>
+	</ul>
+</div>
+	</article>
+</main>
+<h5>更多及时资讯欢迎关注 <code>进击的Hunter</code> </h5>
+<img src="/img/qrcode.jpg" />
+
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/post/2020_01_14_%E6%B5%81%E7%95%85%E7%9A%84mac%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8C%97_%E5%86%8D%E4%B9%9F%E4%B8%8D%E7%94%A8%E7%BF%BB%E8%AF%91%E6%8F%92%E4%BB%B6/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">【Mac配置指北】流畅的内建词典</p></a>
+	</div>
+</nav>
+
+<section class="comments">
+	<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "https-pyocean-com" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2020 s045pd.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+</body>
+</html>
