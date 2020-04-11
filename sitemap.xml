@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://pyocean.com/post/2020_04_11_%E6%9D%80%E6%AD%BBcelery%E4%BB%BB%E5%8A%A1%E5%AD%90%E8%BF%9B%E7%A8%8B/</loc>
+    <lastmod>2020-04-10T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://pyocean.com/post/2020_04_07_%E5%AD%A6%E7%82%B9nlp-twitter%E8%88%86%E6%83%85lda%E5%BB%BA%E6%A8%A1/</loc>
     <lastmod>2020-04-07T00:00:00+00:00</lastmod>
   </url>
@@ -201,10 +206,6 @@
   </url>
   
   <url>
-    <loc>https://pyocean.com/post/2020_04_11_%E6%9D%80%E6%AD%BBcelery%E4%BB%BB%E5%8A%A1%E5%AD%90%E8%BF%9B%E7%A8%8B/</loc>
-  </url>
-  
-  <url>
     <loc>https://pyocean.com/tags/aiohttp/</loc>
     <lastmod>2019-12-10T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -253,7 +254,7 @@
   
   <url>
     <loc>https://pyocean.com/tags/celery/</loc>
-    <lastmod>2019-11-19T00:00:00+00:00</lastmod>
+    <lastmod>2020-04-10T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -384,6 +385,12 @@
   </url>
   
   <url>
+    <loc>https://pyocean.com/tags/linux/</loc>
+    <lastmod>2020-04-10T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://pyocean.com/tags/mac/</loc>
     <lastmod>2020-01-14T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -415,7 +422,13 @@
   
   <url>
     <loc>https://pyocean.com/post/</loc>
-    <lastmod>2020-04-07T00:00:00+00:00</lastmod>
+    <lastmod>2020-04-10T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://pyocean.com/tags/process/</loc>
+    <lastmod>2020-04-10T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -565,7 +578,7 @@
   
   <url>
     <loc>https://pyocean.com/</loc>
-    <lastmod>2020-04-07T00:00:00+00:00</lastmod>
+    <lastmod>2020-04-10T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

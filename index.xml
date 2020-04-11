@@ -6,10 +6,19 @@
     <description>Recent content on 进击的Hunter</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
-    <lastBuildDate>Tue, 07 Apr 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 10 Apr 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://pyocean.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Celery停止了任务却未关闭子进程，怎么破？</title>
+      <link>https://pyocean.com/post/2020_04_11_%E6%9D%80%E6%AD%BBcelery%E4%BB%BB%E5%8A%A1%E5%AD%90%E8%BF%9B%E7%A8%8B/</link>
+      <pubDate>Fri, 10 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://pyocean.com/post/2020_04_11_%E6%9D%80%E6%AD%BBcelery%E4%BB%BB%E5%8A%A1%E5%AD%90%E8%BF%9B%E7%A8%8B/</guid>
+      <description>&lt;p&gt;这问题似乎挺棘手的，毕竟我所进行的任务是通过celery下发给subprocess的。在查阅了资料我有了解决办法，以下是简化后的代码便于理解&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>【项目实战】针对Twitter舆情进行LDA建模</title>
@@ -383,21 +392,6 @@
 我们通过brew install vim 来安装。在安装结束后通过最开始的步骤再次查看。
 0x02 安装增强 我们通过以下命令，安装vim-plug
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim 添加</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>https://pyocean.com/post/2020_04_11_%E6%9D%80%E6%AD%BBcelery%E4%BB%BB%E5%8A%A1%E5%AD%90%E8%BF%9B%E7%A8%8B/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://pyocean.com/post/2020_04_11_%E6%9D%80%E6%AD%BBcelery%E4%BB%BB%E5%8A%A1%E5%AD%90%E8%BF%9B%E7%A8%8B/</guid>
-      <description>&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;title: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Celery停止了任务却未关闭子进程，怎么破？&amp;#34;&lt;/span&gt;
-thumbnail: img/content_img/linux/subprocess.jpg
-date: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;2020-04-11&amp;#34;&lt;/span&gt;
-tags:
-
-- &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Twitter&amp;#34;&lt;/span&gt;
-- &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;NLP&amp;#34;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
   </channel>

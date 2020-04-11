@@ -4,30 +4,19 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title> - 进击的Hunter</title>
+	<title>Celery停止了任务却未关闭子进程，怎么破？ - 进击的Hunter</title>
 	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
 	<meta name="description" content="">
 	<meta name="generator" content="Hugo 0.53" />
-	<meta property="og:title" content="" />
-<meta property="og:description" content="title: &#34;Celery停止了任务却未关闭子进程，怎么破？&#34;
-thumbnail: img/content_img/linux/subprocess.jpg
-date: &#34;2020-04-11&#34;
-tags:
-
-- &#34;Twitter&#34;
-- &#34;NLP&#34;" />
+	<meta property="og:title" content="Celery停止了任务却未关闭子进程，怎么破？" />
+<meta property="og:description" content="这问题似乎挺棘手的，毕竟我所进行的任务是通过celery下发给subprocess的。在查阅了资料我有了解决办法，以下是简化后的代码便于理解" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://pyocean.com/post/2020_04_11_%E6%9D%80%E6%AD%BBcelery%E4%BB%BB%E5%8A%A1%E5%AD%90%E8%BF%9B%E7%A8%8B/" />
+<meta property="og:url" content="https://pyocean.com/post/2020_04_11_%E6%9D%80%E6%AD%BBcelery%E4%BB%BB%E5%8A%A1%E5%AD%90%E8%BF%9B%E7%A8%8B/" /><meta property="article:published_time" content="2020-04-10T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2020-04-10T00:00:00&#43;00:00"/>
 
 	<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content=""/>
-<meta name="twitter:description" content="title: &#34;Celery停止了任务却未关闭子进程，怎么破？&#34;
-thumbnail: img/content_img/linux/subprocess.jpg
-date: &#34;2020-04-11&#34;
-tags:
-
-- &#34;Twitter&#34;
-- &#34;NLP&#34;"/>
+<meta name="twitter:title" content="Celery停止了任务却未关闭子进程，怎么破？"/>
+<meta name="twitter:description" content="这问题似乎挺棘手的，毕竟我所进行的任务是通过celery下发给subprocess的。在查阅了资料我有了解决办法，以下是简化后的代码便于理解"/>
 
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">
 	<link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -83,9 +72,17 @@ if (!doNotTrack) {
 <main class="main" role="main">
 	<article class="post">
 		<header class="post__header">
-			<h1 class="post__title"></h1>
-			
+			<h1 class="post__title">Celery停止了任务却未关闭子进程，怎么破？</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2020-04-10T00:00:00">April 10, 2020</time>
+</div>
+</div>
 		</header>
+		<figure class="post__thumbnail">
+			<img src="/img/content_img/linux/subprocess.jpg" alt="Celery停止了任务却未关闭子进程，怎么破？">
+		</figure>
 
 
 <div class="post__toc toc">
@@ -95,24 +92,17 @@ if (!doNotTrack) {
 	</div>
 </div>
 <div class="content post__content clearfix">
-			<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">title: <span style="color:#e6db74">&#34;Celery停止了任务却未关闭子进程，怎么破？&#34;</span>
-thumbnail: img/content_img/linux/subprocess.jpg
-date: <span style="color:#e6db74">&#34;2020-04-11&#34;</span>
-tags:
+			<p>这问题似乎挺棘手的，毕竟我所进行的任务是通过celery下发给subprocess的。在查阅了资料我有了解决办法，以下是简化后的代码便于理解</p>
 
-- <span style="color:#e6db74">&#34;Twitter&#34;</span>
-- <span style="color:#e6db74">&#34;NLP&#34;</span></code></pre></div>
 <p>🍺本篇文章大约需要1分钟来阅读，届时你或许将学到：</p>
 
 <ul>
 <li>杀死子进程</li>
 </ul>
 
-<p>这问题似乎挺棘手的，毕竟我所进行的任务是通过celery下发给subprocess的。在查阅了资料我有了解决办法，以下是简化后的代码便于理解</p>
+<p>首先，我们获取该进程的<code>PID</code>，这很重要。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">run_code</span>(code):
     <span style="color:#66d9ef">return</span> Popen(code,shell<span style="color:#f92672">=</span>True)<span style="color:#f92672">.</span>pid</code></pre></div>
-<p>首先，我们获取该进程的<code>PID</code>，这很重要。</p>
-
 <p>然后我们通过类似如下命令（可能写得比较烂）找出所有子进程的<code>PID</code>，例如父进程<code>PID</code>为<code>66687</code></p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ps -ef|grep <span style="color:#ae81ff">66687</span>|awk <span style="color:#e6db74">&#39;{print $2,$3}&#39;</span>|grep <span style="color:#e6db74">&#39; 66687&#39;</span>|awk <span style="color:#e6db74">&#39;{print $1}&#39;</span></code></pre></div>
 <p>于是我们编辑代码退出方法如下。</p>
@@ -121,6 +111,14 @@ tags:
 <p>希望这能帮到你，如有疑问请联系我。</p>
 		</div>
 		
+<div class="post__tags tags clearfix">
+	<svg class="icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="/tags/linux/" rel="tag">Linux</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/celery/" rel="tag">Celery</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/process/" rel="tag">Process</a></li>
+	</ul>
+</div>
 	</article>
 </main>
 <h5>更多及时资讯欢迎关注 <code>进击的Hunter</code> </h5>
@@ -128,8 +126,8 @@ tags:
 
 
 <nav class="post-nav flex">
-	<div class="post-nav__item post-nav__item--next">
-		<a class="post-nav__link" href="/post/2020_02_18_%E9%80%9A%E8%BF%87vim%E6%90%AD%E5%BB%BA%E8%BD%BB%E9%87%8Fide/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title"></p></a>
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/post/2020_04_07_%E5%AD%A6%E7%82%B9nlp-twitter%E8%88%86%E6%83%85lda%E5%BB%BA%E6%A8%A1/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">【项目实战】针对Twitter舆情进行LDA建模</p></a>
 	</div>
 </nav>
 
