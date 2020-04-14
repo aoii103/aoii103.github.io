@@ -143,15 +143,15 @@ if (!doNotTrack) {
 
 <p>语句 <code>A</code> 将必出现在结果中</p>
 
-<p><img src="/img/marktext/3ab5d4e40bc460e1a2688f982a21f5a1835bf200.gif" alt="" /></p>
+<p><img src="/img/marktext/6d9a470a43f79a3dbda5db3eb6fa91c4da7d2717.gif" alt="" /></p>
 
-<p>案例结果从<code>1060,000</code>减少到了<code>839,000</code>条</p>
+<p>案例结果从<code>1050,000</code>减少到了<code>840,000</code>条</p>
 
 <h4 id="2-a-or-b-选填">2. <code>A OR B</code> 选填</h4>
 
 <p>每条搜索结果必然出现两个语句，但不一定同时出现</p>
 
-<p><img src="/img/marktext/dcc933dadb6661b303c228eea90cbbf8b1c58a29.gif" alt="" /></p>
+<p><img src="/img/marktext/2ab87e5151fc97d288c7e78c7e74c45b432116a8.gif" alt="" /></p>
 
 <p>案例结果爆炸式得从<code>1060,000</code>增加到了<code>432,000,000</code>条</p>
 
@@ -163,7 +163,7 @@ if (!doNotTrack) {
 
 <p>一般用于组合搜索，结果将过滤掉 <code>-</code> 后的A语法相关内容</p>
 
-<p><img src="/img/marktext/99db63582dad4157d4138e1ff827a56c3382ed5e.gif" alt="" /></p>
+<p><img src="/img/marktext/08f91041920f8d4498796334879c557f2769be4b.gif" alt="" /></p>
 
 <p>例如我们搜索<code>SpaceX</code>将会出现和<code>Elon Musk</code>相关的内容，这时候我们要过滤掉他就通过添加<code>- elon</code></p>
 
@@ -171,7 +171,7 @@ if (!doNotTrack) {
 
 <p>这个语法后的A将根据词的内容搜索与之相近意思的结果</p>
 
-<p><img src="/img/marktext/2020-04-14-18-02-11-image.png" alt="" /></p>
+<p><img src="/img/marktext/2020-04-14-23-32-43-image.png" alt="" /></p>
 
 <p>例如我们搜索 <code>dark hole</code> 并将<code>dark</code>标记搜索同义词，结果出来的有<code>black hole</code></p>
 
@@ -189,7 +189,7 @@ if (!doNotTrack) {
 
 <p>该语法可以帮助我们检索结果的文件类型</p>
 
-<p><img src="/img/marktext/57dca59bd10d565a00c632166ea0dd76be6b6fff.gif" alt="" /></p>
+<p><img src="/img/marktext/967fd83b6730e732912da433cb94fce6f393bf16.gif" alt="" /></p>
 
 <p>例如这边我们搜索<code>HarryPotter</code>的相关CSV(这啥用嘞)，<code>Julia</code>的相关资源。奥对了，它是一种编程语言</p>
 
@@ -197,19 +197,23 @@ if (!doNotTrack) {
 
 <p>某些时候我们要对某个站点进行搜索，于是乎该语法就起到了至关重要的作用</p>
 
-<p><img src="/img/marktext/2020-04-14-20-54-42-image.png" alt="" /></p>
+<p><img src="/img/marktext/2020-04-14-23-35-35-image.png" alt="" /></p>
 
 <p>例如我们在纽约时报官网内检索特朗普与奥巴马相关的文章，其中特朗普标记为必然出现。结果如上</p>
 
 <h4 id="3-intext-正文检索">3. <code>intext:</code> 正文检索</h4>
 
-<p><img src="/img/marktext/e5760253a6d46a6944b1494d493090c31ad8df5b.gif" alt="" /></p>
+<p>也就是网页的主题部分，一般我们看到的绝大多数内容都在其中</p>
+
+<p><img src="/img/marktext/08cf78c5875c6cdd3856f12dcae46d0bfcdf854c.gif" alt="" /></p>
+
+<p>这里我们举例一个目录遍历的搜索过程</p>
 
 <h4 id="4-inurl-链接检索">4. <code>inurl:</code> 链接检索</h4>
 
 <p>该语法简而言之就是过滤URL。链接是网页的唯一标识，我们对其进行模糊匹配的时候，可能会有惊人的效果</p>
 
-<p><img src="/img/marktext/2020-04-14-22-13-15-image.png" alt="" /></p>
+<p><img src="/img/marktext/2020-04-14-23-40-22-image.png" alt="" /></p>
 
 <p>例如我们检索链接中存在相关<code>phpmyadmin</code>相关的路径，并过滤存在<code>Welcome to</code>内容的页面。400多条，还行吧，估摸着都已经是公交车了</p>
 
@@ -225,7 +229,7 @@ if (!doNotTrack) {
 
 <p>这俩语法适用于时间检索，一般在需要对结果进行筛选时间范围的时候可以用到</p>
 
-<p><img src="/img/marktext/2020-04-14-21-51-41-image.png" alt="" /></p>
+<p><img src="/img/marktext/2020-04-14-23-40-53-image.png" alt="" /></p>
 
 <p>这里举一个反例，例如我们在搜索<code>covid-19</code>且时间为18年以前的内容，居然也能出来一大堆的结果。为啥嘞，个人认为是因为并不是所有界面都是静态网页且存在相关内容导致的。</p>
 
@@ -249,7 +253,7 @@ if (!doNotTrack) {
 
 <p>有人可能会问这语法表怎么来的呢。答曰：谷歌搜来的 - -</p>
 
-<p><img src="/img/marktext/e42f4f87339ece3a21d0a79684850beedea7720a.gif" alt="" /></p>
+<p><img src="/img/marktext/42d6145f70f294cb097e60a0b52a9ab9c677723f.gif" alt="" /></p>
 
 <blockquote>
 <p>本文参考：</p>
