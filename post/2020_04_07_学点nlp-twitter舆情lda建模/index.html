@@ -153,11 +153,11 @@ if (!doNotTrack) {
 
 <p>🤔嗯，长得真可怕。。</p>
 
-<p><img src="https://raw.githubusercontent.com/aoii103/BlogImages/master/2020/04/07-11-14-50-2020-04-03-10-30-38-image.png" alt="" /></p>
+<p><img src="/img/marktext/654ac7a42a2d35550f6d77d22d7c8a2fc2a773d5.png" alt="" /></p>
 
 <h2 id="0x01-colab改变生活">0x01 Colab改变生活</h2>
 
-<p><img src="https://raw.githubusercontent.com/aoii103/BlogImages/master/2020/04/07-11-15-26-2020-04-03-11-25-44-image.png" alt="" /></p>
+<p><img src="/img/marktext/2020-04-16-18-04-02-image.png" alt="" /></p>
 
 <p>和以往的不同，为什么这次的任务推荐使用Colab呢。理由如下：</p>
 
@@ -183,7 +183,7 @@ if (!doNotTrack) {
 
 <p>再者我们需要一个开发者账户，由于申请过程比较麻烦；且很多开发者喜欢把包含这类的内容传到Github，索引我们就去合理利用下。</p>
 
-<p><img title="" src="https://raw.githubusercontent.com/aoii103/BlogImages/master/2020/04/07-11-19-39-5505f675ad525a4d971cee92e87348904ca4cd63.gif" alt="" data-align="center"></p>
+<p><img src="/img/marktext/e96d85a0dc14f28c2e9dd22368c39eeb160e94c5.gif" title="" alt="" data-align="center"></p>
 
 <h4 id="2-编写抓取器">2. 编写抓取器</h4>
 
@@ -208,7 +208,7 @@ TWEETS <span style="color:#f92672">=</span> deque(maxlen<span style="color:#f926
 TWEETS_BAR <span style="color:#f92672">=</span> progressbar<span style="color:#f92672">.</span>ProgressBar(max_value<span style="color:#f92672">=</span>MAX_TWEETS)</code></pre></div>
 <h4 id="3-挂载googledrive">3. 挂载GoogleDrive</h4>
 
-<p><img src="https://9to5google.com/wp-content/uploads/sites/4/2020/01/google_drive_logo.jpg?quality=82&strip=all&w=1600" title="" alt="It's not just you, Google Drive is down for some today - 9to5Google" data-align="center"></p>
+<p><img src="/img/marktext/2020-04-16-18-04-55-image.png" alt="" /></p>
 
 <p>我们使用如下代码来挂载，并设定了数据保存的位置<code>datasets_path</code>及推文文件<code>tweets_file</code>。这样一来你就不必担心数据没地方存啦</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> pathlib
@@ -283,7 +283,7 @@ nltk<span style="color:#f92672">.</span>download(<span style="color:#e6db74">&#3
 stopwords <span style="color:#f92672">=</span> set(stopwords<span style="color:#f92672">.</span>words(<span style="color:#e6db74">&#34;english&#34;</span>))</code></pre></div>
 <p>然后我们就需要进行清洗，就拿下图举个例子。</p>
 
-<p><img src="https://raw.githubusercontent.com/aoii103/BlogImages/master/2020/04/07-11-16-24-2020-04-06-22-11-36-image.png" alt="" /></p>
+<p><img src="/img/marktext/2020-04-16-18-05-12-image.png" alt="" /></p>
 
 <h4 id="1-标准化-normalization">1.标准化(Normalization)</h4>
 
@@ -378,7 +378,7 @@ words <span style="color:#f92672">=</span> chain<span style="color:#f92672">.</s
 stylecloud<span style="color:#f92672">.</span>gen_stylecloud(<span style="color:#e6db74">&#39; &#39;</span><span style="color:#f92672">.</span>join(words),icon_name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;fab fa-twitter&#34;</span>)</code></pre></div>
 <p>然后结果如下，AMP是啥??</p>
 
-<p><img title="" src="https://raw.githubusercontent.com/aoii103/BlogImages/master/2020/04/07-11-17-40-2020-04-07-01-35-27-image.png" alt="" data-align="center"></p>
+<p><img src="/img/marktext/2020-04-16-18-05-32-image.png" title="" alt="" data-align="center"></p>
 
 <h2 id="0x04-模型生成">0x04 模型生成</h2>
 
@@ -428,7 +428,7 @@ lda_display <span style="color:#f92672">=</span> pyLDAvis<span style="color:#f92
 pyLDAvis<span style="color:#f92672">.</span>display(lda_display)</code></pre></div>
 <p>下图是图表大致的样子，附带部分交互式按钮。</p>
 
-<p><img title="" src="https://raw.githubusercontent.com/aoii103/BlogImages/master/2020/04/07-11-19-18-42103e8c44954709bbb4127d7be9003362b194d9.gif" alt="" data-align="center"></p>
+<p><img src="/img/marktext/b97f0b91e8b3a78780603da26df0b55b68945e77.gif" alt="" /></p>
 
 <p>当然也别忘记了保存Model，毕竟这处理过程，时间也不短吧。借助强大的<code>pathlib</code>我们直接按照如下写法将其保存至GoogleDrive</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">lda_model_file <span style="color:#f92672">=</span> datasets_path <span style="color:#f92672">/</span> f<span style="color:#e6db74">&#39;Stream_tweets_lda_model&#39;</span>
