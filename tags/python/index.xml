@@ -6,10 +6,19 @@
     <description>Recent content in Python on 进击的Hunter</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
-    <lastBuildDate>Thu, 17 Oct 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 22 Apr 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://pyocean.com/tags/python/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Python异步: 从入门到入___</title>
+      <link>https://pyocean.com/post/2020_04_22_python%E5%BC%82%E6%AD%A5%E5%85%A5%E9%97%A8/</link>
+      <pubDate>Wed, 22 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://pyocean.com/post/2020_04_22_python%E5%BC%82%E6%AD%A5%E5%85%A5%E9%97%A8/</guid>
+      <description>&lt;p&gt;异步真的很快，至于入什么也不是我说了算，看您是哪种 * 操作了。&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>python3.8正式发布，这些特性令人眼前一亮</title>
