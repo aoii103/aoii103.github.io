@@ -102,7 +102,7 @@ if (!doNotTrack) {
 <li><a href="#0x01-生活中的异步">0x01 生活中的异步</a></li>
 <li><a href="#0x02-为何用异步">0x02 为何用异步</a></li>
 <li><a href="#0x03-coroutines">0x03 Coroutines</a></li>
-<li><a href="#0x04-async-await">0x04 Async、Await</a>
+<li><a href="#0x04-async-await">0x04 Async &amp; Await</a>
 <ul>
 <li>
 <ul>
@@ -112,8 +112,9 @@ if (!doNotTrack) {
 </ul></li>
 </ul></li>
 </ul></li>
-<li><a href="#0x04-task-future">0x04 Task、Future</a></li>
+<li><a href="#0x04-task-future">0x04 Task &amp; Future</a></li>
 <li><a href="#0x05-awaitable">0x05 Awaitable</a></li>
+<li><a href="#0x06-并发请求">0x06 并发请求</a></li>
 </ul></li>
 </ul>
 </nav>
@@ -126,9 +127,9 @@ if (!doNotTrack) {
 
 <ul>
 <li>异步原理简要</li>
-<li><code>Asyncio</code>的基础用法(python3.7+特性)</li>
-<li><code>Coroutines</code>,<code>Task</code>与<code>Feature</code></li>
-<li>改写基础同步代码为异步</li>
+<li><code>asyncio</code> 的基础用法 (3.7+特性)</li>
+<li><code>Coroutines</code>、<code>Task</code> 、<code>Future</code></li>
+<li>编写你的第一段异步请求</li>
 </ul>
 
 <h2 id="0x01-生活中的异步">0x01 生活中的异步</h2>
@@ -173,7 +174,7 @@ if (!doNotTrack) {
 <li><p>需运行在事件循环 <code>loop</code> 中</p></li>
 </ul>
 
-<h2 id="0x04-async-await">0x04 Async、Await</h2>
+<h2 id="0x04-async-await">0x04 Async &amp; Await</h2>
 
 <p>这俩关键字为Python3.5新特性，使得异步写法愈发简洁，相当于将原先的语法进行了替换</p>
 
@@ -197,16 +198,24 @@ if (!doNotTrack) {
     <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;A end&#39;</span>)</code></pre></div>
 <p>不过如上写法已经不太推荐，故在<code>python3.8</code>中出现会有<code>DeprecationWarning</code>的警告</p>
 
-<h2 id="0x04-task-future">0x04 Task、Future</h2>
+<h2 id="0x04-task-future">0x04 Task &amp; Future</h2>
 
-<p><code>task</code> 是通过打包协程所生成的，而它的存在意义就是用于任务并发。打包的方法也非常简单，即如下代码中的<code>asyncio.create_task</code>过程</p>
+<blockquote>
+<p><code>Task</code> 是通过打包协程所生成的，而它的存在意义就是用于任务并发。</p>
+</blockquote>
+
+<p>打包的方法也非常简单，即如下代码中的<code>asyncio.create_task</code>过程</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> asyncio
 
 async <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">func</span>(i):
     <span style="color:#f92672">...</span>
 
 task <span style="color:#f92672">=</span> asyncio<span style="color:#f92672">.</span>create_task(func(<span style="color:#ae81ff">10</span>)) <span style="color:#75715e"># task</span></code></pre></div>
-<p>不过所谓并发，一定是一下子跑多个任务才有意义，也就需要用到 <code>asyncio.gather</code> 方法将多个任务并发运行。其中写入的协程将会自动转为<code>Task</code>对象</p>
+<blockquote>
+<p><code>Future</code> 简单的理解就是未完成的任务集合，它的意义在于方便我们对任务集的管控。我们可以从中看到任务集状态，及结果</p>
+</blockquote>
+
+<p>接下来是时候讲一讲并发了。也就是把多个任务丢入 <code>asyncio.gather</code>方法，结果将获得一个 <code>Future</code> 的继承。其中写入的协程将会自动转为<code>Task</code>对象</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> asyncio
 
 async <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">func</span>(i):
@@ -214,17 +223,18 @@ async <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">func</s
     <span style="color:#66d9ef">return</span> i<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span>
 
 async <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span>():
-    <span style="color:#66d9ef">return</span> await asyncio<span style="color:#f92672">.</span>gather(
+    gathering_future <span style="color:#f92672">=</span> asyncio<span style="color:#f92672">.</span>gather(
         func(<span style="color:#ae81ff">10</span>),
         func(<span style="color:#ae81ff">13</span>)
-)
+    )
+    <span style="color:#66d9ef">return</span> await gathering_future
 
 asyncio<span style="color:#f92672">.</span>run(main())</code></pre></div>
 <h2 id="0x05-awaitable">0x05 Awaitable</h2>
 
-<p>最后我们来梳理一下他们之间的关系，并画了张图</p>
+<p>我们来梳理一下他们之间的关系，并画了张图</p>
 
-<p><img src="/img/marktext/a8983f723f34c6655840e65157dd96a314357714.png" alt="" /></p>
+<p><img src="/img/marktext/2324ebe7a4e2e9c09cf77ab0a4f40bdedcb4ff08.png" alt="" /></p>
 
 <ul>
 <li><p>普通方法通过 <code>async</code> 关键字可以变成协程 <code>(coroutine)</code></p></li>
@@ -237,12 +247,56 @@ asyncio<span style="color:#f92672">.</span>run(main())</code></pre></div>
 
 <li><p><code>awaitable</code> 对象都只能在 <code>coroutine</code> 中进行 <code>await</code> 操作</p></li>
 
-<li><p><code>awaitable</code> 对象通过 <code>asyncio.gather</code> 将获得一个 <code>future</code> 结果</p></li>
+<li><p><code>awaitable</code> 对象通过 <code>asyncio.gather</code> 将获得一个 <code>future</code> 继承</p></li>
 </ul>
 
 <blockquote>
 <p>详见: <a href="https://docs.python.org/3/library/asyncio-task.html">https://docs.python.org/3/library/asyncio-task.html</a></p>
 </blockquote>
+
+<h2 id="0x06-并发请求">0x06 并发请求</h2>
+
+<p>如果不实践一下的话，可能上面的内容就当小说看了。于是我们设计了如下入门demo来并发请求，这里我们就需要借助大名鼎鼎的异步请求库 <code>aiohttp</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> asyncio
+<span style="color:#f92672">import</span> aiohttp</code></pre></div>
+<p>我们预设一个方法用于输入事件时间</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> datetime <span style="color:#f92672">import</span> datetime
+current <span style="color:#f92672">=</span> <span style="color:#66d9ef">lambda</span>: datetime<span style="color:#f92672">.</span>now()</code></pre></div>
+<p>并且准备好需要访问的站点</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">urls <span style="color:#f92672">=</span> [
+    <span style="color:#e6db74">&#39;https://hulu.com&#39;</span>,
+    <span style="color:#e6db74">&#39;https://google.com&#39;</span>,
+    <span style="color:#e6db74">&#39;https://netflix.com&#39;</span>,
+    <span style="color:#e6db74">&#39;https://youtube.com&#39;</span>
+]</code></pre></div>
+<p> 然后我们编写单任务请求方法及多任务并发方法</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">async <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">fetch</span>(url):
+    <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;[{current()}]start {url}&#34;</span>)
+    async <span style="color:#66d9ef">with</span> aiohttp<span style="color:#f92672">.</span>ClientSession() <span style="color:#66d9ef">as</span> session:
+        resp <span style="color:#f92672">=</span> await session<span style="color:#f92672">.</span>get(url)
+        <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;[{current()}]end {url}&#34;</span>)
+        <span style="color:#66d9ef">return</span> resp
+
+
+async <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">run_all</span>():
+    <span style="color:#66d9ef">return</span> await asyncio<span style="color:#f92672">.</span>gather(
+        <span style="color:#f92672">*</span>list(map(fetch,urls))
+    )
+
+results <span style="color:#f92672">=</span> asyncio<span style="color:#f92672">.</span>run(run_all())</code></pre></div>
+<p>然后运行整个代码，这里需借助 <code>timeit</code> 来统计任务用时</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">timeit python3 test_asyncio.py</code></pre></div>
+<p>最后我们看到日志缓缓输出，这里就不缓缓了。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span><span style="color:#ae81ff">2020</span>-05-06 <span style="color:#ae81ff">22</span>:31:47.055686<span style="color:#f92672">]</span>start https://hulu.com
+<span style="color:#f92672">[</span><span style="color:#ae81ff">2020</span>-05-06 <span style="color:#ae81ff">22</span>:31:47.077206<span style="color:#f92672">]</span>start https://google.com
+<span style="color:#f92672">[</span><span style="color:#ae81ff">2020</span>-05-06 <span style="color:#ae81ff">22</span>:31:47.078004<span style="color:#f92672">]</span>start https://netflix.com
+<span style="color:#f92672">[</span><span style="color:#ae81ff">2020</span>-05-06 <span style="color:#ae81ff">22</span>:31:47.078528<span style="color:#f92672">]</span>start https://youtube.com
+<span style="color:#f92672">[</span><span style="color:#ae81ff">2020</span>-05-06 <span style="color:#ae81ff">22</span>:31:47.467144<span style="color:#f92672">]</span>end https://youtube.com
+<span style="color:#f92672">[</span><span style="color:#ae81ff">2020</span>-05-06 <span style="color:#ae81ff">22</span>:31:47.495745<span style="color:#f92672">]</span>end https://google.com
+<span style="color:#f92672">[</span><span style="color:#ae81ff">2020</span>-05-06 <span style="color:#ae81ff">22</span>:31:49.468241<span style="color:#f92672">]</span>end https://netflix.com
+<span style="color:#f92672">[</span><span style="color:#ae81ff">2020</span>-05-06 <span style="color:#ae81ff">22</span>:31:49.622931<span style="color:#f92672">]</span>end https://hulu.com
+python3 test_asyncio.py  <span style="color:#ae81ff">0</span>.64s user <span style="color:#ae81ff">0</span>.14s system <span style="color:#ae81ff">23</span>% cpu <span style="color:#ae81ff">3</span>.254 total</code></pre></div>
+<p>所有任务几乎被同时启动并处理，符合我们的预期效果</p>
 		</div>
 		
 <div class="post__tags tags clearfix">
