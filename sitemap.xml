@@ -3,18 +3,8 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://pyocean.com/post/2020_08_02_colab_hack_track/</loc>
-    <lastmod>2020-07-29T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://pyocean.com/post/2020_07_29_%E7%BB%99%E5%A4%A7%E5%AE%B6%E4%BB%8B%E7%BB%8D%E4%B8%8Bsharingan/</loc>
     <lastmod>2020-07-29T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://pyocean.com/post/2020_07_24_%E5%9C%B0%E5%9B%BE%E5%8F%AF%E8%A7%86%E5%8C%96_%E4%BD%A0%E8%BF%98%E5%8F%AF%E4%BB%A5%E7%94%BB%E5%BE%97%E6%9B%B4%E5%A5%BD/</loc>
-    <lastmod>2020-07-24T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -356,12 +346,6 @@
   <url>
     <loc>https://pyocean.com/tags/ffmpeg/</loc>
     <lastmod>2019-10-08T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://pyocean.com/tags/folium/</loc>
-    <lastmod>2020-07-24T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
