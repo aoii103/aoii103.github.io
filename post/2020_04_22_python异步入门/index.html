@@ -11,8 +11,8 @@
 	<meta property="og:title" content="Python异步: 从入门到入___" />
 <meta property="og:description" content="异步真的很快，至于入什么也不是我说了算，看您是哪种 * 操作了。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://pyocean.com/post/2020_04_22_python%E5%BC%82%E6%AD%A5%E5%85%A5%E9%97%A8/" /><meta property="article:published_time" content="2020-04-22T00:00:00&#43;00:00"/>
-<meta property="article:modified_time" content="2020-04-22T00:00:00&#43;00:00"/>
+<meta property="og:url" content="https://pyocean.com/post/2020_04_22_python%E5%BC%82%E6%AD%A5%E5%85%A5%E9%97%A8/" /><meta property="article:published_time" content="2020-05-08T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2020-05-08T00:00:00&#43;00:00"/>
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Python异步: 从入门到入___"/>
@@ -76,7 +76,7 @@ if (!doNotTrack) {
 			<div class="post__meta meta">
 <div class="meta__item-datetime meta__item">
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
-	<time class="meta__text" datetime="2020-04-22T00:00:00">April 22, 2020</time>
+	<time class="meta__text" datetime="2020-05-08T00:00:00">May 08, 2020</time>
 </div>
 </div>
 		</header>
@@ -148,6 +148,8 @@ if (!doNotTrack) {
 
 <h2 id="0x02-为何用异步">0x02 为何用异步</h2>
 
+<p><img src="/Users/s045pd/workobj/Blog/static/img/marktext/2020-05-07-13-08-02-image.png" alt="" /></p>
+
 <p>通过 0x01 我们不难知道，将事件集合一个接一个得进行会导致耗时过长</p>
 
 <p>而异步有着良好的时间管理，并通过 <mark>暂停A去做B 并来回切换</mark> 的方式，将节省大量时间。</p>
@@ -210,24 +212,18 @@ if (!doNotTrack) {
 async <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">func</span>(i):
     <span style="color:#f92672">...</span>
 
-task <span style="color:#f92672">=</span> asyncio<span style="color:#f92672">.</span>create_task(func(<span style="color:#ae81ff">10</span>)) <span style="color:#75715e"># task</span></code></pre></div>
+task <span style="color:#f92672">=</span> asyncio<span style="color:#f92672">.</span>create_task(func(<span style="color:#ae81ff">10</span>))</code></pre></div>
 <blockquote>
 <p><code>Future</code> 简单的理解就是未完成的任务集合，它的意义在于方便我们对任务集的管控。我们可以从中看到任务集状态，及结果</p>
 </blockquote>
 
-<p>接下来是时候讲一讲并发了。也就是把多个任务丢入 <code>asyncio.gather</code>方法，结果将获得一个 <code>Future</code> 的继承。其中写入的协程将会自动转为<code>Task</code>对象</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> asyncio
-
-async <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">func</span>(i):
-    await asyncio<span style="color:#f92672">.</span>sleep(<span style="color:#ae81ff">1</span>)
-    <span style="color:#66d9ef">return</span> i<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span>
-
-async <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span>():
-    gathering_future <span style="color:#f92672">=</span> asyncio<span style="color:#f92672">.</span>gather(
+<p>是时候讲讲并发了，也就是将多个任务交由 <code>asyncio.gather</code> 方法处理</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">async <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span>():
+    <span style="color:#66d9ef">return</span> await asyncio<span style="color:#f92672">.</span>gather(
         func(<span style="color:#ae81ff">10</span>),
-        func(<span style="color:#ae81ff">13</span>)
+        func(<span style="color:#ae81ff">13</span>),
+        <span style="color:#f92672">...</span>
     )
-    <span style="color:#66d9ef">return</span> await gathering_future
 
 asyncio<span style="color:#f92672">.</span>run(main())</code></pre></div>
 <h2 id="0x05-awaitable">0x05 Awaitable</h2>
@@ -315,6 +311,9 @@ python3 test_asyncio.py  <span style="color:#ae81ff">0</span>.64s user <span sty
 <nav class="post-nav flex">
 	<div class="post-nav__item post-nav__item--prev">
 		<a class="post-nav__link" href="/post/2020_04_12_%E7%AE%80%E5%8D%95%E5%AE%9E%E7%94%A8%E7%9A%84%E8%B0%B7%E6%AD%8C%E6%90%9C%E7%B4%A2%E6%8A%80%E5%B7%A7/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">搜!搜!搜!众里搜他千百度</p></a>
+	</div>
+	<div class="post-nav__item post-nav__item--next">
+		<a class="post-nav__link" href="/post/2020_07_24_%E5%9C%B0%E5%9B%BE%E5%8F%AF%E8%A7%86%E5%8C%96_%E4%BD%A0%E8%BF%98%E5%8F%AF%E4%BB%A5%E7%94%BB%E5%BE%97%E6%9B%B4%E5%A5%BD/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">地图可视化，你能够做得更好</p></a>
 	</div>
 </nav>
 

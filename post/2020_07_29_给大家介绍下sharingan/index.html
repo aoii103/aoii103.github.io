@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>我是如何写一款社工工具的 - 进击的Hunter</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta name="generator" content="Hugo 0.53" />
+	<meta property="og:title" content="我是如何写一款社工工具的" />
+<meta property="og:description" content="生活在互联网时代的我们都喜爱社交媒体，甚至于这已经成了生活中的必需品。曾给大家介绍过 sherlock，但它的功能局限较大，感觉远远不够。所以我做了这么件事儿来更好的找到各位。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://pyocean.com/post/2020_07_29_%E7%BB%99%E5%A4%A7%E5%AE%B6%E4%BB%8B%E7%BB%8D%E4%B8%8Bsharingan/" /><meta property="article:published_time" content="2020-07-29T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2020-07-29T00:00:00&#43;00:00"/>
+
+	<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="我是如何写一款社工工具的"/>
+<meta name="twitter:description" content="生活在互联网时代的我们都喜爱社交媒体，甚至于这已经成了生活中的必需品。曾给大家介绍过 sherlock，但它的功能局限较大，感觉远远不够。所以我做了这么件事儿来更好的找到各位。"/>
+
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-135738940-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="进击的Hunter" rel="home">
+				<div class="logo__title">进击的Hunter</div>
+				<div class="logo__tagline">Uneasy lies the head that wears the crown.</div>
+			</a>
+		</div>
+		<a href="https://github.com/aoii103/every_day_cmd"><div style="
+	height: 30px;
+	display: inline-block;
+	line-height:30px;
+	padding:0 20px;
+	color:rgb(73, 80, 87);
+	font-size:13px;
+	text-decoration:none;
+	font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;" id="every_day_cmd" class="every_day_cmd" title="字字珠玑，每日一记。" ></div></a>
+<div class="divider"></div>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+	axios.get('https://pyocean.com/every_day_cmd?os=osx,window,common').then(resp => {
+		document.getElementById('every_day_cmd').innerHTML = `🍺 ${resp.data.description}: <code  style="color: rgb(232, 62, 140);background:none;border:none;">${resp.data.code}</code>`
+	})
+</script>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">我是如何写一款社工工具的</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2020-07-29T00:00:00">July 29, 2020</time>
+</div>
+</div>
+		</header>
+		<figure class="post__thumbnail">
+			<img src="/img/content_img/github/sharingan/yitaqi2.jpg" alt="我是如何写一款社工工具的">
+		</figure>
+
+
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+<ul>
+<li><a href="#0x01-人性的漏洞">0x01 人性的漏洞</a></li>
+<li><a href="#0x02-站点搜集">0x02 站点搜集</a>
+<ul>
+<li><a href="#2-1-rank排行">2.1 rank排行</a></li>
+<li><a href="#2-2-配置转录">2.2 配置转录</a></li>
+<li><a href="#2-3-个人模型与站点配置建立">2.3 个人模型与站点配置建立</a></li>
+</ul></li>
+<li><a href="#0x03-定义解析方法">0x03 定义解析方法</a></li>
+<li><a href="#0x04-实例操作">0x04 实例操作</a></li>
+<li><a href="#0x05-项目运行方式优化">0x05 项目运行方式优化</a>
+<ul>
+<li><a href="#5-1-模块化">5.1 模块化</a></li>
+<li><a href="#5-2-参数化">5.2 参数化</a></li>
+<li><a href="#5-3-代码整理">5.3 代码整理</a></li>
+<li><a href="#5-4-项目图标">5.4 项目图标</a></li>
+</ul></li>
+<li><a href="#0x06-github自动化">0x06 Github自动化</a>
+<ul>
+<li><a href="#6-1-自动发布">6.1 自动发布</a></li>
+<li><a href="#6-2-测试及提醒">6.2 测试及提醒</a></li>
+</ul></li>
+</ul>
+</nav>
+	</div>
+</div>
+<div class="content post__content clearfix">
+			<p>生活在互联网时代的我们都喜爱社交媒体，甚至于这已经成了生活中的必需品。曾给大家介绍过 <a href="https://github.com/sherlock-project/sherlock"><code>sherlock</code></a>，但它的功能局限较大，感觉远远不够。所以我做了这么件事儿来更好的找到各位。</p>
+
+<p><img src="/img/content_img/github/sharingan/media_types.jpg" alt="" /></p>
+
+<p>🍺本篇文章大约需要4分钟来阅读，届时你或许将学到：</p>
+
+<ul>
+<li>我所理解的人性漏洞</li>
+<li><code>python</code> 实现多站点信息搜寻原理</li>
+<li><code>Github Action</code> 自动发布至 <code>PYPI</code> 与功能测试</li>
+</ul>
+
+<h1 id="0x01-人性的漏洞">0x01 人性的漏洞</h1>
+
+<p>为了让别人更好得认识自己，我们通常会将各类信息上传。出于 <strong>某种习惯</strong> 亦或懒癌，我们更偏向于使用 <strong>相同的用户名</strong> 来进行注册。</p>
+
+<p>即便是受过良好网络安全教育的同学，也会出现大量 <strong>账号密码的一致</strong> ，甚至是 <strong>同款头像、地区、昵称、备注</strong> 的情况。</p>
+
+<p>且不管内容的真实度，他们依然可以带来一定的参考价值，尤其是在 <strong>关键信息内容交叉</strong> 的那一刻。</p>
+
+<blockquote>
+<p>以上内容纯属个人经验所得</p>
+</blockquote>
+
+<h1 id="0x02-站点搜集">0x02 站点搜集</h1>
+
+<p>依照上一点我们可以知道，寻找个人足迹并不会太难。而信息的可信度一直都有这一种从量变引发质变的过程，说白了就是越多越好。接下来我们就来讲讲我们去哪儿些站点更值得我们去检索。</p>
+
+<h2 id="2-1-rank排行">2.1 rank排行</h2>
+
+<p>rank作为站点排名的依据也同样反应出其受欢迎的程度，我们可以根据搜索引擎并以如下关键字进行搜索</p>
+
+<p><code>top social media 2020</code> 或 <code>social media ranks</code> 类似语法来获取相关站点的统计结果</p>
+
+<p><img src="/img/content_img/github/sharingan/ranks.jpg" alt="" /></p>
+
+<p>当然这样做也存在非常耗时的几项缺点, 例如:</p>
+
+<ul>
+<li>你需要对多个搜索结果进行整合处理</li>
+<li>需要对每个站点进行可行性测试</li>
+</ul>
+
+<h2 id="2-2-配置转录">2.2 配置转录</h2>
+
+<blockquote>
+<p>项目内可通过 python3 -m sharingan.common 即可生成配置转录文件 templates.py</p>
+</blockquote>
+
+<p>开篇我也提到了 <a href="https://github.com/sherlock-project/sherlock"><code>sherlock</code></a> ，而在这个项目中就已经存在了一个常用社交媒体的配置文件,大约有500个站点可供参考。而在后期这也将成为我们的首选。</p>
+
+<p><img src="/img/content_img/github/sharingan/sherlocks.jpg" alt="" /></p>
+
+<h2 id="2-3-个人模型与站点配置建立">2.3 个人模型与站点配置建立</h2>
+
+<blockquote>
+<p>这里可能会有较为突兀的感觉</p>
+</blockquote>
+
+<p>有了理念及目标，那就是时候讲讲如何定义一个人的身份了。我们应该很容易就能想到姓名、年龄、性别、地区等信息。于是我们编写如下代码，其中 <code>extras</code> 就作为额外的备选字段。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> dataclasses <span style="color:#f92672">import</span> dataclass, field
+
+<span style="color:#a6e22e">@dataclass</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">person</span>:
+    name: str <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;未知&#34;</span>
+    age: int <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+    gender: int <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+    sign: str <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>
+    avatar: str <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>
+    locations: Set[str] <span style="color:#f92672">=</span> field(default_factory<span style="color:#f92672">=</span>set)
+    extras: Dict <span style="color:#f92672">=</span> field(default_factory<span style="color:#f92672">=</span>dict)
+    <span style="color:#f92672">...</span></code></pre></div>
+<p>然后是对站点发送请求一般需要 链接、方法、载荷、代理、判断方法等等</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#a6e22e">@dataclass</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">config</span>:
+    url: str
+    method: str <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;get&#34;</span>
+    data: str <span style="color:#f92672">=</span> None
+    json: str <span style="color:#f92672">=</span> None
+    headers: dict <span style="color:#f92672">=</span> None
+    cookies: dict <span style="color:#f92672">=</span> None
+    proxy: bool <span style="color:#f92672">=</span> False
+    lang: str <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;en&#34;</span>
+    error_type: str <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;func&#34;</span>
+    error_msg: str <span style="color:#f92672">=</span> <span style="color:#66d9ef">lambda</span> resp: resp<span style="color:#f92672">.</span>status_code <span style="color:#f92672">!=</span> <span style="color:#ae81ff">200</span></code></pre></div>
+<p>再是判断用户名是否存在该站点的时候，肯定不止状态码这一种方法，于是我们定义多个方法</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> httpx <span style="color:#f92672">import</span> Response
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">error_types</span>:
+    <span style="color:#a6e22e">@staticmethod</span>
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">code</span>(resp: Response, msg: int) <span style="color:#f92672">-&gt;</span> bool:
+        <span style="color:#75715e"># 根据状态码判断</span>
+        <span style="color:#66d9ef">return</span> resp<span style="color:#f92672">.</span>status_code <span style="color:#f92672">==</span> int(msg)
+
+    <span style="color:#a6e22e">@staticmethod</span>
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">text</span>(resp: Response, msg: str) <span style="color:#f92672">-&gt;</span> bool:
+        <span style="color:#75715e"># 根据内容判断</span>
+        <span style="color:#66d9ef">return</span> msg <span style="color:#f92672">in</span> resp<span style="color:#f92672">.</span>text
+
+    <span style="color:#a6e22e">@staticmethod</span>
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">func</span>(resp: Response, msg: object) <span style="color:#f92672">-&gt;</span> bool:
+        <span style="color:#75715e"># 自定义方法判断</span>
+        <span style="color:#66d9ef">return</span> msg(resp)</code></pre></div>
+<h1 id="0x03-定义解析方法">0x03 定义解析方法</h1>
+
+<p>在完成模型类定义后，我们所需要做的就是将社交媒体站点集合进行实例化。由于该项目所涉及到的解析工作较为复杂，<code>json</code>无法胜任。于是我们将其变为一个类 <code>Extractor</code>。而类下的每个方法都代表一个站点, 配置信息则将通过 <code>upload</code> 方法上传，其中的可填字段则对应上文 <code>config</code> 类</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">upload</span>(<span style="color:#f92672">*</span>args, <span style="color:#f92672">**</span>kwargs):
+    <span style="color:#66d9ef">return</span> person(<span style="color:#f92672">*</span>(<span style="color:#66d9ef">yield</span> config(<span style="color:#f92672">*</span>args, <span style="color:#f92672">**</span>kwargs)))
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Extractor</span>:
+
+    <span style="color:#a6e22e">@staticmethod</span>
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">__site_name</span>():
+        T <span style="color:#f92672">=</span> <span style="color:#66d9ef">yield</span> <span style="color:#f92672">from</span> upload(
+            {<span style="color:#e6db74">&#34;url&#34;</span>: <span style="color:#e6db74">&#34;http://xxxx&#34;</span>, <span style="color:#e6db74">&#34;proxy&#34;</span>: True <span style="color:#f92672">or</span> False, <span style="color:#e6db74">&#34;skip&#34;</span>: {}}
+        )
+        T<span style="color:#f92672">.</span>title <span style="color:#f92672">=</span> T<span style="color:#f92672">.</span>html<span style="color:#f92672">.</span>pq(<span style="color:#e6db74">&#34;title&#34;</span>)<span style="color:#f92672">.</span>text()
+
+        <span style="color:#66d9ef">yield</span> T</code></pre></div>
+<p>方法的工作流程如下：</p>
+
+<blockquote>
+<p>这里非常绕，不要问我怎么写出来的。。外部工作流程简单的说就是扩展了一个for循环</p>
+</blockquote>
+
+<ol>
+<li><a href="https://github.com/aoii103/Sharingan/blob/a0ed7aedf723725a5a2f81da4d2f85b689d1af8b/sharingan/extract.py#L39">配置信息进入 <code>upload</code> 方法处理后将生成一个 <code>config</code> 实例</a></li>
+<li><a href="https://github.com/aoii103/Sharingan/blob/a0ed7aedf723725a5a2f81da4d2f85b689d1af8b/sharingan/sharingan.py#L199"><code>config</code> 实例将通过生成器 返回至外部</a></li>
+<li><a href="https://github.com/aoii103/Sharingan/blob/a0ed7aedf723725a5a2f81da4d2f85b689d1af8b/sharingan/sharingan.py#L201">实例与方法相关信息被丢入事件循环并开始作业</a></li>
+<li><a href="https://github.com/aoii103/Sharingan/blob/a0ed7aedf723725a5a2f81da4d2f85b689d1af8b/sharingan/sharingan.py#L116">每个实例在被提取信息后生成有效载荷并发送请求获得响应</a></li>
+<li><a href="https://github.com/aoii103/Sharingan/blob/a0ed7aedf723725a5a2f81da4d2f85b689d1af8b/sharingan/sharingan.py#L118"><strong>响应体及实例</strong>又通过生成器被发送回 <code>upload</code> 方法内部</a></li>
+<li><a href="https://github.com/aoii103/Sharingan/blob/a0ed7aedf723725a5a2f81da4d2f85b689d1af8b/sharingan/extract.py#L39"><code>upload</code> 将接受到的数据以 <code>person</code> 类的方式进行了实例化 也就是变量 <code>T</code></a></li>
+<li><a href="https://github.com/aoii103/Sharingan/blob/a0ed7aedf723725a5a2f81da4d2f85b689d1af8b/sharingan/extract.py#L42"><code>T</code> 开始根据自身 <code>html</code> 属性以一定的<code>css</code> 路径去提取站点中的信息并赋值给自身</a></li>
+<li><a href="https://github.com/aoii103/Sharingan/blob/a0ed7aedf723725a5a2f81da4d2f85b689d1af8b/sharingan/extract.py#L44">在完成所有提取后，将 <code>T</code> 返回给外部, 深藏功与名。</a></li>
+</ol>
+
+<h1 id="0x04-实例操作">0x04 实例操作</h1>
+
+<p>在完成站点导入后，就基本完成了编写。于是我们任意输入一个账号例如 <code>ruanyf</code> 来进行测试，大家应该都知道是谁吧。</p>
+
+<p><img src="/img/content_img/github/sharingan/use.gif" alt="" /></p>
+
+<p>结果一会儿就出来了，由于绝大多数的站点都暂时是导入状态，所以只获取了标题而并未见有具体内容。当然这点也正在进一步的完善中。</p>
+
+<p><img src="/img/content_img/github/sharingan/sharingan_res.gif" alt="" /></p>
+
+<h1 id="0x05-项目运行方式优化">0x05 项目运行方式优化</h1>
+
+<p>规范化对于一个项目来说非常重要，能避免很多不必要的麻烦，例如源代码易于阅读、运行方式简单。也就是良好的用户体验。</p>
+
+<h2 id="5-1-模块化">5.1 模块化</h2>
+
+<p>为了将该项目作为一个模块来调用，类似这样</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">python3 <span style="color:#f92672">-</span>m sharingan</code></pre></div>
+<p>我们需要在目录下添加了 <code>__main__.py</code> 并添加如下代码</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> . <span style="color:#f92672">import</span> sharingan
+
+<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
+    sharingan<span style="color:#f92672">.</span>main()</code></pre></div>
+<h2 id="5-2-参数化">5.2 参数化</h2>
+
+<p>并且作为一个工具，命令参数也是必不可少的。而在这里我们更推荐您使用 <code>click</code> 模块来添加参数，相比 <code>argparse</code> 着实方便很多</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> click 
+<span style="color:#f92672">import</span> XXX
+
+<span style="color:#a6e22e">@click.command</span>()
+<span style="color:#a6e22e">@click.argument</span>(<span style="color:#e6db74">&#34;name&#34;</span>) <span style="color:#75715e"># 必要的名称</span>
+<span style="color:#a6e22e">@click.option</span>(<span style="color:#e6db74">&#34;--proxy_uri&#34;</span>,default<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://127.0.0.1:1080&#34;</span>) <span style="color:#75715e"># 其他参数</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span>():
+    XXX(name,proxy_uri)<span style="color:#f92672">.</span>xx()</code></pre></div>
+<p>于是我们就可以通过如下代码方式来运行了</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">python3 <span style="color:#f92672">-</span>m sharingan ruanyf <span style="color:#f92672">--</span>proxy_uri<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span></code></pre></div>
+<h2 id="5-3-代码整理">5.3 代码整理</h2>
+
+<p>我不知道有多少同学会觉得自己的代码规范有待提升</p>
+
+<p>而在这方面 <code>black</code> 及 <code>isort</code> 分别能帮你完成代码整理及<code>import</code>整理</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">python3 <span style="color:#f92672">-</span>m pip install black isort
+isort <span style="color:#f92672">*/*.</span>py <span style="color:#f92672">&amp;&amp;</span> black <span style="color:#f92672">./</span></code></pre></div>
+<p>并且在代码出现较语法错误的时候，<code>black</code> 将报错</p>
+
+<h2 id="5-4-项目图标">5.4 项目图标</h2>
+
+<p>这也是我最近才想起来要用并搜索到的资源分享给大家</p>
+
+<p><a href="http://patorjk.com/software/taag/#p=display&amp;f=Graffiti&amp;t=Type%20Something%20">http://patorjk.com/software/taag</a></p>
+
+<p><img src="/img/content_img/github/sharingan/title.gif" alt="" /></p>
+
+<h1 id="0x06-github自动化">0x06 Github自动化</h1>
+
+<p>如果你经常在使用github做一些开发的话，这个项目你一定需要知道下</p>
+
+<p><a href="https://github.com/sdras/awesome-actions">https://github.com/sdras/awesome-actions </a></p>
+
+<p>它里面包含了许多非常好用的 <code>Action</code>，而我们今天聊得主要是发布到 <code>PYPI</code> 及在每次 <code>push</code> 后自动测试程序并发送提醒到 <code>Telegram</code></p>
+
+<h2 id="6-1-自动发布">6.1 自动发布</h2>
+
+<p>首先我们在本地项目下新建一个名为 <code>setup.py</code> 文件，并按照规范填入相关信息</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> setuptools
+
+<span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#34;README.md&#34;</span>, <span style="color:#e6db74">&#34;r&#34;</span>) <span style="color:#66d9ef">as</span> fh: <span style="color:#75715e"># 默认读取readme</span>
+    long_description <span style="color:#f92672">=</span> fh<span style="color:#f92672">.</span>read()
+
+setuptools<span style="color:#f92672">.</span>setup(
+    name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;项目名称&#34;</span>, 
+    version<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;项目版本例如 0.0.4&#34;</span>, 
+    author<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;作者名称&#34;</span>,
+    author_email<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;作者邮箱链接&#34;</span>,
+    description<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;项目简介&#34;</span>, 
+    long_description<span style="color:#f92672">=</span>long_description,
+    long_description_content_type<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text/markdown&#34;</span>,
+    url<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;项目主页链接&#34;</span>,
+    packages<span style="color:#f92672">=</span>setuptools<span style="color:#f92672">.</span>find_packages(),
+    classifiers<span style="color:#f92672">=</span>[
+        <span style="color:#e6db74">&#34;Programming Language :: Python :: 3.8&#34;</span>,
+        <span style="color:#f92672">...</span>
+    ], <span style="color:#75715e"># 这里填的是相关的项目状态标识符</span>
+    python_requires<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&gt;=3.8&#34;</span>,
+    install_requires<span style="color:#f92672">=</span>[
+        <span style="color:#e6db74">&#34;python_box==4.2.3&#34;</span>,
+        <span style="color:#e6db74">&#34;requests_html==0.10.0&#34;</span>,
+        <span style="color:#f92672">...</span>
+    ], <span style="color:#75715e"># 这里填写的是相关项目的依赖</span>
+)</code></pre></div>
+<p>或许有同学会问，这个依赖(<code>install_requires</code>)该怎么填写。</p>
+
+<p>我们会推荐使用 <code>pipreqs</code> 来一键生成，运行如下命令将生成一个 <code>requirements.txt</code> 的文件，然后我们摘抄进去就可以了。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">python3 -m pip install pipreqs
+pipreqs ./ --force</code></pre></div>
+<p>在发布前，请确认<code>setup.py</code> 已经提交至<code>Github</code>且保证您已经注册了 <code>pypi</code> ，并通过邮箱认证。 然后我们将账号信息填入 <code>Github</code> 个人设定</p>
+
+<p><img src="/img/content_img/github/sharingan/secure.jpg" alt="" /></p>
+
+<p>接下来我们进入 <code>Action</code> 界面下并选择官方的上传方法</p>
+
+<p><img src="/img/content_img/github/sharingan/upload.gif" alt="" /></p>
+
+<p>我们按下 <code>Commit</code> 就创建了这一步流程。然后我们需要转到主页并进入 <code>release</code> 以发布新版本</p>
+
+<p><img src="/img/content_img/github/sharingan/releases.gif" alt="" /></p>
+
+<p>然后 <code>Action</code> 就开始工作了，我们可以进入到该界面查看详情。如果不去看的话，也只有报错才会接收到邮件提醒</p>
+
+<p><img src="/img/content_img/github/sharingan/pip_search.jpg" alt="" /></p>
+
+<h2 id="6-2-测试及提醒">6.2 测试及提醒</h2>
+
+<blockquote>
+<p>TG参考 <a href="https://github.com/appleboy/telegram-action">https://github.com/appleboy/telegram-action</a></p>
+</blockquote>
+
+<p>这里我们需要创建好<code>telegram</code>机器人，关于怎么创建我下次再说吧写累了。。这里写下文字版的</p>
+
+<ul>
+<li>Search &ndash;&gt; <code>BotFather</code> 记得要后面带个✨的那个</li>
+<li>然后输入一连串命令 <code>/start</code></li>
+<li><code>/newbot</code></li>
+<li>给自己新的 <code>robot</code> 取个昵称</li>
+<li>然后会再让您给这个 <code>robot</code> 取个用户名，注意：用户名存在唯一性</li>
+<li>顺利的话下一句会告诉你 <code>robot</code> 创建成功 并且 <code>token</code> 在 <code>Use this token to access the HTTP API:</code> 之下</li>
+<li>接下来我们需要创建一个组并将自己和 <code>robot</code> 都拉进去，然后再里面发个消息</li>
+<li>最后我们访问 <code>https://api.telegram.org/bot[token]/getupdates</code> ，获取其中的<code>chat</code>中的<code>ID</code>，也就是房间号</li>
+</ul>
+
+<p>然后我们同样把 <code>TOKEN</code> 及 <code>ID</code>(对应 <code>TO</code> ) 填入到 <code>Setting</code> 的 <code>Secure</code>中</p>
+
+<p>最后在<code>Action</code> 文件中追加如下内容并保存，即可添加测试及提醒功能</p>
+
+<pre><code>    - name: Auto Test
+      run: |
+        python -m sharingan ruanyf --no_proxy
+    - name: Send result message
+      uses: appleboy/telegram-action@master
+      with:
+        to: ${{ secrets.TELEGRAM_TO }}
+        token: ${{ secrets.TELEGRAM_TOKEN }}
+        message: sharingan report
+</code></pre>
+
+<p><img src="/img/content_img/github/sharingan/gactions.jpg" alt="" /></p>
+
+<p>目前小编也正在积极得开发中，支持更多信息截取的站点也将越来越多，尽情期待 ~</p>
+
+<p>项目地址: <a href="https://github.com/aoii103/Sharingan">https://github.com/aoii103/Sharingan</a></p>
+		</div>
+		
+<div class="post__tags tags clearfix">
+	<svg class="icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="/tags/python/" rel="tag">Python</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/social-media/" rel="tag">Social media</a></li>
+	</ul>
+</div>
+	</article>
+</main>
+<h5>更多及时资讯欢迎关注 <code>进击的Hunter</code> </h5>
+<img src="/img/qrcode.jpg" />
+
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/post/2020_07_24_%E5%9C%B0%E5%9B%BE%E5%8F%AF%E8%A7%86%E5%8C%96_%E4%BD%A0%E8%BF%98%E5%8F%AF%E4%BB%A5%E7%94%BB%E5%BE%97%E6%9B%B4%E5%A5%BD/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">地图可视化，你能够做得更好</p></a>
+	</div>
+	<div class="post-nav__item post-nav__item--next">
+		<a class="post-nav__link" href="/post/2020_08_02_colab_hack_track/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">Colab神技能</p></a>
+	</div>
+</nav>
+
+<section class="comments">
+	<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "https-pyocean-com" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2020 s045pd.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+</body>
+</html>
