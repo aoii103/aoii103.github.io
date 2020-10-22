@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Note on 进击的Hunter</title>
+    <link>https://pyocean.com/tags/note/</link>
+    <description>Recent content in Note on 进击的Hunter</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <lastBuildDate>Thu, 22 Oct 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://pyocean.com/tags/note/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Java版本安装及切换</title>
+      <link>https://pyocean.com/post/2020_10_22_java%E7%89%88%E6%9C%AC%E5%AE%89%E8%A3%85%E5%A4%87%E6%B3%A8/</link>
+      <pubDate>Thu, 22 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://pyocean.com/post/2020_10_22_java%E7%89%88%E6%9C%AC%E5%AE%89%E8%A3%85%E5%A4%87%E6%B3%A8/</guid>
+      <description>&lt;p&gt;要使用的 &lt;code&gt;Burp&lt;/code&gt;需要 &lt;code&gt;java9&lt;/code&gt; 来支持，记录一下&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Python类追踪</title>
+      <link>https://pyocean.com/post/2020_10_21_%E7%B1%BB%E8%BF%BD%E8%B8%AA/</link>
+      <pubDate>Wed, 21 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://pyocean.com/post/2020_10_21_%E7%B1%BB%E8%BF%BD%E8%B8%AA/</guid>
+      <description>&lt;p&gt;日常笔记&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

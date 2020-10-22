@@ -6,10 +6,19 @@
     <description>Recent content in Python on 进击的Hunter</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
-    <lastBuildDate>Wed, 29 Jul 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 21 Oct 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://pyocean.com/tags/python/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Python类追踪</title>
+      <link>https://pyocean.com/post/2020_10_21_%E7%B1%BB%E8%BF%BD%E8%B8%AA/</link>
+      <pubDate>Wed, 21 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://pyocean.com/post/2020_10_21_%E7%B1%BB%E8%BF%BD%E8%B8%AA/</guid>
+      <description>&lt;p&gt;日常笔记&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>我是如何写一款社工工具的</title>
