@@ -119,12 +119,14 @@ brew cask install adoptopenjdk9</code></pre></div>
 
 <span style="color:#75715e"># output</span>
 Matching Java Virtual Machines <span style="color:#f92672">(</span><span style="color:#ae81ff">2</span><span style="color:#f92672">)</span>:
-    <span style="color:#ae81ff">9</span>, x86_64:	<span style="color:#e6db74">&#34;AdoptOpenJDK 9&#34;</span>	/Library/Java/JavaVirtualMachines/adoptopenjdk-9.jdk/Contents/Home
-    <span style="color:#ae81ff">1</span>.8.0_171, x86_64:	<span style="color:#e6db74">&#34;Java SE 8&#34;</span>	/Library/Java/JavaVirtualMachines/jdk1.8.0_171.jdk/Contents/Home</code></pre></div>
+    <span style="color:#ae81ff">9</span>, x86_64:    <span style="color:#e6db74">&#34;AdoptOpenJDK 9&#34;</span>    /Library/Java/JavaVirtualMachines/adoptopenjdk-9.jdk/Contents/Home
+    <span style="color:#ae81ff">1</span>.8.0_171, x86_64:    <span style="color:#e6db74">&#34;Java SE 8&#34;</span>    /Library/Java/JavaVirtualMachines/jdk1.8.0_171.jdk/Contents/Home</code></pre></div>
 <h2 id="0x03-切换指定java版本">0x03 切换指定Java版本</h2>
 
 <p>例如我使用的是<code>zsh</code>，并且要使用<code>java9</code>，则将如下一段添加到 <code>~/.zshrc</code> 中</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">export JAVA_HOME<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>/usr/libexec/java_home -v <span style="color:#ae81ff">9</span><span style="color:#e6db74">`</span></code></pre></div>
+<p>然后运行如下命令生效配置</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">source ~/.zshrc</code></pre></div>
 <h2 id="0x04-查看是否切换成功">0x04 查看是否切换成功</h2>
 
 <p>我们通过如下命令，即可看到当前使用的 <code>java</code> 版本信息</p>
@@ -152,6 +154,9 @@ OpenJDK <span style="color:#ae81ff">64</span>-Bit Server VM <span style="color:#
 <nav class="post-nav flex">
 	<div class="post-nav__item post-nav__item--prev">
 		<a class="post-nav__link" href="/post/2020_10_21_%E7%B1%BB%E8%BF%BD%E8%B8%AA/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">Python类追踪</p></a>
+	</div>
+	<div class="post-nav__item post-nav__item--next">
+		<a class="post-nav__link" href="/post/2020_11_24_%E5%9C%B0%E5%9B%BE%E5%8F%AF%E8%A7%86%E5%8C%96_%E4%BD%A0%E8%BF%98%E5%8F%AF%E4%BB%A5%E7%94%BB%E5%BE%97%E6%9B%B4%E5%A5%BD/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">地图可视化，你能够做得更好</p></a>
 	</div>
 </nav>
 
@@ -186,7 +191,7 @@ OpenJDK <span style="color:#ae81ff">64</span>-Bit Server VM <span style="color:#
 	<div class="container footer__container flex">
 		
 		<div class="footer__copyright">
-			&copy; 2020 s045pd.
+			&copy; 2021 s045pd.
 			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
 		</div>
 	</div>

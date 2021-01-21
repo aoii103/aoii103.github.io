@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>命令行还能这么玩? - 进击的Hunter</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta name="generator" content="Hugo 0.53" />
+	<meta property="og:title" content="命令行还能这么玩?" />
+<meta property="og:description" content="若是你有使用终端的习惯，那这篇文章就是为你所精心准备的。代码无毒，请放心食用 ~" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://pyocean.com/post/2020_11_24_%E5%91%BD%E4%BB%A4%E8%A1%8C%E8%BF%98%E8%83%BD%E8%BF%99%E4%B9%88%E7%8E%A9%E5%84%BF/" /><meta property="article:published_time" content="2020-11-24T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2020-11-24T00:00:00&#43;00:00"/>
+
+	<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="命令行还能这么玩?"/>
+<meta name="twitter:description" content="若是你有使用终端的习惯，那这篇文章就是为你所精心准备的。代码无毒，请放心食用 ~"/>
+
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-135738940-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="进击的Hunter" rel="home">
+				<div class="logo__title">进击的Hunter</div>
+				<div class="logo__tagline">Uneasy lies the head that wears the crown.</div>
+			</a>
+		</div>
+		<a href="https://github.com/aoii103/every_day_cmd"><div style="
+	height: 30px;
+	display: inline-block;
+	line-height:30px;
+	padding:0 20px;
+	color:rgb(73, 80, 87);
+	font-size:13px;
+	text-decoration:none;
+	font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;" id="every_day_cmd" class="every_day_cmd" title="字字珠玑，每日一记。" ></div></a>
+<div class="divider"></div>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+	axios.get('https://pyocean.com/every_day_cmd?os=osx,window,common').then(resp => {
+		document.getElementById('every_day_cmd').innerHTML = `🍺 ${resp.data.description}: <code  style="color: rgb(232, 62, 140);background:none;border:none;">${resp.data.code}</code>`
+	})
+</script>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">命令行还能这么玩?</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2020-11-24T00:00:00">November 24, 2020</time>
+</div>
+</div>
+		</header>
+		<figure class="post__thumbnail">
+			<img src="/img/marktext/terminal.jpg" alt="命令行还能这么玩?">
+		</figure>
+
+
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#0x01-翻译">0x01 翻译</a></li>
+<li><a href="#0x02-命令">0x02 命令</a></li>
+<li><a href="#0x03-搜索">0x03 搜索</a></li>
+<li><a href="#0x04-预览">0x04 预览</a></li>
+</ul></li>
+</ul>
+</nav>
+	</div>
+</div>
+<div class="content post__content clearfix">
+			<p>若是你有使用终端的习惯，那这篇文章就是为你所精心准备的。代码无毒，请放心食用 ~</p>
+
+<p>🍺本篇文章大约需要1分40秒来阅读，届时你或许将学到：</p>
+
+<p>快速得~</p>
+
+<ul>
+<li><p>查词典</p></li>
+
+<li><p>翻命令</p></li>
+
+<li><p>搜谷歌</p></li>
+
+<li><p>寻内容</p></li>
+
+<li><p>找文件</p></li>
+
+<li><p>看概要</p></li>
+</ul>
+
+<blockquote>
+<p>以下未注明安装方式的在mac下均可通过 <code>brew install xxx</code> 直接安装</p>
+</blockquote>
+
+<h2 id="0x01-翻译">0x01 翻译</h2>
+
+<p><strong><code>fy</code></strong> 如果你只是想简单得查查单词，它或许会是你最好的选择。这是一款中英文互译工具，自动判断语言并拼读单词，通过 <code>npm install fanyi -g</code> 安装。</p>
+
+<p><img src="/img/marktext/ee0405fc98b1ebb4f301f1d2202cab2046f55df1.gif" alt="" /></p>
+
+<p><strong><code>trans</code></strong>  这是一款多语言互译工具，可整句翻译、调用多种引擎、功能齐全且跨平台。Mac下可通过<code>brew install translate-shell</code>安装</p>
+
+<p><img src="/img/marktext/ed0e3eb985073f7327524fed512967e953a27e09.gif" alt="" /></p>
+
+<h2 id="0x02-命令">0x02 命令</h2>
+
+<p><strong><code>tldr</code></strong> 当你不了解某个命令的用法，并不想查看<code>--help</code>的时候，它的作用就显而易见了。</p>
+
+<p><img src="/img/marktext/ec9cb2009cebf66ef3861cbe37678c441ecb4ab0.gif" alt="" /></p>
+
+<p><strong><code>cht.sh</code></strong> 或许你渴望更全面的语法案例，那就选它。个人认为的唯一缺点就是结果高亮效果较差。 访问 <a href="https://github.com/chubin/cheat.sh#installation">https://github.com/chubin/cheat.sh#installation</a> 以安装</p>
+
+<p><img src="/img/marktext/96cf868edf7bfe184464ceab411e6705cf19739d.gif" alt="" /></p>
+
+<h2 id="0x03-搜索">0x03 搜索</h2>
+
+<p><strong><code>googler</code></strong> 可直接返回谷歌搜索结果，免去了打开浏览器的过程(查看详情的时候还是要的)</p>
+
+<p><img src="/img/marktext/bac16e118cf2c748e4a8627cf771f806f47c3b99.gif" alt="" /></p>
+
+<p><strong><code>ag</code></strong> 简简单单的一条语句却能让内容搜索变得如此高效，更支持正则及二进制查找。那么例如我要搜索所有包含有facebook的文件及所在行，只需这样</p>
+
+<p><img src="/img/marktext/f3f83a11c6fd5fa9bc8cbbb780ce0d230e75bb6f.gif" alt="" /></p>
+
+<p><strong><code>fd</code></strong> 相比前一位，它更擅长的是文件搜索，支持正则、指定文件类型及隐藏目录查找。</p>
+
+<p><img src="/img/marktext/56b7a485bbb16fc108118c6c4317dce27d008e74.gif" alt="" /></p>
+
+<h2 id="0x04-预览">0x04 预览</h2>
+
+<p><strong><code>bat</code></strong> 都看到了这里，那想必大家一定熟悉<code>cat</code>吧，更有甚者也了解 <code>ccat</code> 等等。它们是不是都很伤眼睛，是的话那就下载它吧。</p>
+
+<p><img src="/img/marktext/99e8fda333487d74a127b4e43eebfa11bc7afef4.gif" alt="" /></p>
+
+<p><strong><code>imgcat</code></strong> 查找到了图片，又想快速得查看，那就用它了。通过 <code>pip install imgcat</code> 进行安装。</p>
+
+<p><img src="/img/marktext/3ec620eca184c874271ccc3cec3de5395b0bfb1f.gif" alt="" /></p>
+		</div>
+		
+<div class="post__tags tags clearfix">
+	<svg class="icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="/tags/terminal/" rel="tag">Terminal</a></li>
+	</ul>
+</div>
+	</article>
+</main>
+<h5>更多及时资讯欢迎关注 <code>进击的Hunter</code> </h5>
+<img src="/img/qrcode.jpg" />
+
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/post/2020_11_24_%E5%9C%B0%E5%9B%BE%E5%8F%AF%E8%A7%86%E5%8C%96_%E4%BD%A0%E8%BF%98%E5%8F%AF%E4%BB%A5%E7%94%BB%E5%BE%97%E6%9B%B4%E5%A5%BD/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">地图可视化，你能够做得更好</p></a>
+	</div>
+	<div class="post-nav__item post-nav__item--next">
+		<a class="post-nav__link" href="/post/2020_11_02_colab_hack_track/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">Colab神技能</p></a>
+	</div>
+</nav>
+
+<section class="comments">
+	<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "https-pyocean-com" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 s045pd.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+</body>
+</html>
