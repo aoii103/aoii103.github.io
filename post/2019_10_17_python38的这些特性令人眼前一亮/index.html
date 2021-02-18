@@ -7,12 +7,13 @@
 	<title>python3.8正式发布，这些特性令人眼前一亮 - 进击的Hunter</title>
 	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
 	<meta name="description" content="">
-	<meta name="generator" content="Hugo 0.53" />
+	<meta name="generator" content="Hugo 0.80.0" />
 	<meta property="og:title" content="python3.8正式发布，这些特性令人眼前一亮" />
 <meta property="og:description" content="在2019年10月14号，Python3.8第一版以正式发布。所以屏幕面前的各位2.7忠粉，你们到底还在等什么❓那么它能给大家带来怎样的全新体验，让我们一起看看吧。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://pyocean.com/post/2019_10_17_python38%E7%9A%84%E8%BF%99%E4%BA%9B%E7%89%B9%E6%80%A7%E4%BB%A4%E4%BA%BA%E7%9C%BC%E5%89%8D%E4%B8%80%E4%BA%AE/" /><meta property="article:published_time" content="2019-10-17T00:00:00&#43;00:00"/>
-<meta property="article:modified_time" content="2019-10-17T00:00:00&#43;00:00"/>
+<meta property="og:url" content="https://pyocean.com/post/2019_10_17_python38%E7%9A%84%E8%BF%99%E4%BA%9B%E7%89%B9%E6%80%A7%E4%BB%A4%E4%BA%BA%E7%9C%BC%E5%89%8D%E4%B8%80%E4%BA%AE/" />
+<meta property="article:published_time" content="2019-10-17T00:00:00+00:00" />
+<meta property="article:modified_time" content="2019-10-17T00:00:00+00:00" />
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="python3.8正式发布，这些特性令人眼前一亮"/>
@@ -88,71 +89,56 @@ if (!doNotTrack) {
 <div class="post__toc toc">
 	<div class="toc__title">Page content</div>
 	<div class="toc__menu">
-		<nav id="TableOfContents">
-<ul>
-<li><a href="#0x01-海象赋值法">0x01 海象赋值法</a></li>
-<li><a href="#0x02-仅限位置形参">0x02 仅限位置形参</a></li>
-<li><a href="#0x03-f-expr-记录表达式与调试文档">0x03 <code>f'{expr=}'</code> 记录表达式与调试文档</a></li>
-<li><a href="#0x04-部分常用语言特性更新及性能变化-简报">0x04 部分常用语言特性更新及性能变化(✨简报)</a></li>
-</ul>
-</nav>
+		<nav id="TableOfContents"></nav>
 	</div>
 </div>
 <div class="content post__content clearfix">
 			<p>在2019年10月14号，Python3.8第一版以正式发布。所以屏幕面前的各位2.7忠粉，你们到底还在等什么❓那么它能给大家带来怎样的全新体验，让我们一起看看吧。</p>
-
 <p>🍺本篇文章大约需要2分钟来阅读。届时你将学到：</p>
-
 <ul>
 <li>如何在表达使用使用全新的赋值法<code>:=</code></li>
 <li>如何在定义方法时限制形参类型<code>/</code></li>
 <li>更好得调试代码技巧<code>f&quot;{expr=}&quot;</code></li>
 <li>其他需要你适应的python38特性&hellip;</li>
 </ul>
-
 <h1 id="0x01-海象赋值法">0x01 海象赋值法</h1>
-
 <p>(<a href="https://www.python.org/dev/peps/pep-0572/">PEP 572</a>)这将是python有史以来最大的改变，它的写法与go非常相似。使得对变量的赋值可以发生在表达式的内部。至于为什么叫海象赋值法..</p>
-
-<p><img src="/img/content_img/python/HS.jpg" alt="一头迷茫的海象老哥" /></p>
-
+<p><img src="/img/content_img/python/HS.jpg" alt="一头迷茫的海象老哥"></p>
 <p>我们继续看下面两个例子</p>
-
 <ul>
-<li><p>常规方法</p>
+<li>
+<p>常规方法</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">a <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">4</span>]
 n <span style="color:#f92672">=</span> len(a)
 
 <span style="color:#66d9ef">if</span> n <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">10</span>:
-<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;数据长度为{n}, 且小于10&#34;</span>)</code></pre></div></li>
-
-<li><p>使用海象赋值法</p>
+<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;数据长度为{n}, 且小于10&#34;</span>)
+</code></pre></div></li>
+<li>
+<p>使用海象赋值法</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">a <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">4</span>]
 
 <span style="color:#66d9ef">if</span> (n :<span style="color:#f92672">=</span> len(a)) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">10</span>:
-    <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;数据长度为{n}, 且小于10&#34;</span>)</code></pre></div></li>
+    <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;数据长度为{n}, 且小于10&#34;</span>)
+</code></pre></div></li>
 </ul>
-
 <p>第二个方法相比第一次减少了 <code>n = len(a)</code> 的赋值过程，转而写在了<code>if</code>表达式当中，并使<code>n</code>可以继续在下文中使用。</p>
-
 <p>再例如列表推导式，我们需要判断迭代每项i的计算结果ii是否符合条件，并将结果生成列表。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">[ii <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">101</span>) <span style="color:#66d9ef">if</span> (ii :<span style="color:#f92672">=</span> i<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span> ) <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">200</span> ]</code></pre></div>
-<p>请尽量将海象运算符的使用限制在清晰的场合中，以降低复杂性并提升可读性。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">[ii <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">101</span>) <span style="color:#66d9ef">if</span> (ii :<span style="color:#f92672">=</span> i<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span> ) <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">200</span> ]
 
+</code></pre></div><p>请尽量将海象运算符的使用限制在清晰的场合中，以降低复杂性并提升可读性。</p>
 <h1 id="0x02-仅限位置形参">0x02 仅限位置形参</h1>
-
 <p>(<a href="https://www.python.org/dev/peps/pep-0570/">PEP 570</a>)新增了一个函数形参语法<code>/</code>用来指明某些函数形参必须使用仅限位置而非关键字参数的形式。</p>
-
 <p>例如<code>demo</code>方法，在<code>/</code>之前的<code>a</code>只可以用位置形参，在<code>*</code>之后的<code>c</code>只可以用关键字形参。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">demo</span>(a, <span style="color:#f92672">/</span>, b, <span style="color:#f92672">*</span>, c):
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">demo</span>(a, <span style="color:#f92672">/</span>, b, <span style="color:#f92672">*</span>, c):
     <span style="color:#66d9ef">print</span>(a, b, c)
 
 
 demo(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, c<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>) <span style="color:#75715e"># 正确</span>
 demo(a<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>) <span style="color:#75715e"># 错误，a不可用关键字形参</span>
-demo(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>) <span style="color:#75715e"># 错误，c不可用位置形参</span></code></pre></div>
-<h1 id="0x03-f-expr-记录表达式与调试文档">0x03 <code>f'{expr=}'</code> 记录表达式与调试文档</h1>
-
+demo(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>) <span style="color:#75715e"># 错误，c不可用位置形参</span>
+</code></pre></div><h1 id="0x03-fexpr-记录表达式与调试文档">0x03 <code>f'{expr=}'</code> 记录表达式与调试文档</h1>
 <p>(<a href="https://bugs.python.org/issue36817">bro-36817</a>)增加 <code>=</code> 说明符用于 f-string，它将额外输出变量的引用值，例如：</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> moment
 
@@ -160,11 +146,9 @@ today <span style="color:#f92672">=</span> moment<span style="color:#f92672">.</
 <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;{today=} , have a great time ~&#34;</span>)
 
 <span style="color:#75715e"># output </span>
-today<span style="color:#f92672">=&lt;</span>Moment(<span style="color:#ae81ff">2019</span><span style="color:#f92672">-</span><span style="color:#ae81ff">10</span><span style="color:#f92672">-</span><span style="color:#ae81ff">18</span>T03:<span style="color:#ae81ff">32</span>:<span style="color:#ae81ff">01</span>)<span style="color:#f92672">&gt;</span> , have a great time <span style="color:#f92672">~</span></code></pre></div>
-<h1 id="0x04-部分常用语言特性更新及性能变化-简报">0x04 部分常用语言特性更新及性能变化(✨简报)</h1>
-
+today<span style="color:#f92672">=&lt;</span>Moment(<span style="color:#ae81ff">2019</span><span style="color:#f92672">-</span><span style="color:#ae81ff">10</span><span style="color:#f92672">-</span><span style="color:#ae81ff">18</span>T03:<span style="color:#ae81ff">32</span>:<span style="color:#ae81ff">01</span>)<span style="color:#f92672">&gt;</span> , have a great time <span style="color:#f92672">~</span>
+</code></pre></div><h1 id="0x04-部分常用语言特性更新及性能变化简报">0x04 部分常用语言特性更新及性能变化(✨简报)</h1>
 <p>这边我们挑选了几个较为常用的特性及更新来简单列举一下</p>
-
 <ul>
 <li>❌ <code>yield</code> 表达式将在<strong>推导式</strong>和<strong>生成器</strong>中不被允许使用</li>
 <li>✅ <code>continue</code> 语句将在 <code>finally</code> 表达式中被允许使用</li>
@@ -176,14 +160,13 @@ today<span style="color:#f92672">=&lt;</span>Moment(<span style="color:#ae81ff">
 <li>✅ <code>pathlib</code>及<code>os.path</code> 针对部分异常字符路径将返回<code>False</code> 而不是报错</li>
 <li>✅ <code>math</code>模块添加了<code>dist,hypot,prod,isqrt</code>4个新函数，具体详查</li>
 </ul>
-
 <p>除了以上几项，更多新特性请访问<code>https://docs.python.org/zh-cn/3.8/whatsnew/3.8.html</code></p>
 		</div>
 		
 <div class="post__tags tags clearfix">
 	<svg class="icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
 	<ul class="tags__list">
-		<li class="tags__item"><a class="tags__link btn" href="/tags/python38/" rel="tag">python38</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/python3/" rel="tag">python3</a></li>
 		<li class="tags__item"><a class="tags__link btn" href="/tags/python/" rel="tag">python</a></li>
 	</ul>
 </div>

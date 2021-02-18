@@ -7,12 +7,13 @@
 	<title>自定义JWT Header头 - 进击的Hunter</title>
 	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
 	<meta name="description" content="">
-	<meta name="generator" content="Hugo 0.53" />
+	<meta name="generator" content="Hugo 0.80.0" />
 	<meta property="og:title" content="自定义JWT Header头" />
 <meta property="og:description" content="在某些特定场景下，我们需要修改默认的JWT认证请求Header头。这里做一下简单记录。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://pyocean.com/post/2019_03_27_django%E7%AC%94%E8%AE%B0_%E8%87%AA%E5%AE%9A%E4%B9%89authheader%E5%A4%B4/" /><meta property="article:published_time" content="2019-03-27T00:00:00&#43;00:00"/>
-<meta property="article:modified_time" content="2019-03-27T00:00:00&#43;00:00"/>
+<meta property="og:url" content="https://pyocean.com/post/2019_03_27_django%E7%AC%94%E8%AE%B0_%E8%87%AA%E5%AE%9A%E4%B9%89authheader%E5%A4%B4/" />
+<meta property="article:published_time" content="2019-03-27T00:00:00+00:00" />
+<meta property="article:modified_time" content="2019-03-27T00:00:00+00:00" />
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="自定义JWT Header头"/>
@@ -93,20 +94,19 @@ if (!doNotTrack) {
 <div class="post__toc toc">
 	<div class="toc__title">Page content</div>
 	<div class="toc__menu">
-		
+		<nav id="TableOfContents"></nav>
 	</div>
 </div>
 <div class="content post__content clearfix">
 			<p>在某些特定场景下，我们需要修改默认的JWT认证请求Header头。这里做一下简单记录。</p>
-
 <ol>
 <li>我们在apps目录下新建<code>custom_jwt.py</code>,填入如下代码，并替换<code>[CustomHeader]</code>为您所需要的自定义的<code>jwt header</code>头.</li>
 </ol>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">JSONWebTokenAuthenticationQS</span>(JSONWebTokenAuthentication):
 
     <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_jwt_value</span>(self, request):
-        <span style="color:#66d9ef">return</span> request<span style="color:#f92672">.</span>META<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#39;HTTP_[CustomHeader]&#39;</span>)</code></pre></div>
-<ol>
+        <span style="color:#66d9ef">return</span> request<span style="color:#f92672">.</span>META<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#39;HTTP_[CustomHeader]&#39;</span>)
+</code></pre></div><ol start="2">
 <li>修改<code>setting.py</code>如下位置以应用</li>
 </ol>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">REST_FRAMEWORK <span style="color:#f92672">=</span> {
@@ -114,8 +114,9 @@ if (!doNotTrack) {
         <span style="color:#75715e"># &#39;rest_framework_jwt.authentication.JSONWebTokenAuthentication&#39;,</span>
         <span style="color:#e6db74">&#39;apps.custom_jwt.JSONWebTokenAuthenticationQS&#39;</span>,
     ),
-}</code></pre></div>
-<p>参考：<a href="http://getblimp.github.io/django-rest-framework-jwt/#extending-jsonwebtokenauthentication">http://getblimp.github.io/django-rest-framework-jwt/#extending-jsonwebtokenauthentication</a></p>
+}
+
+</code></pre></div><p>参考：<a href="http://getblimp.github.io/django-rest-framework-jwt/#extending-jsonwebtokenauthentication">http://getblimp.github.io/django-rest-framework-jwt/#extending-jsonwebtokenauthentication</a></p>
 		</div>
 		
 <div class="post__tags tags clearfix">

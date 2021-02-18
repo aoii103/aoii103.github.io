@@ -7,12 +7,13 @@
 	<title>HTTP状态码 201,202,302,405 ... 傻傻分不清，看这一个项目就够啦 - 进击的Hunter</title>
 	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
 	<meta name="description" content="">
-	<meta name="generator" content="Hugo 0.53" />
+	<meta name="generator" content="Hugo 0.80.0" />
 	<meta property="og:title" content="HTTP状态码 201,202,302,405 ... 傻傻分不清，看这一个项目就够啦" />
 <meta property="og:description" content="本期搬运 【github】http.cat，它是一款用于提供对应HTTP状态码界面模板的API，并且每次都会返回一张寓意如图的🐱喵喵相片。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://pyocean.com/post/2019_11_21_%E7%94%A8%E4%B8%80%E5%8F%AA%E7%8C%AB%E6%9D%A5%E6%95%99%E4%BC%9A%E4%BD%A0%E5%90%84%E7%B1%BBhttp%E7%8A%B6%E6%80%81%E7%A0%81%E7%9A%84%E5%90%AB%E4%B9%89/" /><meta property="article:published_time" content="2019-11-21T00:00:00&#43;00:00"/>
-<meta property="article:modified_time" content="2019-11-21T00:00:00&#43;00:00"/>
+<meta property="og:url" content="https://pyocean.com/post/2019_11_21_%E7%94%A8%E4%B8%80%E5%8F%AA%E7%8C%AB%E6%9D%A5%E6%95%99%E4%BC%9A%E4%BD%A0%E5%90%84%E7%B1%BBhttp%E7%8A%B6%E6%80%81%E7%A0%81%E7%9A%84%E5%90%AB%E4%B9%89/" />
+<meta property="article:published_time" content="2019-11-21T00:00:00+00:00" />
+<meta property="article:modified_time" content="2019-11-21T00:00:00+00:00" />
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="HTTP状态码 201,202,302,405 ... 傻傻分不清，看这一个项目就够啦"/>
@@ -89,510 +90,308 @@ if (!doNotTrack) {
 	<div class="toc__title">Page content</div>
 	<div class="toc__menu">
 		<nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li><a href="#http状态码五大分类">HTTP状态码五大分类</a></li>
-<li><a href="#1xx-信息响应">1xx 信息响应</a>
-<ul>
-<li><a href="#100-continue">100 Continue</a></li>
-<li><a href="#101-switching-protocol">101 Switching Protocol</a></li>
-</ul></li>
-<li><a href="#2xx-成功响应">2xx 成功响应</a>
-<ul>
-<li><a href="#200-ok">200 OK</a></li>
-<li><a href="#201-created">201 Created</a></li>
-<li><a href="#202-accepted">202 Accepted</a></li>
-<li><a href="#204-no-content">204 No Content</a></li>
-<li><a href="#206-partial-content">206 Partial Content</a></li>
-<li><a href="#207-multi-status">207 Multi-Status</a></li>
-</ul></li>
-<li><a href="#3xx-重定向">3xx 重定向</a>
-<ul>
-<li><a href="#300-multiple-choice">300 Multiple Choice</a></li>
-<li><a href="#301-moved-permanently">301 Moved Permanently</a></li>
-<li><a href="#302-found">302 Found</a></li>
-<li><a href="#303-see-other">303 See Other</a></li>
-<li><a href="#304-not-modified">304 Not Modified</a></li>
-<li><a href="#305-use-proxy">305 Use Proxy</a></li>
-<li><a href="#307-temporary-redirect">307 Temporary Redirect</a></li>
-</ul></li>
-<li><a href="#4xx-客户端错误">4xx 客户端错误</a>
-<ul>
-<li><a href="#400-bad-request">400 Bad Request</a></li>
-<li><a href="#401-unauthorized">401 Unauthorized</a></li>
-<li><a href="#402-payment-required">402 Payment Required</a></li>
-<li><a href="#403-forbidden">403 Forbidden</a></li>
-<li><a href="#404-not-found">404 Not Found</a></li>
-<li><a href="#405-method-not-allowed">405 Method Not Allowed</a></li>
-<li><a href="#406-not-acceptable">406 Not Acceptable</a></li>
-<li><a href="#408-request-timeout">408 Request Timeout</a></li>
-<li><a href="#409-conflict">409 Conflict</a></li>
-<li><a href="#410-gone">410 Gone</a></li>
-<li><a href="#411-length-required">411 Length Required</a></li>
-<li><a href="#412-precondition-failed">412 Precondition Failed</a></li>
-<li><a href="#413-payload-too-large">413 Payload Too Large</a></li>
-<li><a href="#414-uri-too-long">414 URI Too Long</a></li>
-<li><a href="#415-unsupported-media-type">415 Unsupported Media Type</a></li>
-<li><a href="#416-requested-range-not-satisfiable">416 Requested Range Not Satisfiable</a></li>
-<li><a href="#417-expectation-failed">417 Expectation Failed</a></li>
-<li><a href="#418-i-m-a-teapot">418 I&rsquo;m a teapot</a></li>
-<li><a href="#420-enhance-your-calm">420 Enhance Your Calm</a></li>
-<li><a href="#421-misdirected-request">421 Misdirected Request</a></li>
-<li><a href="#422-unprocessable-entity-webdav">422 Unprocessable Entity (WebDAV)</a></li>
-<li><a href="#423-locked-webdav">423 Locked (WebDAV)</a></li>
-<li><a href="#424-failed-dependency-webdav">424 Failed Dependency (WebDAV)</a></li>
-<li><a href="#425-too-early">425 Too Early</a></li>
-<li><a href="#426-upgrade-required">426 Upgrade Required</a></li>
-<li><a href="#429-too-many-requests">429 Too Many Requests</a></li>
-<li><a href="#431-request-header-fields-too-large">431 Request Header Fields Too Large</a></li>
-<li><a href="#444-no-response">444 No Response</a></li>
-<li><a href="#450-blocked-by-windows-parental-controls">450 Blocked by Windows Parental Controls</a></li>
-<li><a href="#451-unavailable-for-legal-reasons">451 Unavailable For Legal Reasons</a></li>
-</ul></li>
-<li><a href="#5xx-服务端错误">5xx 服务端错误</a>
-<ul>
-<li><a href="#500-internal-server-error">500 Internal Server Error</a></li>
-<li><a href="#501-not-implemented">501 Not Implemented</a></li>
-<li><a href="#502-bad-gateway">502 Bad Gateway</a></li>
-<li><a href="#503-service-unavailable">503 Service Unavailable</a></li>
-<li><a href="#504-gateway-timeout">504 Gateway Timeout</a></li>
-<li><a href="#506-variant-also-negotiates">506 Variant Also Negotiates</a></li>
-<li><a href="#507-insufficient-storage">507 Insufficient Storage</a></li>
-<li><a href="#508-loop-detected-webdav">508 Loop Detected (WebDAV)</a></li>
-<li><a href="#509-bandwidth-limit-exceeded">509 Bandwidth Limit Exceeded</a></li>
-<li><a href="#510-not-extended">510 Not Extended</a></li>
-<li><a href="#511-network-authentication-required">511 Network Authentication Required</a></li>
-<li><a href="#599-network-connect-timeout-error">599 Network Connect Timeout Error</a></li>
-</ul></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#http状态码五大分类">HTTP状态码五大分类</a></li>
+    <li><a href="#1xx-信息响应">1xx 信息响应</a>
+      <ul>
+        <li><a href="#100-continue">100 Continue</a></li>
+        <li><a href="#101-switching-protocol">101 Switching Protocol</a></li>
+      </ul>
+    </li>
+    <li><a href="#2xx-成功响应">2xx 成功响应</a>
+      <ul>
+        <li><a href="#200-ok">200 OK</a></li>
+        <li><a href="#201-created">201 Created</a></li>
+        <li><a href="#202-accepted">202 Accepted</a></li>
+        <li><a href="#204-no-content">204 No Content</a></li>
+        <li><a href="#206-partial-content">206 Partial Content</a></li>
+        <li><a href="#207-multi-status">207 Multi-Status</a></li>
+      </ul>
+    </li>
+    <li><a href="#3xx-重定向">3xx 重定向</a>
+      <ul>
+        <li><a href="#300-multiple-choice">300 Multiple Choice</a></li>
+        <li><a href="#301-moved-permanently">301 Moved Permanently</a></li>
+        <li><a href="#302-found">302 Found</a></li>
+        <li><a href="#303-see-other">303 See Other</a></li>
+        <li><a href="#304-not-modified">304 Not Modified</a></li>
+        <li><a href="#305-use-proxy">305 Use Proxy</a></li>
+        <li><a href="#307-temporary-redirect">307 Temporary Redirect</a></li>
+      </ul>
+    </li>
+    <li><a href="#4xx-客户端错误">4xx 客户端错误</a>
+      <ul>
+        <li><a href="#400-bad-request">400 Bad Request</a></li>
+        <li><a href="#401-unauthorized">401 Unauthorized</a></li>
+        <li><a href="#402-payment-required">402 Payment Required</a></li>
+        <li><a href="#403-forbidden">403 Forbidden</a></li>
+        <li><a href="#404-not-found">404 Not Found</a></li>
+        <li><a href="#405-method-not-allowed">405 Method Not Allowed</a></li>
+        <li><a href="#406-not-acceptable">406 Not Acceptable</a></li>
+        <li><a href="#408-request-timeout">408 Request Timeout</a></li>
+        <li><a href="#409-conflict">409 Conflict</a></li>
+        <li><a href="#410-gone">410 Gone</a></li>
+        <li><a href="#411-length-required">411 Length Required</a></li>
+        <li><a href="#412-precondition-failed">412 Precondition Failed</a></li>
+        <li><a href="#413-payload-too-large">413 Payload Too Large</a></li>
+        <li><a href="#414-uri-too-long">414 URI Too Long</a></li>
+        <li><a href="#415-unsupported-media-type">415 Unsupported Media Type</a></li>
+        <li><a href="#416-requested-range-not-satisfiable">416 Requested Range Not Satisfiable</a></li>
+        <li><a href="#417-expectation-failed">417 Expectation Failed</a></li>
+        <li><a href="#418-im-a-teapot">418 I&rsquo;m a teapot</a></li>
+        <li><a href="#420-enhance-your-calm">420 Enhance Your Calm</a></li>
+        <li><a href="#421-misdirected-request">421 Misdirected Request</a></li>
+        <li><a href="#422-unprocessable-entity-webdav">422 Unprocessable Entity (WebDAV)</a></li>
+        <li><a href="#423-locked-webdav">423 Locked (WebDAV)</a></li>
+        <li><a href="#424-failed-dependency-webdav">424 Failed Dependency (WebDAV)</a></li>
+        <li><a href="#425-too-early">425 Too Early</a></li>
+        <li><a href="#426-upgrade-required">426 Upgrade Required</a></li>
+        <li><a href="#429-too-many-requests">429 Too Many Requests</a></li>
+        <li><a href="#431-request-header-fields-too-large">431 Request Header Fields Too Large</a></li>
+        <li><a href="#444-no-response">444 No Response</a></li>
+        <li><a href="#450-blocked-by-windows-parental-controls">450 Blocked by Windows Parental Controls</a></li>
+        <li><a href="#451-unavailable-for-legal-reasons">451 Unavailable For Legal Reasons</a></li>
+      </ul>
+    </li>
+    <li><a href="#5xx-服务端错误">5xx 服务端错误</a>
+      <ul>
+        <li><a href="#500-internal-server-error">500 Internal Server Error</a></li>
+        <li><a href="#501-not-implemented">501 Not Implemented</a></li>
+        <li><a href="#502-bad-gateway">502 Bad Gateway</a></li>
+        <li><a href="#503-service-unavailable">503 Service Unavailable</a></li>
+        <li><a href="#504-gateway-timeout">504 Gateway Timeout</a></li>
+        <li><a href="#506-variant-also-negotiates">506 Variant Also Negotiates</a></li>
+        <li><a href="#507-insufficient-storage">507 Insufficient Storage</a></li>
+        <li><a href="#508-loop-detected-webdav">508 Loop Detected (WebDAV)</a></li>
+        <li><a href="#509-bandwidth-limit-exceeded">509 Bandwidth Limit Exceeded</a></li>
+        <li><a href="#510-not-extended">510 Not Extended</a></li>
+        <li><a href="#511-network-authentication-required">511 Network Authentication Required</a></li>
+        <li><a href="#599-network-connect-timeout-error">599 Network Connect Timeout Error</a></li>
+      </ul>
+    </li>
+  </ul>
 </nav>
 	</div>
 </div>
 <div class="content post__content clearfix">
 			<p>本期搬运 <a href="https://github.com/httpcats/http.cat">【github】http.cat</a>，它是一款用于提供对应HTTP状态码界面模板的API，并且每次都会返回一张寓意如图的🐱喵喵相片。</p>
-
 <p>🍺本篇文章大约需要3分钟来阅读，热衷吸猫人士可能会更久。届时你将学到：</p>
-
 <ul>
 <li>http状态码的作用分块</li>
 <li>http状态码的大概含义</li>
 </ul>
-
 <h2 id="http状态码五大分类">HTTP状态码五大分类</h2>
-
 <p>HTTP 响应状态代码指示特定 HTTP 请求是否已成功完成，其中响应分为五类。</p>
-
 <ul>
-<li>信息响应     <span class="success">1xx</span></li>
-<li>成功响应     <span class="success">2xx</span></li>
-<li>重定向       <span class="warning">3xx</span></li>
-<li>客户端错误   <span class="error">4xx</span></li>
-<li>服务器错误   <span class="error">5xx</span></li>
+<li>信息响应     <!-- raw HTML omitted -->1xx<!-- raw HTML omitted --></li>
+<li>成功响应     <!-- raw HTML omitted -->2xx<!-- raw HTML omitted --></li>
+<li>重定向       <!-- raw HTML omitted -->3xx<!-- raw HTML omitted --></li>
+<li>客户端错误   <!-- raw HTML omitted -->4xx<!-- raw HTML omitted --></li>
+<li>服务器错误   <!-- raw HTML omitted -->5xx<!-- raw HTML omitted --></li>
 </ul>
-
 <blockquote>
 <p>参考详见:</p>
-
 <p><a href="https://tools.ietf.org/html/rfc2616">https://tools.ietf.org/html/rfc2616</a></p>
-
 <p><a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes">https://en.wikipedia.org/wiki/List_of_HTTP_status_codes</a></p>
-
 <p><a href="https://httpstatuses.com/">https://httpstatuses.com/</a></p>
 </blockquote>
-
 <h2 id="1xx-信息响应">1xx 信息响应</h2>
-
 <p>请求已经收到将继续处理</p>
-
 <h3 id="100-continue">100 Continue</h3>
-
-<p><img src="/img/content_img/cat/100.jpg" alt="" /></p>
-
+<p><img src="/img/content_img/cat/100.jpg" alt=""></p>
 <p>这个临时响应表明，迄今为止的所有内容都是可行的，客户端应该继续请求，如果已经完成，则忽略它。</p>
-
 <h3 id="101-switching-protocol">101 Switching Protocol</h3>
-
-<p><img src="/img/content_img/cat/101.jpg" alt="" /></p>
-
+<p><img src="/img/content_img/cat/101.jpg" alt=""></p>
 <p>该代码是响应客户端的 Upgrade 标头发送的，表示服务器正在切换的协议。</p>
-
 <h2 id="2xx-成功响应">2xx 成功响应</h2>
-
 <p>请求已成功接收，并被接受</p>
-
 <h3 id="200-ok">200 OK</h3>
-
-<p><img src="/img/content_img/cat/200.jpg" alt="" /></p>
-
+<p><img src="/img/content_img/cat/200.jpg" alt=""></p>
 <p>请求成功。成功的含义取决于HTTP方法：</p>
-
 <ul>
 <li>GET：资源已被提取并在消息正文中传输。</li>
 <li>HEAD：实体标头位于消息正文中。</li>
 <li>POST：描述动作结果的资源在消息体中传输。</li>
 <li>TRACE：消息正文包含服务器收到的请求消息</li>
 </ul>
-
 <h3 id="201-created">201 Created</h3>
-
-<p><img src="/img/content_img/cat/201.jpg" alt="" /></p>
-
+<p><img src="/img/content_img/cat/201.jpg" alt=""></p>
 <p>该请求已成功，并因此创建了一个新的资源。通常源于POST或某些PUT请求。</p>
-
 <h3 id="202-accepted">202 Accepted</h3>
-
-<p><img src="/img/content_img/cat/202.jpg" alt="" /></p>
-
+<p><img src="/img/content_img/cat/202.jpg" alt=""></p>
 <p>该请求已被接受进行处理，但是处理尚未完成。最终有可能会被处理也可能不会。</p>
-
 <h3 id="204-no-content">204 No Content</h3>
-
-<p><img src="/img/content_img/cat/204.jpg" alt="" /></p>
-
+<p><img src="/img/content_img/cat/204.jpg" alt=""></p>
 <p>服务器成功处理了请求，但响应体中不会有任何内容。</p>
-
 <h3 id="206-partial-content">206 Partial Content</h3>
-
-<p><img src="/img/content_img/cat/206.jpg" alt="" /></p>
-
+<p><img src="/img/content_img/cat/206.jpg" alt=""></p>
 <p>服务器已经成功处理了部分 GET 请求。例如迅雷的断点续传或分段同时下载就是利用了该类响应。该请求必须包含 Range 头信息来指示客户端希望得到的内容范围，并且可能包含 If-Range 来作为请求条件。</p>
-
 <h3 id="207-multi-status">207 Multi-Status</h3>
-
-<p><img src="/img/content_img/cat/207.jpg" alt="" /></p>
-
+<p><img src="/img/content_img/cat/207.jpg" alt=""></p>
 <p>代表之后的消息体将是一个XML消息，很可能包含了后续的多段响应。</p>
-
 <h2 id="3xx-重定向">3xx 重定向</h2>
-
 <p>为了完成请求，需要采取进一步的措施</p>
-
 <h3 id="300-multiple-choice">300 Multiple Choice</h3>
-
-<p><img src="/img/content_img/cat/300.jpg" alt="" /></p>
-
+<p><img src="/img/content_img/cat/300.jpg" alt=""></p>
 <p>被请求的资源有一系列可供选择的回馈信息，每个都有自己特定的地址和浏览器驱动的商议信息。用户或浏览器能够自行选择一个首选的地址进行重定向。</p>
-
 <h3 id="301-moved-permanently">301 Moved Permanently</h3>
-
-<p><img src="/img/content_img/cat/301.jpg" alt="" /></p>
-
+<p><img src="/img/content_img/cat/301.jpg" alt=""></p>
 <p>永久性定向，被请求的资源已永久移动到新位置，并且将来任何对此资源的引用都应该使用本响应返回的若干个 URI 之一。</p>
-
 <h3 id="302-found">302 Found</h3>
-
-<p><img src="/img/content_img/cat/302.jpg" alt="" /></p>
-
+<p><img src="/img/content_img/cat/302.jpg" alt=""></p>
 <p>临时性重定向，请求的资源现在临时从不同的 URI 响应请求。由于这样的重定向是临时的，客户端应当继续向原有地址发送以后的请求。只有在Cache-Control或Expires中进行了指定的情况下，这个响应才是可缓存的。</p>
-
 <h3 id="303-see-other">303 See Other</h3>
-
-<p><img src="/img/content_img/cat/303.jpg" alt="" /></p>
-
+<p><img src="/img/content_img/cat/303.jpg" alt=""></p>
 <p>服务器正在将用户代理重定向到其他资源，如通过Location标头，旨在提供对原始请求的间接响应。</p>
-
 <h3 id="304-not-modified">304 Not Modified</h3>
-
-<p><img src="/img/content_img/cat/304.jpg" alt="" /></p>
-
+<p><img src="/img/content_img/cat/304.jpg" alt=""></p>
 <p>客户端发送了一定的GET或HEAD请求，但需要获取的目标资源未改变。</p>
-
 <h3 id="305-use-proxy">305 Use Proxy</h3>
-
-<p><img src="/img/content_img/cat/305.jpg" alt="" /></p>
-
+<p><img src="/img/content_img/cat/305.jpg" alt=""></p>
 <p>被请求的资源必须通过指定的代理才能被访问。Location 域中将给出指定的代理所在的 URI 信息，接收者需要重复发送一个单独的请求，通过这个代理才能访问相应资源。</p>
-
 <h3 id="307-temporary-redirect">307 Temporary Redirect</h3>
-
-<p><img src="/img/content_img/cat/307.jpg" alt="" /></p>
-
+<p><img src="/img/content_img/cat/307.jpg" alt=""></p>
 <p>与302相似，但禁止自动重定向，除非获得用户的确认</p>
-
 <h2 id="4xx-客户端错误">4xx 客户端错误</h2>
-
 <p>该请求包含错误的语法或无法满足条件</p>
-
 <h3 id="400-bad-request">400 Bad Request</h3>
-
-<p><img src="/img/content_img/cat/400.jpg" alt="" /></p>
-
+<p><img src="/img/content_img/cat/400.jpg" alt=""></p>
 <ol>
 <li>语义有误，当前请求无法被服务器理解。</li>
 <li>请求参数有误。</li>
 </ol>
-
 <h3 id="401-unauthorized">401 Unauthorized</h3>
-
-<p><img src="/img/content_img/cat/401.jpg" alt="" /></p>
-
+<p><img src="/img/content_img/cat/401.jpg" alt=""></p>
 <p>当前请求需要用户验证。该响应必须包含一个适用于被请求资源的 WWW-Authenticate 信息头用以询问用户信息。</p>
-
 <h3 id="402-payment-required">402 Payment Required</h3>
-
-<p><img src="/img/content_img/cat/402.jpg" alt="" /></p>
-
+<p><img src="/img/content_img/cat/402.jpg" alt=""></p>
 <p>此响应码保留以便将来使用，创造此响应码的最初目的是用于数字支付系统，然而现在并未使用</p>
-
 <h3 id="403-forbidden">403 Forbidden</h3>
-
-<p><img src="/img/content_img/cat/403.jpg" alt="" /></p>
-
+<p><img src="/img/content_img/cat/403.jpg" alt=""></p>
 <p>服务器理解了该请求，但拒绝对其进行授权。</p>
-
 <h3 id="404-not-found">404 Not Found</h3>
-
-<p><img src="/img/content_img/cat/404.jpg" alt="" /></p>
-
+<p><img src="/img/content_img/cat/404.jpg" alt=""></p>
 <p>服务器未找到该资源，或不愿透露该资源的存在。</p>
-
 <h3 id="405-method-not-allowed">405 Method Not Allowed</h3>
-
-<p><img src="/img/content_img/cat/405.jpg" alt="" /></p>
-
+<p><img src="/img/content_img/cat/405.jpg" alt=""></p>
 <p>请求行中指定的请求方法不能被用于请求相应的资源。该响应必须返回一个Allow 头信息用以表示出当前资源能够接受的请求方法的列表。</p>
-
 <h3 id="406-not-acceptable">406 Not Acceptable</h3>
-
-<p><img src="/img/content_img/cat/406.jpg" alt="" /></p>
-
+<p><img src="/img/content_img/cat/406.jpg" alt=""></p>
 <p>请求的资源的内容特性无法满足请求头中的条件，因而无法生成响应实体。</p>
-
 <h3 id="408-request-timeout">408 Request Timeout</h3>
-
-<p><img src="/img/content_img/cat/408.jpg" alt="" /></p>
-
+<p><img src="/img/content_img/cat/408.jpg" alt=""></p>
 <p>请求超时。客户端没有在服务器预备等待的时间内完成一个请求的发送。</p>
-
 <h3 id="409-conflict">409 Conflict</h3>
-
-<p><img src="/img/content_img/cat/409.jpg" alt="" /></p>
-
+<p><img src="/img/content_img/cat/409.jpg" alt=""></p>
 <p>由于和被请求的资源的当前状态之间存在冲突，请求无法完成。</p>
-
 <h3 id="410-gone">410 Gone</h3>
-
-<p><img src="/img/content_img/cat/410.jpg" alt="" /></p>
-
+<p><img src="/img/content_img/cat/410.jpg" alt=""></p>
 <p>被请求的资源在服务器上已经不再可用，这样的状况一般是永久性的。</p>
-
 <h3 id="411-length-required">411 Length Required</h3>
-
-<p><img src="/img/content_img/cat/411.jpg" alt="" /></p>
-
+<p><img src="/img/content_img/cat/411.jpg" alt=""></p>
 <p>服务器拒绝在没有定义 Content-Length 头的情况下接受请求。</p>
-
 <h3 id="412-precondition-failed">412 Precondition Failed</h3>
-
-<p><img src="/img/content_img/cat/412.jpg" alt="" /></p>
-
+<p><img src="/img/content_img/cat/412.jpg" alt=""></p>
 <p>服务器在验证在请求的头字段中给出先决条件时，没能满足其中的一个或多个。。</p>
-
 <h3 id="413-payload-too-large">413 Payload Too Large</h3>
-
-<p><img src="/img/content_img/cat/413.jpg" alt="" /></p>
-
+<p><img src="/img/content_img/cat/413.jpg" alt=""></p>
 <p>请求体过大导致服务器拒绝处理当前请求。</p>
-
 <h3 id="414-uri-too-long">414 URI Too Long</h3>
-
-<p><img src="/img/content_img/cat/414.jpg" alt="" /></p>
-
+<p><img src="/img/content_img/cat/414.jpg" alt=""></p>
 <p>请求的URI过长导致服务器拒绝对该请求提供服务。</p>
-
 <h3 id="415-unsupported-media-type">415 Unsupported Media Type</h3>
-
-<p><img src="/img/content_img/cat/415.jpg" alt="" /></p>
-
+<p><img src="/img/content_img/cat/415.jpg" alt=""></p>
 <p>对于当前请求的方法和所请求的资源，请求中提交的实体并不是服务器中所支持的格式，因此请求被拒绝。</p>
-
 <h3 id="416-requested-range-not-satisfiable">416 Requested Range Not Satisfiable</h3>
-
-<p><img src="/img/content_img/cat/416.jpg" alt="" /></p>
-
+<p><img src="/img/content_img/cat/416.jpg" alt=""></p>
 <p>如果请求中包含了 Range 请求头，并且 Range 中指定的任何数据范围都与当前资源的可用范围不重合，同时请求中又没有定义 If-Range 请求头，那么服务器就应当返回416状态码。</p>
-
 <h3 id="417-expectation-failed">417 Expectation Failed</h3>
-
-<p><img src="/img/content_img/cat/417.jpg" alt="" /></p>
-
+<p><img src="/img/content_img/cat/417.jpg" alt=""></p>
 <p>此响应代码意味着服务器无法满足 Expect 请求标头字段指示的期望值。</p>
-
-<h3 id="418-i-m-a-teapot">418 I&rsquo;m a teapot</h3>
-
-<p><img src="/img/content_img/cat/418.jpg" alt="" /></p>
-
+<h3 id="418-im-a-teapot">418 I&rsquo;m a teapot</h3>
+<p><img src="/img/content_img/cat/418.jpg" alt=""></p>
 <p>服务器拒绝冲泡咖啡,因为他是一盏茶壶。。。这是一个1998年的愚人节笑话。</p>
-
 <h3 id="420-enhance-your-calm">420 Enhance Your Calm</h3>
-
-<p><img src="/img/content_img/cat/420.jpg" alt="" /></p>
-
+<p><img src="/img/content_img/cat/420.jpg" alt=""></p>
 <p>twitter接口专用的限速代码</p>
-
 <h3 id="421-misdirected-request">421 Misdirected Request</h3>
-
-<p><img src="/img/content_img/cat/421.jpg" alt="" /></p>
-
+<p><img src="/img/content_img/cat/421.jpg" alt=""></p>
 <p>该请求针对的是无法产生响应的服务器。 且它可以由该服务器发送。</p>
-
 <h3 id="422-unprocessable-entity-webdav">422 Unprocessable Entity (WebDAV)</h3>
-
-<p><img src="/img/content_img/cat/422.jpg" alt="" /></p>
-
+<p><img src="/img/content_img/cat/422.jpg" alt=""></p>
 <p>请求格式良好，但由于语义错误而无法遵循。</p>
-
 <h3 id="423-locked-webdav">423 Locked (WebDAV)</h3>
-
-<p><img src="/img/content_img/cat/423.jpg" alt="" /></p>
-
+<p><img src="/img/content_img/cat/423.jpg" alt=""></p>
 <p>正在访问的资源被锁定。</p>
-
 <h3 id="424-failed-dependency-webdav">424 Failed Dependency (WebDAV)</h3>
-
-<p><img src="/img/content_img/cat/424.jpg" alt="" /></p>
-
+<p><img src="/img/content_img/cat/424.jpg" alt=""></p>
 <p>由于先前的请求失败，所以此次请求失败。</p>
-
 <h3 id="425-too-early">425 Too Early</h3>
-
-<p><img src="/img/content_img/cat/425.jpg" alt="" /></p>
-
+<p><img src="/img/content_img/cat/425.jpg" alt=""></p>
 <p>服务器不愿意冒着风险去处理可能重播的请求。</p>
-
 <h3 id="426-upgrade-required">426 Upgrade Required</h3>
-
-<p><img src="/img/content_img/cat/426.jpg" alt="" /></p>
-
+<p><img src="/img/content_img/cat/426.jpg" alt=""></p>
 <p>服务器拒绝使用当前协议执行请求。</p>
-
 <h3 id="429-too-many-requests">429 Too Many Requests</h3>
-
-<p><img src="/img/content_img/cat/429.jpg" alt="" /></p>
-
+<p><img src="/img/content_img/cat/429.jpg" alt=""></p>
 <p>用户在给定的时间内发送了太多请求。</p>
-
 <h3 id="431-request-header-fields-too-large">431 Request Header Fields Too Large</h3>
-
-<p><img src="/img/content_img/cat/431.jpg" alt="" /></p>
-
+<p><img src="/img/content_img/cat/431.jpg" alt=""></p>
 <p>请求头字段太大导致服务器不愿意处理请求。</p>
-
 <h3 id="444-no-response">444 No Response</h3>
-
-<p><img src="/img/content_img/cat/444.jpg" alt="" /></p>
-
+<p><img src="/img/content_img/cat/444.jpg" alt=""></p>
 <p>在内部使用指示服务器不向客户端返回任何信息并立即关闭连接。</p>
-
 <h3 id="450-blocked-by-windows-parental-controls">450 Blocked by Windows Parental Controls</h3>
-
 <p>微软家长控制已打开，且成功阻止了访问该网页的请求。</p>
-
-<p><img src="/img/content_img/cat/450.jpg" alt="" /></p>
-
+<p><img src="/img/content_img/cat/450.jpg" alt=""></p>
 <h3 id="451-unavailable-for-legal-reasons">451 Unavailable For Legal Reasons</h3>
-
-<p><img src="/img/content_img/cat/451.jpg" alt="" /></p>
-
+<p><img src="/img/content_img/cat/451.jpg" alt=""></p>
 <p>用户请求了非法资源。</p>
-
 <h2 id="5xx-服务端错误">5xx 服务端错误</h2>
-
 <p>服务器无法处理有效的请求</p>
-
 <h3 id="500-internal-server-error">500 Internal Server Error</h3>
-
-<p><img src="/img/content_img/cat/500.jpg" alt="" /></p>
-
+<p><img src="/img/content_img/cat/500.jpg" alt=""></p>
 <p>服务器遇到了不知道如何处理的情况。</p>
-
 <h3 id="501-not-implemented">501 Not Implemented</h3>
-
-<p><img src="/img/content_img/cat/501.jpg" alt="" /></p>
-
+<p><img src="/img/content_img/cat/501.jpg" alt=""></p>
 <p>此请求方法不被服务器支持且无法被处理。只有GET和HEAD是要求服务器支持的，它们必定不会返回此错误代码。</p>
-
 <h3 id="502-bad-gateway">502 Bad Gateway</h3>
-
-<p><img src="/img/content_img/cat/502.jpg" alt="" /></p>
-
+<p><img src="/img/content_img/cat/502.jpg" alt=""></p>
 <p>此错误响应表明服务器作为网关需要得到一个处理这个请求的响应，但是得到一个错误的响应。</p>
-
 <h3 id="503-service-unavailable">503 Service Unavailable</h3>
-
-<p><img src="/img/content_img/cat/503.jpg" alt="" /></p>
-
+<p><img src="/img/content_img/cat/503.jpg" alt=""></p>
 <p>服务器没有准备好处理请求，一般是服务器维护或重载而停机。</p>
-
 <h3 id="504-gateway-timeout">504 Gateway Timeout</h3>
-
-<p><img src="/img/content_img/cat/504.jpg" alt="" /></p>
-
+<p><img src="/img/content_img/cat/504.jpg" alt=""></p>
 <p>当服务器作为网关，不能及时得到响应时返回此错误代码。</p>
-
 <h3 id="506-variant-also-negotiates">506 Variant Also Negotiates</h3>
-
-<p><img src="/img/content_img/cat/506.jpg" alt="" /></p>
-
+<p><img src="/img/content_img/cat/506.jpg" alt=""></p>
 <p>服务器有一个内部配置错误：对请求的透明内容协商导致循环引用。</p>
-
 <h3 id="507-insufficient-storage">507 Insufficient Storage</h3>
-
-<p><img src="/img/content_img/cat/507.jpg" alt="" /></p>
-
+<p><img src="/img/content_img/cat/507.jpg" alt=""></p>
 <p>服务器有内部配置错误：所选的变体资源被配置为参与透明内容协商本身，因此不是协商过程中的适当端点。</p>
-
 <h3 id="508-loop-detected-webdav">508 Loop Detected (WebDAV)</h3>
-
-<p><img src="/img/content_img/cat/508.jpg" alt="" /></p>
-
+<p><img src="/img/content_img/cat/508.jpg" alt=""></p>
 <p>服务器在处理请求时检测到无限循环。</p>
-
 <h3 id="509-bandwidth-limit-exceeded">509 Bandwidth Limit Exceeded</h3>
-
 <p>服务器已超出服务器管理员指定的带宽；共享托管服务提供商通常使用它来限制客户的带宽。</p>
-
-<p><img src="/img/content_img/cat/509.jpg" alt="" /></p>
-
+<p><img src="/img/content_img/cat/509.jpg" alt=""></p>
 <h3 id="510-not-extended">510 Not Extended</h3>
-
-<p><img src="/img/content_img/cat/510.jpg" alt="" /></p>
-
+<p><img src="/img/content_img/cat/510.jpg" alt=""></p>
 <p>客户端需要对请求进一步扩展，服务器才能实现它。服务器会回复客户端发出扩展请求所需的所有信息。</p>
-
 <h3 id="511-network-authentication-required">511 Network Authentication Required</h3>
-
-<p><img src="/img/content_img/cat/511.jpg" alt="" /></p>
-
+<p><img src="/img/content_img/cat/511.jpg" alt=""></p>
 <p>511 状态码指示客户端需要进行身份验证才能获得网络访问权限。</p>
-
 <h3 id="599-network-connect-timeout-error">599 Network Connect Timeout Error</h3>
-
-<p><img src="/img/content_img/cat/599.jpg" alt="" /></p>
-
+<p><img src="/img/content_img/cat/599.jpg" alt=""></p>
 <p>此状态代码未在任何RFC中指定，但是某些HTTP代理使用此状态代码向代理之前的客户端发送信号，以指示代理后面的网络连接超时。</p>
-
 <blockquote>
 <p>同类项目 <a href="https://httpstatusdogs.com/">https://httpstatusdogs.com/</a></p>
 </blockquote>
-
-<style>
-
-.success {
-    color:#67c23a
-}
-
-.warning{
-    color:#e6a23c
-}
-
-.error{
-    color:#f56c6c
-}
-
-</style>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<blockquote>
+</blockquote>
 		</div>
 		
 <div class="post__tags tags clearfix">

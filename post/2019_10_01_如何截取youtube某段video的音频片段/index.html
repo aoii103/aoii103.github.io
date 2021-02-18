@@ -7,28 +7,19 @@
 	<title>如何截取Youtube某段Video的音频片段 - 进击的Hunter</title>
 	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
 	<meta name="description" content="">
-	<meta name="generator" content="Hugo 0.53" />
+	<meta name="generator" content="Hugo 0.80.0" />
 	<meta property="og:title" content="如何截取Youtube某段Video的音频片段" />
 <meta property="og:description" content="常看视频的朋友都应该知道，许多作者喜好在自己视频的结尾配上一些音乐作为点缀。某天在逛Youtube的时候看到下面这段视频，觉得结尾曲(大概中间开始)还挺好听的，于是就打算把它的这段音频给截取下来当手机铃声(.m4a)用。
 
-
-    
-    Your browser does not support the video element.
-
-
 " />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://pyocean.com/post/2019_10_01_%E5%A6%82%E4%BD%95%E6%88%AA%E5%8F%96youtube%E6%9F%90%E6%AE%B5video%E7%9A%84%E9%9F%B3%E9%A2%91%E7%89%87%E6%AE%B5/" /><meta property="article:published_time" content="2019-10-08T00:00:00&#43;00:00"/>
-<meta property="article:modified_time" content="2019-10-08T00:00:00&#43;00:00"/>
+<meta property="og:url" content="https://pyocean.com/post/2019_10_01_%E5%A6%82%E4%BD%95%E6%88%AA%E5%8F%96youtube%E6%9F%90%E6%AE%B5video%E7%9A%84%E9%9F%B3%E9%A2%91%E7%89%87%E6%AE%B5/" />
+<meta property="article:published_time" content="2019-10-08T00:00:00+00:00" />
+<meta property="article:modified_time" content="2019-10-08T00:00:00+00:00" />
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="如何截取Youtube某段Video的音频片段"/>
 <meta name="twitter:description" content="常看视频的朋友都应该知道，许多作者喜好在自己视频的结尾配上一些音乐作为点缀。某天在逛Youtube的时候看到下面这段视频，觉得结尾曲(大概中间开始)还挺好听的，于是就打算把它的这段音频给截取下来当手机铃声(.m4a)用。
-
-
-    
-    Your browser does not support the video element.
-
 
 "/>
 
@@ -100,64 +91,43 @@ if (!doNotTrack) {
 	<div class="toc__title">Page content</div>
 	<div class="toc__menu">
 		<nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li><a href="#0x00-环境安装">0x00 环境安装</a></li>
-<li><a href="#0x01-一键命令下载">0x01 一键命令下载</a></li>
-<li><a href="#0x02-python方式下载音频">0x02 python方式下载音频</a></li>
-<li><a href="#0x03-python方式下载视频">0x03 python方式下载视频</a></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#0x00-环境安装">0x00 环境安装</a></li>
+    <li><a href="#0x01-一键命令下载">0x01 一键命令下载</a></li>
+    <li><a href="#0x02-python方式下载音频">0x02 python方式下载音频</a></li>
+    <li><a href="#0x03-python方式下载视频">0x03 python方式下载视频</a></li>
+  </ul>
 </nav>
 	</div>
 </div>
 <div class="content post__content clearfix">
 			<p>常看视频的朋友都应该知道，许多作者喜好在自己视频的结尾配上一些音乐作为点缀。某天在逛Youtube的时候看到下面这段视频，觉得结尾曲(大概中间开始)还挺好听的，于是就打算把它的这段音频给截取下来当手机铃声(<code>.m4a</code>)用。</p>
-
-<video controls="controls">
-    <source type="video/mp4" src="/data/youtube/Rust_oblivion.mp4"></source>
-    <p>Your browser does not support the video element.</p>
-</video>
-
-<!-- 
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="//www.youtube.com/embed/_lWcuMQfF_Y" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
- -->
-
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
 <blockquote>
 <p>🍺本篇文章大约需要3分钟来阅读，届时你将学到：</p>
 </blockquote>
-
 <ul>
 <li>如何在使用<code>youtube_dl</code>及<code>ffmpeg</code>命令或相关知识</li>
 <li>如何在使用<code>python</code>调用两个命令来一键下载</li>
 <li>如何使用<code>Google colab</code>进行预处理来加速下载</li>
 </ul>
-
 <h2 id="0x00-环境安装">0x00 环境安装</h2>
-
 <blockquote>
 <p>因为本文是python教学，所以就默认用pip来装了</p>
 </blockquote>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">python3 -m pip install --upgrade youtube-dl</code></pre></div>
-<p>在<a href="https://www.youtube.com/watch?v=RrQhnf5yewo">原视频</a>上，我们需要截取目标 <strong>11分19秒</strong> 到 <strong>11分53秒</strong> 的音频。</p>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">python3 -m pip install --upgrade youtube-dl
+</code></pre></div><p>在<a href="https://www.youtube.com/watch?v=RrQhnf5yewo">原视频</a>上，我们需要截取目标 <strong>11分19秒</strong> 到 <strong>11分53秒</strong> 的音频。</p>
 <h2 id="0x01-一键命令下载">0x01 一键命令下载</h2>
-
 <p>我们以变量<code>A</code>来代表链接，就可以写成这样。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">youtube-dl -x --audio-format m4a --postprocessor-args <span style="color:#e6db74">&#34;-ss 0:11:19 -to 0:11:53&#34;</span> A</code></pre></div>
-<p>其中<code>-x</code>是为了仅仅下载音轨，而<code>--audio-format</code>则是设定文件格式</p>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">youtube-dl -x --audio-format m4a --postprocessor-args <span style="color:#e6db74">&#34;-ss 0:11:19 -to 0:11:53&#34;</span> A
+</code></pre></div><p>其中<code>-x</code>是为了仅仅下载音轨，而<code>--audio-format</code>则是设定文件格式</p>
 <p>这里要介绍三个比较关键的<code>ffmpeg</code>参数即上文的<code>--postprocessor-args</code>参数</p>
-
 <ul>
 <li><code>-ss</code> 起始时间点</li>
 <li><code>-to</code> 截止时间点</li>
 <li><code>-t</code> 截取时长</li>
 </ul>
-
 <h2 id="0x02-python方式下载音频">0x02 python方式下载音频</h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> youtube_dl <span style="color:#75715e"># 导入库</span>
 
@@ -174,33 +144,22 @@ ydl_opts <span style="color:#f92672">=</span> {
     ],
 }
 <span style="color:#66d9ef">with</span> youtube_dl<span style="color:#f92672">.</span>YoutubeDL(ydl_opts) <span style="color:#66d9ef">as</span> ydl:
-    ydl<span style="color:#f92672">.</span>download([url])</code></pre></div>
-<p>但是这样的缺点就是得把整个文件下载到本地后再进行分割，会很久且等不及。这个时候就需要使用到我们的<a href="https://colab.research.google.com/notebook#create=true&amp;language=python3"><code>Colab</code></a> &lt;=点击即可直接创建一个<code>python3</code>的脚本。</p>
+    ydl<span style="color:#f92672">.</span>download([url])
 
+</code></pre></div><p>但是这样的缺点就是得把整个文件下载到本地后再进行分割，会很久且等不及。这个时候就需要使用到我们的<a href="https://colab.research.google.com/notebook#create=true&amp;language=python3"><code>Colab</code></a> &lt;=点击即可直接创建一个<code>python3</code>的脚本。</p>
 <p>首先我们需要安装第三方模块<code>youtube_dl</code>，通过下面命令后按<code>shift+enter</code>即可。</p>
-
-<p><img src="/img/content_img/colab/colab_pip_install.png" alt="colab_pip_install" /></p>
-
+<p><img src="/img/content_img/colab/colab_pip_install.png" alt="colab_pip_install"></p>
 <p>然后我们直接把上面的代码直接贴进去运行，文件开始在云端下载，并处理成了一个我们所想要的<code>xxxx.m4a</code>文件。</p>
-
-<p><img src="/img/content_img/colab/colab_run.gif" alt="colab_run" /></p>
-
+<p><img src="/img/content_img/colab/colab_run.gif" alt="colab_run"></p>
 <p>接着我们在左侧栏目找到<code>file</code>，并点击<code>refresh</code>刷新目录，选定我们生成的音频文件，右键<code>download</code>。</p>
-
-<p><img src="/img/content_img/colab/download_file.png" alt="download_file" /></p>
-
+<p><img src="/img/content_img/colab/download_file.png" alt="download_file"></p>
 <p>于是我们就获取到了该文件<a href="/data/youtube/music.m4a">music.m4a</a></p>
-
 <p>最后我们将其通过<code>itunes</code>导入到手机，即可设置成手机铃声啦！</p>
-
 <h2 id="0x03-python方式下载视频">0x03 python方式下载视频</h2>
-
 <blockquote>
 <p>大家开头看到的小视频就是我通过如下方法截取的，和获得音频的方法类似，只不过多了些许细节。</p>
 </blockquote>
-
 <p>这里首先给大家介绍下相关指定格式下载的<code>format</code>参数值</p>
-
 <table>
 <thead>
 <tr>
@@ -210,7 +169,6 @@ ydl_opts <span style="color:#f92672">=</span> {
 <th>备注</th>
 </tr>
 </thead>
-
 <tbody>
 <tr>
 <td>139</td>
@@ -218,154 +176,132 @@ ydl_opts <span style="color:#f92672">=</span> {
 <td>audio only</td>
 <td>DASH audio   48k , m4a_dash container, mp4a.40.5@ 48k (22050Hz)</td>
 </tr>
-
 <tr>
 <td>249</td>
 <td>webm</td>
 <td>audio only</td>
 <td>DASH audio   55k , opus @ 50k, 1.14MiB</td>
 </tr>
-
 <tr>
 <td>250</td>
 <td>webm</td>
 <td>audio only</td>
 <td>DASH audio   72k , opus @ 70k, 1.51MiB</td>
 </tr>
-
 <tr>
 <td>140</td>
 <td>m4a</td>
 <td>audio only</td>
 <td>DASH audio  128k , m4a_dash container, mp4a.40.2@128k (44100Hz)</td>
 </tr>
-
 <tr>
 <td>251</td>
 <td>webm</td>
 <td>audio only</td>
 <td>DASH audio  140k , opus @160k, 2.99MiB</td>
 </tr>
-
 <tr>
 <td>171</td>
 <td>webm</td>
 <td>audio only</td>
 <td>DASH audio  142k , vorbis@128k, 3.09MiB</td>
 </tr>
-
 <tr>
 <td>160</td>
 <td>mp4</td>
 <td>256x144</td>
 <td>DASH video  113k , avc1.4d400c, 30fps, video only</td>
 </tr>
-
 <tr>
 <td>278</td>
 <td>webm</td>
 <td>256x144</td>
 <td>144p  121k , webm container, vp9, 30fps, video only, 2.30MiB</td>
 </tr>
-
 <tr>
 <td>133</td>
 <td>mp4</td>
 <td>426x240</td>
 <td>DASH video  266k , avc1.4d4015, 30fps, video only</td>
 </tr>
-
 <tr>
 <td>242</td>
 <td>webm</td>
 <td>426x240</td>
 <td>240p  282k , vp9, 30fps, video only, 5.47MiB</td>
 </tr>
-
 <tr>
 <td>243</td>
 <td>webm</td>
 <td>640x360</td>
 <td>360p  505k , vp9, 30fps, video only, 10.12MiB</td>
 </tr>
-
 <tr>
 <td>134</td>
 <td>mp4</td>
 <td>640x360</td>
 <td>DASH video  644k , avc1.4d401e, 30fps, video only</td>
 </tr>
-
 <tr>
 <td>244</td>
 <td>webm</td>
 <td>854x480</td>
 <td>480p  896k , vp9, 30fps, video only, 18.53MiB</td>
 </tr>
-
 <tr>
 <td>135</td>
 <td>mp4</td>
 <td>854x480</td>
 <td>DASH video 1176k , avc1.4d401f, 30fps, video only</td>
 </tr>
-
 <tr>
 <td>247</td>
 <td>webm</td>
 <td>1280x720</td>
 <td>720p 1748k , vp9, 30fps, video only, 36.29MiB</td>
 </tr>
-
 <tr>
 <td>136</td>
 <td>mp4</td>
 <td>1280x720</td>
 <td>DASH video 2329k , avc1.4d401f, 30fps, video only</td>
 </tr>
-
 <tr>
 <td>248</td>
 <td>webm</td>
 <td>1920x1080</td>
 <td>1080p 3146k , vp9, 30fps, video only, 63.64MiB</td>
 </tr>
-
 <tr>
 <td>137</td>
 <td>mp4</td>
 <td>1920x1080</td>
 <td>DASH video 4143k , avc1.640028, 30fps, video only</td>
 </tr>
-
 <tr>
 <td>17</td>
 <td>3gp</td>
 <td>176x144</td>
 <td>small , mp4v.20.3, mp4a.40.2@ 24k</td>
 </tr>
-
 <tr>
 <td>36</td>
 <td>3gp</td>
 <td>320x180</td>
 <td>small , mp4v.20.3, mp4a.40.2</td>
 </tr>
-
 <tr>
 <td>43</td>
 <td>webm</td>
 <td>640x360</td>
 <td>medium , vp8.0, vorbis@128k</td>
 </tr>
-
 <tr>
 <td>18</td>
 <td>mp4</td>
 <td>640x360</td>
 <td>medium , avc1.42001E, mp4a.40.2@ 96k</td>
 </tr>
-
 <tr>
 <td>22</td>
 <td>mp4</td>
@@ -374,7 +310,6 @@ ydl_opts <span style="color:#f92672">=</span> {
 </tr>
 </tbody>
 </table>
-
 <p>然后我们贴上下载视频的代码，整个文件<code>300mb</code>，而我们只需要截取其中的部分，这种时候就很好得发挥除了<code>Colab</code>的优势</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 承接上文变量及导入</span>
 
@@ -389,8 +324,9 @@ ydl_opts <span style="color:#f92672">=</span> {
     ],
 }
 <span style="color:#66d9ef">with</span> youtube_dl<span style="color:#f92672">.</span>YoutubeDL(ydl_opts) <span style="color:#66d9ef">as</span> ydl:
-    ydl<span style="color:#f92672">.</span>download([url])</code></pre></div>
-<p>在处理完后，我们只需要下载<code>4.9mb</code>的文件即可，其他操作都在云端完成。</p>
+    ydl<span style="color:#f92672">.</span>download([url])
+
+</code></pre></div><p>在处理完后，我们只需要下载<code>4.9mb</code>的文件即可，其他操作都在云端完成。</p>
 		</div>
 		
 <div class="post__tags tags clearfix">

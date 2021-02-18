@@ -7,12 +7,13 @@
 	<title>如何在mac上一键生成复杂口令 - 进击的Hunter</title>
 	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
 	<meta name="description" content="">
-	<meta name="generator" content="Hugo 0.53" />
+	<meta name="generator" content="Hugo 0.80.0" />
 	<meta property="og:title" content="如何在mac上一键生成复杂口令" />
 <meta property="og:description" content="很多场景我们需要使用到 ”复杂口令“, 也就是哪些包含了字母大小写数字及符号的口令。自己想也可以，但总归麻烦。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://pyocean.com/post/2019_12_19_%E5%A6%82%E4%BD%95%E9%80%9A%E8%BF%87%E5%91%BD%E4%BB%A4%E8%A1%8C%E4%B8%80%E9%94%AE%E7%94%9F%E6%88%90%E5%A4%8D%E6%9D%82%E5%8F%A3%E4%BB%A4/" /><meta property="article:published_time" content="2019-12-19T00:00:00&#43;00:00"/>
-<meta property="article:modified_time" content="2019-12-19T00:00:00&#43;00:00"/>
+<meta property="og:url" content="https://pyocean.com/post/2019_12_19_%E5%A6%82%E4%BD%95%E9%80%9A%E8%BF%87%E5%91%BD%E4%BB%A4%E8%A1%8C%E4%B8%80%E9%94%AE%E7%94%9F%E6%88%90%E5%A4%8D%E6%9D%82%E5%8F%A3%E4%BB%A4/" />
+<meta property="article:published_time" content="2019-12-19T00:00:00+00:00" />
+<meta property="article:modified_time" content="2019-12-19T00:00:00+00:00" />
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="如何在mac上一键生成复杂口令"/>
@@ -88,37 +89,25 @@ if (!doNotTrack) {
 <div class="post__toc toc">
 	<div class="toc__title">Page content</div>
 	<div class="toc__menu">
-		<nav id="TableOfContents">
-<ul>
-<li><a href="#安装-pwgen">安装 <code>pwgen</code></a></li>
-<li><a href="#配置-zshrc">配置 <code>.zshrc</code></a></li>
-<li><a href="#测试">测试</a></li>
-</ul>
-</nav>
+		<nav id="TableOfContents"></nav>
 	</div>
 </div>
 <div class="content post__content clearfix">
 			<p>很多场景我们需要使用到 ”复杂口令“, 也就是哪些包含了字母大小写数字及符号的口令。自己想也可以，但总归麻烦。</p>
-
 <h1 id="安装-pwgen">安装 <code>pwgen</code></h1>
-
 <p>pwgen是一个专业的密码生成器，能够生成大量的安全密码, 并提供了许多选项来定制密码以满足用户的各种需求。现在我们通过如下命令来安装这个插件。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">brew install pwgen</code></pre></div>
-<h1 id="配置-zshrc">配置 <code>.zshrc</code></h1>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">brew install pwgen
+</code></pre></div><h1 id="配置-zshrc">配置 <code>.zshrc</code></h1>
 <blockquote>
 <p>bash 同理</p>
 </blockquote>
-
 <p>现在我们要根据<code>pwgen</code>的语法来设定一个快捷方法来生成一个高强度密码，并复制到剪贴板</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">echo <span style="color:#e6db74">&#39;newpwd() { pwgen -Bsy $1 1 |pbcopy; echo `pbpaste`}&#39;</span> &gt;&gt; ~/.zshrc</code></pre></div>
-<p>然后我们刷新配置</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">source ~/.zshrc</code></pre></div>
-<h1 id="测试">测试</h1>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">echo <span style="color:#e6db74">&#39;newpwd() { pwgen -Bsy $1 1 |pbcopy; echo `pbpaste`}&#39;</span> &gt;&gt; ~/.zshrc
+</code></pre></div><p>然后我们刷新配置</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">source ~/.zshrc
+</code></pre></div><h1 id="测试">测试</h1>
 <p>现在我们已经可以通过<code>newpwd</code>命令来生成密码, 并可以直接粘贴使用~</p>
-
-<p><img src="/img/content_img/pwgen/test.png" alt="test.png" /></p>
+<p><img src="/img/content_img/pwgen/test.png" alt="test.png"></p>
 		</div>
 		
 <div class="post__tags tags clearfix">
@@ -136,10 +125,10 @@ if (!doNotTrack) {
 
 <nav class="post-nav flex">
 	<div class="post-nav__item post-nav__item--prev">
-		<a class="post-nav__link" href="/post/2019_12_10_django%E7%AC%94%E8%AE%B0_orm%E6%89%B9%E9%87%8F%E5%A4%84%E7%90%86/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">django笔记_ORM批量处理</p></a>
+		<a class="post-nav__link" href="/post/2019_12_12_uvloop%E5%86%99%E7%9A%84%E7%88%AC%E8%99%AB%E7%9C%9F%E7%9A%84%E5%BE%88%E5%BF%AB%E4%B9%88/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">uvloop写的爬虫真的很快么</p></a>
 	</div>
 	<div class="post-nav__item post-nav__item--next">
-		<a class="post-nav__link" href="/post/2020_01_14_%E6%B5%81%E7%95%85%E7%9A%84mac%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8C%97_%E5%86%8D%E4%B9%9F%E4%B8%8D%E7%94%A8%E7%BF%BB%E8%AF%91%E6%8F%92%E4%BB%B6/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">【Mac配置指北】流畅的内建词典</p></a>
+		<a class="post-nav__link" href="/post/2020_02_18_%E9%80%9A%E8%BF%87vim%E6%90%AD%E5%BB%BA%E8%BD%BB%E9%87%8Fide/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">【Mac配置指北】流畅的内建词典</p></a>
 	</div>
 </nav>
 

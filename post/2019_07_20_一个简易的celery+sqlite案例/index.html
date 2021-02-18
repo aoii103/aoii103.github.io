@@ -7,12 +7,13 @@
 	<title>一个简易的celery&#43;sqlite案例 - 进击的Hunter</title>
 	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
 	<meta name="description" content="">
-	<meta name="generator" content="Hugo 0.53" />
+	<meta name="generator" content="Hugo 0.80.0" />
 	<meta property="og:title" content="一个简易的celery&#43;sqlite案例" />
 <meta property="og:description" content="Celery 是一个简单、灵活且可靠的，处理大量消息的分布式系统，并且提供维护这样一个系统的必需工具。今天我们通过一个案例简单得讲一下celery的快速应用。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://pyocean.com/post/2019_07_20_%E4%B8%80%E4%B8%AA%E7%AE%80%E6%98%93%E7%9A%84celery&#43;sqlite%E6%A1%88%E4%BE%8B/" /><meta property="article:published_time" content="2019-07-20T00:00:00&#43;00:00"/>
-<meta property="article:modified_time" content="2019-07-20T00:00:00&#43;00:00"/>
+<meta property="og:url" content="https://pyocean.com/post/2019_07_20_%E4%B8%80%E4%B8%AA%E7%AE%80%E6%98%93%E7%9A%84celery&#43;sqlite%E6%A1%88%E4%BE%8B/" />
+<meta property="article:published_time" content="2019-07-20T00:00:00+00:00" />
+<meta property="article:modified_time" content="2019-07-20T00:00:00+00:00" />
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="一个简易的celery&#43;sqlite案例"/>
@@ -89,39 +90,33 @@ if (!doNotTrack) {
 	<div class="toc__title">Page content</div>
 	<div class="toc__menu">
 		<nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li>
-<ul>
-<li><a href="#环境依赖">环境依赖</a></li>
-<li><a href="#预设任务方法-task-py">预设任务方法  <code>task.py</code></a></li>
-<li><a href="#发布任务执行">发布任务执行</a></li>
-<li><a href="#使用效果">使用效果</a></li>
-<li><a href="#一键bash">一键bash</a></li>
-</ul></li>
-</ul></li>
-</ul>
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#环境依赖">环境依赖</a></li>
+        <li><a href="#预设任务方法--taskpy">预设任务方法  <code>task.py</code></a></li>
+        <li><a href="#发布任务执行">发布任务执行</a></li>
+        <li><a href="#使用效果">使用效果</a></li>
+        <li><a href="#一键bash">一键bash</a></li>
+      </ul>
+    </li>
+  </ul>
 </nav>
 	</div>
 </div>
 <div class="content post__content clearfix">
 			<p>Celery 是一个简单、灵活且可靠的，处理大量消息的分布式系统，并且提供维护这样一个系统的必需工具。今天我们通过一个案例简单得讲一下celery的快速应用。</p>
-
 <h3 id="环境依赖">环境依赖</h3>
-
 <ul>
 <li><code>python3</code>
-
 <ul>
 <li><code>sqlite3</code> 用于创建数据库</li>
 <li><code>requests_html</code> 请求测试</li>
 <li><code>celery</code> 异步任务</li>
-</ul></li>
 </ul>
-
-<h3 id="预设任务方法-task-py">预设任务方法  <code>task.py</code></h3>
-
+</li>
+</ul>
+<h3 id="预设任务方法--taskpy">预设任务方法  <code>task.py</code></h3>
 <p>通过设定<code>broker</code>参数为<code>sqla+sqlite:///xxx</code>来已连接sqlite的方式实例化<code>Celery</code></p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> datetime <span style="color:#f92672">import</span> timedelta
 <span style="color:#f92672">from</span> celery.schedules <span style="color:#f92672">import</span> crontab
@@ -156,34 +151,27 @@ app<span style="color:#f92672">.</span>conf<span style="color:#f92672">.</span>u
 <span style="color:#a6e22e">@app.task</span>()  <span style="color:#75715e"># celery方法写法</span>
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">check_poc</span>(index,url):
     resp <span style="color:#f92672">=</span> HTMLSession()<span style="color:#f92672">.</span>get(url) <span style="color:#75715e"># poc 测试</span>
-    <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;[{index}]{url}: {resp.html.find(&#39;title&#39;, first=True).text}&#34;</span>) <span style="color:#75715e"># 打印</span></code></pre></div>
-<h3 id="发布任务执行">发布任务执行</h3>
+    <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;[{index}]{url}: {resp.html.find(&#39;title&#39;, first=True).text}&#34;</span>) <span style="color:#75715e"># 打印</span>
 
+</code></pre></div><h3 id="发布任务执行">发布任务执行</h3>
 <p>我们通过若干个网址作为<code>payload</code>来做测试</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> task <span style="color:#f92672">import</span> check_poc
 
 urls <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;http://qq.com&#34;</span>, <span style="color:#e6db74">&#34;http://baidu.com&#34;</span>, <span style="color:#e6db74">&#34;http://freebuf.com&#34;</span>] <span style="color:#75715e"># 测试案例站点</span>
 
 <span style="color:#66d9ef">for</span> index,url <span style="color:#f92672">in</span> enumerate(urls):
-    check_poc<span style="color:#f92672">.</span>delay(index,url) <span style="color:#75715e"># 异步调用</span></code></pre></div>
-<h3 id="使用效果">使用效果</h3>
-
+    check_poc<span style="color:#f92672">.</span>delay(index,url) <span style="color:#75715e"># 异步调用</span>
+</code></pre></div><h3 id="使用效果">使用效果</h3>
 <p>最后使用<code>celery worker -A task --pool=solo -l info</code>命令启动<code>celery</code>的<code>worker</code></p>
-
-<video controls="controls">
-  <source type="video/mp4" src="/img/content_img/celery/test.mp4"></source>
-  <p>Your browser does not support the video element.</p>
-</video>
-
+<!-- raw HTML omitted -->
 <p><code>celery beat -A task -l INFO</code> 启动定时任务</p>
-
 <h3 id="一键bash">一键bash</h3>
-
 <p>也可以通过如下脚本快速重启<code>celery</code></p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kill -9 <span style="color:#e6db74">`</span>ps -ef|grep celery |awk <span style="color:#e6db74">&#39;{print $2}&#39;</span><span style="color:#e6db74">`</span>
 
-nohup celery worker -A task --pool<span style="color:#f92672">=</span>solo -l INFO &gt;&gt; celery_worker.log <span style="color:#ae81ff">2</span>&gt;&amp;<span style="color:#ae81ff">1</span> &amp;
-nohup celery beat -A task -l INFO &gt;&gt; celery_beats.log <span style="color:#ae81ff">2</span>&gt;&amp;<span style="color:#ae81ff">1</span> &amp;</code></pre></div>
+nohup celery worker -A task --pool<span style="color:#f92672">=</span>solo -l INFO &gt;&gt; celery_worker.log 2&gt;&amp;<span style="color:#ae81ff">1</span> &amp;
+nohup celery beat -A task -l INFO &gt;&gt; celery_beats.log 2&gt;&amp;<span style="color:#ae81ff">1</span> &amp;
+</code></pre></div>
 		</div>
 		
 <div class="post__tags tags clearfix">

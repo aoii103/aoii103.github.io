@@ -7,12 +7,13 @@
 	<title>Celery停止了任务却未关闭子进程，怎么破？ - 进击的Hunter</title>
 	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
 	<meta name="description" content="">
-	<meta name="generator" content="Hugo 0.53" />
+	<meta name="generator" content="Hugo 0.80.0" />
 	<meta property="og:title" content="Celery停止了任务却未关闭子进程，怎么破？" />
 <meta property="og:description" content="这问题似乎挺棘手的，毕竟我所进行的任务是通过celery下发给subprocess的。在查阅了资料我有了解决办法，以下是简化后的代码便于理解" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://pyocean.com/post/2020_04_11_%E6%9D%80%E6%AD%BBcelery%E4%BB%BB%E5%8A%A1%E5%AD%90%E8%BF%9B%E7%A8%8B/" /><meta property="article:published_time" content="2020-04-10T00:00:00&#43;00:00"/>
-<meta property="article:modified_time" content="2020-04-10T00:00:00&#43;00:00"/>
+<meta property="og:url" content="https://pyocean.com/post/2020_04_11_%E6%9D%80%E6%AD%BBcelery%E4%BB%BB%E5%8A%A1%E5%AD%90%E8%BF%9B%E7%A8%8B/" />
+<meta property="article:published_time" content="2020-04-11T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-04-11T00:00:00+00:00" />
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Celery停止了任务却未关闭子进程，怎么破？"/>
@@ -76,7 +77,7 @@ if (!doNotTrack) {
 			<div class="post__meta meta">
 <div class="meta__item-datetime meta__item">
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
-	<time class="meta__text" datetime="2020-04-10T00:00:00">April 10, 2020</time>
+	<time class="meta__text" datetime="2020-04-11T00:00:00">April 11, 2020</time>
 </div>
 </div>
 		</header>
@@ -88,35 +89,32 @@ if (!doNotTrack) {
 <div class="post__toc toc">
 	<div class="toc__title">Page content</div>
 	<div class="toc__menu">
-		
+		<nav id="TableOfContents"></nav>
 	</div>
 </div>
 <div class="content post__content clearfix">
 			<p>这问题似乎挺棘手的，毕竟我所进行的任务是通过celery下发给subprocess的。在查阅了资料我有了解决办法，以下是简化后的代码便于理解</p>
-
 <p>🍺本篇文章大约需要1分钟来阅读，届时你或许将学到：</p>
-
 <ul>
 <li>杀死子进程</li>
 </ul>
-
 <p>首先，我们获取该进程的<code>PID</code>，这很重要。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">run_code</span>(code):
-    <span style="color:#66d9ef">return</span> Popen(code,shell<span style="color:#f92672">=</span>True)<span style="color:#f92672">.</span>pid</code></pre></div>
-<p>然后我们通过类似如下命令（可能写得比较烂）找出所有子进程的<code>PID</code>，例如父进程<code>PID</code>为<code>66687</code></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ps -ef|grep <span style="color:#ae81ff">66687</span>|awk <span style="color:#e6db74">&#39;{print $2,$3}&#39;</span>|grep <span style="color:#e6db74">&#39; 66687&#39;</span>|awk <span style="color:#e6db74">&#39;{print $1}&#39;</span></code></pre></div>
-<p>于是我们编辑代码退出方法如下。</p>
+    <span style="color:#66d9ef">return</span> Popen(code,shell<span style="color:#f92672">=</span>True)<span style="color:#f92672">.</span>pid
+</code></pre></div><p>然后我们通过类似如下命令（可能写得比较烂）找出所有子进程的<code>PID</code>，例如父进程<code>PID</code>为<code>66687</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ps -ef|grep 66687|awk <span style="color:#e6db74">&#39;{print $2,$3}&#39;</span>|grep <span style="color:#e6db74">&#39; 66687&#39;</span>|awk <span style="color:#e6db74">&#39;{print $1}&#39;</span>
+</code></pre></div><p>于是我们编辑代码退出方法如下。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">kill_proc</span>(pid):
-    Popen(f<span style="color:#e6db74">&#34;kill -9 `ps -ef|grep {pid}|awk&#34;</span><span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; &#39;{print $2,$3}&#39;|grep &#39; &#34;</span><span style="color:#f92672">+</span>f<span style="color:#e6db74">&#34;{pid}&#39;|awk &#39;&#34;</span><span style="color:#f92672">+</span><span style="color:#e6db74">&#34;{print $1}&#39;`&#34;</span>,shell<span style="color:#f92672">=</span>True)<span style="color:#f92672">.</span>wait()</code></pre></div>
-<p>希望这能帮到你，如有疑问请联系我。</p>
+    Popen(f<span style="color:#e6db74">&#34;kill -9 `ps -ef|grep {pid}|awk&#34;</span><span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; &#39;{print $2,$3}&#39;|grep &#39; &#34;</span><span style="color:#f92672">+</span>f<span style="color:#e6db74">&#34;{pid}&#39;|awk &#39;&#34;</span><span style="color:#f92672">+</span><span style="color:#e6db74">&#34;{print $1}&#39;`&#34;</span>,shell<span style="color:#f92672">=</span>True)<span style="color:#f92672">.</span>wait()
+</code></pre></div><p>希望这能帮到你，如有疑问请联系我。</p>
 		</div>
 		
 <div class="post__tags tags clearfix">
 	<svg class="icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
 	<ul class="tags__list">
-		<li class="tags__item"><a class="tags__link btn" href="/tags/linux/" rel="tag">Linux</a></li>
-		<li class="tags__item"><a class="tags__link btn" href="/tags/celery/" rel="tag">Celery</a></li>
-		<li class="tags__item"><a class="tags__link btn" href="/tags/process/" rel="tag">Process</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/linux/" rel="tag">linux</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/celery/" rel="tag">celery</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/process/" rel="tag">process</a></li>
 	</ul>
 </div>
 	</article>

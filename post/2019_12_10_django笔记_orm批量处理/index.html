@@ -7,12 +7,13 @@
 	<title>django笔记_ORM批量处理 - 进击的Hunter</title>
 	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
 	<meta name="description" content="">
-	<meta name="generator" content="Hugo 0.53" />
+	<meta name="generator" content="Hugo 0.80.0" />
 	<meta property="og:title" content="django笔记_ORM批量处理" />
 <meta property="og:description" content="假设现在需要将一批数据通过django统统录入，如果你一直都是写个for循环然后批量create，那你就真该点开看看了。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://pyocean.com/post/2019_12_10_django%E7%AC%94%E8%AE%B0_orm%E6%89%B9%E9%87%8F%E5%A4%84%E7%90%86/" /><meta property="article:published_time" content="2019-12-10T00:00:00&#43;00:00"/>
-<meta property="article:modified_time" content="2019-12-10T00:00:00&#43;00:00"/>
+<meta property="og:url" content="https://pyocean.com/post/2019_12_10_django%E7%AC%94%E8%AE%B0_orm%E6%89%B9%E9%87%8F%E5%A4%84%E7%90%86/" />
+<meta property="article:published_time" content="2019-12-10T00:00:00+00:00" />
+<meta property="article:modified_time" content="2019-12-10T00:00:00+00:00" />
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="django笔记_ORM批量处理"/>
@@ -88,20 +89,12 @@ if (!doNotTrack) {
 <div class="post__toc toc">
 	<div class="toc__title">Page content</div>
 	<div class="toc__menu">
-		<nav id="TableOfContents">
-<ul>
-<li><a href="#批量创建">批量创建</a></li>
-<li><a href="#批量更新">批量更新</a></li>
-<li><a href="#批量删除">批量删除</a></li>
-</ul>
-</nav>
+		<nav id="TableOfContents"></nav>
 	</div>
 </div>
 <div class="content post__content clearfix">
 			<p>假设现在需要将一批数据通过<code>django</code>统统录入，如果你一直都是写个for循环然后批量create，那你就真该点开看看了。</p>
-
 <h1 id="批量创建">批量创建</h1>
-
 <p>给定了一份人员列表，需要将他们批量插入到数据库</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> django.db <span style="color:#f92672">import</span> models
 
@@ -113,15 +106,14 @@ person_list <span style="color:#f92672">=</span> [(<span style="color:#e6db74">&
    other <span style="color:#f92672">=</span> models<span style="color:#f92672">.</span>CharField(max_length<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;64&#39;</span>,default<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;&#39;</span>)
 
 
-person<span style="color:#f92672">.</span>objects<span style="color:#f92672">.</span>bluk_create([person(<span style="color:#f92672">*</span>item) <span style="color:#66d9ef">for</span> item <span style="color:#f92672">in</span> person_list])</code></pre></div>
-<h1 id="批量更新">批量更新</h1>
-
+person<span style="color:#f92672">.</span>objects<span style="color:#f92672">.</span>bluk_create([person(<span style="color:#f92672">*</span>item) <span style="color:#66d9ef">for</span> item <span style="color:#f92672">in</span> person_list])
+</code></pre></div><h1 id="批量更新">批量更新</h1>
 <p>将john和mark备注为<strong>测试人员</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">person<span style="color:#f92672">.</span>objects<span style="color:#f92672">.</span>filter(name__in<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;john&#39;</span>,<span style="color:#e6db74">&#39;mark&#39;</span>])<span style="color:#f92672">.</span>update(other<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;测试人员&#39;</span>)</code></pre></div>
-<h1 id="批量删除">批量删除</h1>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">person<span style="color:#f92672">.</span>objects<span style="color:#f92672">.</span>filter(name__in<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;john&#39;</span>,<span style="color:#e6db74">&#39;mark&#39;</span>])<span style="color:#f92672">.</span>update(other<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;测试人员&#39;</span>)
+</code></pre></div><h1 id="批量删除">批量删除</h1>
 <p>删除所有年龄大于等于20岁的人</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">person<span style="color:#f92672">.</span>objects<span style="color:#f92672">.</span>filter(age__gte<span style="color:#f92672">=</span><span style="color:#ae81ff">20</span>)<span style="color:#f92672">.</span>delete()</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">person<span style="color:#f92672">.</span>objects<span style="color:#f92672">.</span>filter(age__gte<span style="color:#f92672">=</span><span style="color:#ae81ff">20</span>)<span style="color:#f92672">.</span>delete()
+</code></pre></div>
 		</div>
 		
 <div class="post__tags tags clearfix">
@@ -139,10 +131,10 @@ person<span style="color:#f92672">.</span>objects<span style="color:#f92672">.</
 
 <nav class="post-nav flex">
 	<div class="post-nav__item post-nav__item--prev">
-		<a class="post-nav__link" href="/post/2019_12_12_uvloop%E5%86%99%E7%9A%84%E7%88%AC%E8%99%AB%E7%9C%9F%E7%9A%84%E5%BE%88%E5%BF%AB%E4%B9%88/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">uvloop写的爬虫真的很快么</p></a>
+		<a class="post-nav__link" href="/post/2019_12_07_django%E7%AC%94%E8%AE%B0_migrate%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">django笔记_migrate异常处理</p></a>
 	</div>
 	<div class="post-nav__item post-nav__item--next">
-		<a class="post-nav__link" href="/post/2019_12_19_%E5%A6%82%E4%BD%95%E9%80%9A%E8%BF%87%E5%91%BD%E4%BB%A4%E8%A1%8C%E4%B8%80%E9%94%AE%E7%94%9F%E6%88%90%E5%A4%8D%E6%9D%82%E5%8F%A3%E4%BB%A4/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">如何在mac上一键生成复杂口令</p></a>
+		<a class="post-nav__link" href="/post/2019_12_12_uvloop%E5%86%99%E7%9A%84%E7%88%AC%E8%99%AB%E7%9C%9F%E7%9A%84%E5%BE%88%E5%BF%AB%E4%B9%88/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">uvloop写的爬虫真的很快么</p></a>
 	</div>
 </nav>
 

@@ -7,12 +7,13 @@
 	<title>Gihub&amp;Hugo搭建静态博客 - 进击的Hunter</title>
 	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
 	<meta name="description" content="">
-	<meta name="generator" content="Hugo 0.53" />
+	<meta name="generator" content="Hugo 0.80.0" />
 	<meta property="og:title" content="Gihub&amp;Hugo搭建静态博客" />
 <meta property="og:description" content="作为非常受欢迎的开源静态站点生成器之一，Hugo兼速度与灵活性并存，而Github的存在又让blog搭建变成了几近0成本的可能。今天我们就来以Mac环境为例讲一讲如何利用俩者来快速搭建一个静态Blog。且编写风格为Markdown。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://pyocean.com/post/2019_03_29_githubhugo%E6%90%AD%E5%BB%BAblog/" /><meta property="article:published_time" content="2019-03-29T00:00:00&#43;00:00"/>
-<meta property="article:modified_time" content="2019-03-29T00:00:00&#43;00:00"/>
+<meta property="og:url" content="https://pyocean.com/post/2019_03_29_githubhugo%E6%90%AD%E5%BB%BAblog/" />
+<meta property="article:published_time" content="2019-03-29T00:00:00+00:00" />
+<meta property="article:modified_time" content="2019-03-29T00:00:00+00:00" />
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Gihub&amp;Hugo搭建静态博客"/>
@@ -89,104 +90,62 @@ if (!doNotTrack) {
 	<div class="toc__title">Page content</div>
 	<div class="toc__menu">
 		<nav id="TableOfContents">
-<ul>
-<li><a href="#hugo站点创建">Hugo站点创建</a>
-<ul>
-<li><a href="#软件安装">软件安装</a></li>
-<li><a href="#初始化">初始化</a></li>
-<li><a href="#案例生成">案例生成</a></li>
-</ul></li>
-<li><a href="#gihhub部署">Gihhub部署</a>
-<ul>
-<li><a href="#新建项目">新建项目</a></li>
-<li><a href="#生成站点">生成站点</a></li>
-<li><a href="#推送上传">推送上传</a></li>
-</ul></li>
-<li><a href="#配置说明">配置说明</a></li>
-</ul>
+  <ul>
+    <li><a href="#软件安装">软件安装</a></li>
+    <li><a href="#初始化">初始化</a></li>
+    <li><a href="#案例生成">案例生成</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#新建项目">新建项目</a></li>
+    <li><a href="#生成站点">生成站点</a></li>
+    <li><a href="#推送上传">推送上传</a></li>
+  </ul>
 </nav>
 	</div>
 </div>
 <div class="content post__content clearfix">
 			<p>作为非常受欢迎的开源静态站点生成器之一，Hugo兼速度与灵活性并存，而Github的存在又让blog搭建变成了几近0成本的可能。今天我们就来以Mac环境为例讲一讲如何利用俩者来快速搭建一个静态Blog。且编写风格为<code>Markdown</code>。</p>
-
 <h1 id="hugo站点创建">Hugo站点创建</h1>
-
 <h2 id="软件安装">软件安装</h2>
-
 <pre><code>brew install hugo
-</code></pre>
-
-<h2 id="初始化">初始化</h2>
-
+</code></pre><h2 id="初始化">初始化</h2>
 <p>我们通过如下命令新建名为<code>[site_name]</code>的站点</p>
-
 <pre><code>hugo new site [site_name]
-</code></pre>
-
-<p>在成功创建后我们会看到如下提示。</p>
-
-<p><img src="/img/content_img/hugo/hugo_new_site_res.png" alt="" /></p>
-
-<p>然后我们需要选择一款皮肤。这里随机选择一款，详情可以参考[](<a href="https://themes.gohugo.io)。">https://themes.gohugo.io)。</a></p>
-
+</code></pre><p>在成功创建后我们会看到如下提示。</p>
+<p><img src="/img/content_img/hugo/hugo_new_site_res.png" alt=""></p>
+<p>然后我们需要选择一款皮肤。这里随机选择一款，详情可以参考<a href="https://themes.gohugo.io"></a>。</p>
 <pre><code>cd [site_name]
 git clone https://github.com/vimux/mainroad themes/mainroad
 hugo server  --buildDrafts --theme=mainroad
-</code></pre>
-
-<p>访问[](localhost:1313)可以看到案例界面，当然里面暂时啥都没有。</p>
-
-<p><img src="/img/content_img/hugo/hugo_new_site_mainroad.png" alt="" /></p>
-
+</code></pre><p>访问<a href="localhost:1313"></a>可以看到案例界面，当然里面暂时啥都没有。</p>
+<p><img src="/img/content_img/hugo/hugo_new_site_mainroad.png" alt=""></p>
 <h2 id="案例生成">案例生成</h2>
-
 <p>为了看到实际效果，我们将<code>mainroad</code>中的案例站点复制到<code>content</code>中来演示。</p>
-
 <pre><code>cp -r themes/mainroad/exampleSite/content/* ./content/
 cat themes/mainroad/exampleSite/config.toml &gt; ./config.toml
 hugo server  --buildDrafts --theme=mainroad
-</code></pre>
-
-<p>最后，刷新界面。</p>
-
-<p><img src="/img/content_img/hugo/hugo_new_site_end.png" alt="" /></p>
-
+</code></pre><p>最后，刷新界面。</p>
+<p><img src="/img/content_img/hugo/hugo_new_site_end.png" alt=""></p>
 <h1 id="gihhub部署">Gihhub部署</h1>
-
 <h2 id="新建项目">新建项目</h2>
-
 <p>接下来我们将在Github上新建一个项目作为静态站点容器。项目名称为 <code>xxx.github.io</code> 其中<code>xxx</code>需为用户名，其他不用管。</p>
-
-<p><img src="/img/content_img/hugo/github_new_repo.png" alt="" /></p>
-
+<p><img src="/img/content_img/hugo/github_new_repo.png" alt=""></p>
 <h2 id="生成站点">生成站点</h2>
-
 <p>运行如下命令会生成静态站点文件夹，baseUrl为项目的未来静态博客的实际地址。</p>
-
 <pre><code>hugo --baseUrl=&quot;https://xxx.github.io/&quot; --theme=mainroad
-</code></pre>
-
-<h2 id="推送上传">推送上传</h2>
-
+</code></pre><h2 id="推送上传">推送上传</h2>
 <p>然后我们进入到目录并将文件夹推送到远端。</p>
-
 <pre><code>cd public
 git init
 git add .
 git commit -m &quot;init&quot;
 git remote add origin https://github.com/xxx/xxx.github.io.git
 git push  --set-upstream origin master
-</code></pre>
-
-<p>这里拿自己的站点做一个案例,我们访问<code>https://aoii103.github.io/</code></p>
-
-<p><img src="/img/content_img/hugo/mysite.png" alt="" /></p>
-
+</code></pre><p>这里拿自己的站点做一个案例,我们访问<code>https://aoii103.github.io/</code></p>
+<p><img src="/img/content_img/hugo/mysite.png" alt=""></p>
 <h1 id="配置说明">配置说明</h1>
-
 <p>hugo配置文件可参考相关theme中的exampleSite/config.toml</p>
-
 <p>更多新建文章等操作可参考 <code>hugo --help</code></p>
 		</div>
 		

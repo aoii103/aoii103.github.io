@@ -7,12 +7,13 @@
 	<title>动动手做一个UserAgent库 - 进击的Hunter</title>
 	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
 	<meta name="description" content="你是否曾使用着一个两个或者直接百度来谷歌来的几个User-Agent来作为爬虫的UA头，或是从浏览器调试工具扒拉下来的本机UA头，甚至是未使用。。作为一个爬虫脚本，基本的伪装是很必要的。">
-	<meta name="generator" content="Hugo 0.53" />
+	<meta name="generator" content="Hugo 0.80.0" />
 	<meta property="og:title" content="动动手做一个UserAgent库" />
 <meta property="og:description" content="你是否曾使用着一个两个或者直接百度来谷歌来的几个User-Agent来作为爬虫的UA头，或是从浏览器调试工具扒拉下来的本机UA头，甚至是未使用。。作为一个爬虫脚本，基本的伪装是很必要的。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://pyocean.com/post/2018_11_29_%E5%8A%A8%E5%8A%A8%E6%89%8B%E5%81%9A%E4%B8%80%E4%B8%AAuseragent%E5%BA%93/" /><meta property="article:published_time" content="2018-11-29T00:00:00&#43;00:00"/>
-<meta property="article:modified_time" content="2018-11-29T00:00:00&#43;00:00"/>
+<meta property="og:url" content="https://pyocean.com/post/2018_11_29_%E5%8A%A8%E5%8A%A8%E6%89%8B%E5%81%9A%E4%B8%80%E4%B8%AAuseragent%E5%BA%93/" />
+<meta property="article:published_time" content="2018-11-29T00:00:00+00:00" />
+<meta property="article:modified_time" content="2018-11-29T00:00:00+00:00" />
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="动动手做一个UserAgent库"/>
@@ -89,137 +90,88 @@ if (!doNotTrack) {
 	<div class="toc__title">Page content</div>
 	<div class="toc__menu">
 		<nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li><a href="#什么是ua">什么是UA</a></li>
-<li><a href="#发现之旅">发现之旅</a></li>
-<li><a href="#命令代理proxychain4-以mac为例">命令代理ProxyChain4（以MAC为例）</a>
-<ul>
-<li>
-<ul>
-<li><a href="#软件安装">软件安装</a></li>
-<li><a href="#软件配置">软件配置</a></li>
-<li><a href="#使用方法">使用方法</a></li>
-</ul></li>
-</ul></li>
-<li><a href="#数据存储">数据存储</a></li>
-<li><a href="#查询代码">查询代码</a></li>
-<li><a href="#源码链接">源码链接</a></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#什么是ua">什么是UA</a></li>
+    <li><a href="#发现之旅">发现之旅</a></li>
+    <li><a href="#命令代理proxychain4以mac为例">命令代理ProxyChain4（以MAC为例）</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#数据存储">数据存储</a></li>
+    <li><a href="#查询代码">查询代码</a></li>
+    <li><a href="#源码链接">源码链接</a></li>
+  </ul>
 </nav>
 	</div>
 </div>
 <div class="content post__content clearfix">
 			<p>作为一个爬虫脚本，基本的伪装是很必要的。而User-Agent头这个看似不起眼的元素，却起着至关重要的作用。</p>
-
 <p>当然，这里还是需要科普下UA，是何物。</p>
-
 <h2 id="什么是ua">什么是UA</h2>
-
 <blockquote>
 <p>Wiki：在计算机科学中，用户代理（英语：User Agent）指的是代表用户行为的软件代理程序所提供的对自己的一个标识符。</p>
-
 <p>我：简而言之就是访问者的身份证。</p>
 </blockquote>
-
 <h2 id="发现之旅">发现之旅</h2>
-
 <p>那么在常规爬虫脚本的编写中，通过每次请求虚假的UA来装饰每次请求，同样能达到一定的伪装作用,较为直观的理解就是，例如戴了个口罩。</p>
-
-<p><img src="/img/content_img/ua_demo/mengmian3.jpg" alt="mengmian3.jpg" /></p>
-
+<p><img src="/img/content_img/ua_demo/mengmian3.jpg" alt="mengmian3.jpg"></p>
 <blockquote>
-<p>如果对方刨根问底要你摘下口罩查你IP的话，那这个就不适用了，请移步文章[](/img/content_img/ua_demo/)</p>
+<p>如果对方刨根问底要你摘下口罩查你IP的话，那这个就不适用了，请移步文章<a href="/img/content_img/ua_demo/"></a></p>
 </blockquote>
-
 <p>废话不多说，说干就干，首先我们打开谷歌（不要问我是怎么打开的。。）并输入<code>user agent list</code>，回车。</p>
-
-<p><img src="/img/content_img/ua_demo/search.png" alt="search.png" /></p>
-
+<p><img src="/img/content_img/ua_demo/search.png" alt="search.png"></p>
 <p>这个时候我们可以看到结果中蓝框内有着令人兴奋的结果，UA的基础分类。
 而红框内为此结果的源URL地址。于是我们访问这个站点。</p>
-
-<p><img src="/img/content_img/ua_demo/mainpage.png" alt="mainpage" /></p>
-
+<p><img src="/img/content_img/ua_demo/mainpage.png" alt="mainpage"></p>
 <p>我们可以看到列表通过用途进行了一定分类。于是我们进行了一定的对比分析。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">https://developers.whatismybrowser.com/useragents/explore/software_name/chrome/
 https://developers.whatismybrowser.com/useragents/explore/software_name/internet-explorer/
 https://developers.whatismybrowser.com/useragents/explore/operating_system_name/windows/
-https://developers.whatismybrowser.com/useragents/explore/operating_platform/nexus-5/</code></pre></div>
-<p>不难看出，这个站点根据尾部的两级目录进行了分类</p>
+https://developers.whatismybrowser.com/useragents/explore/operating_platform/nexus-5/
 
+</code></pre></div><p>不难看出，这个站点根据尾部的两级目录进行了分类</p>
 <pre><code>\type1\
 	\type2\
 		\page
-</code></pre>
-
-<p>说得直白一点，这或许是 <strong>三个循环</strong> 就能搞定的事情，当然page得根据抓取结果来判定。</p>
-
-<p><img src="/img/content_img/ua_demo/pagesearch.png" alt="" /></p>
-
+</code></pre><p>说得直白一点，这或许是 <strong>三个循环</strong> 就能搞定的事情，当然page得根据抓取结果来判定。</p>
+<p><img src="/img/content_img/ua_demo/pagesearch.png" alt=""></p>
 <p>首先我们需要获取到全部的分类链接，也就是上 图中第一个箭头指向元素的 <code>href</code>属性，这里我们通过chrome调试工具直接选取到红框元素css路径并进行对比总结出通用路径</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"># listing-by-field-name &gt; li:nth-child(1) &gt; h2 &gt; a
 # listing-by-field-name &gt; li:nth-child(2) &gt; h2 &gt; a
 
-# listing-by-field-name &gt; li &gt; h2 &gt; a</code></pre></div>
-<p>并且我们可以发现，下级目录直接给出了二级类型及其总数量，具体取法同上文不再赘述。</p>
-
-<p><img src="/img/content_img/ua_demo/nums.png" alt="" /></p>
-
+# listing-by-field-name &gt; li &gt; h2 &gt; a
+</code></pre></div><p>并且我们可以发现，下级目录直接给出了二级类型及其总数量，具体取法同上文不再赘述。</p>
+<p><img src="/img/content_img/ua_demo/nums.png" alt=""></p>
 <p>我们通过访问任意类型的任一一页，并统计单页数量来直接计算出总页数。那么怎么快速计算呢。这里我们来观察下数据集所处的dom位置。</p>
-
-<p><img src="/img/content_img/ua_demo/itemnums.png" alt="" /></p>
-
+<p><img src="/img/content_img/ua_demo/itemnums.png" alt=""></p>
 <p>可以看到全文就一个<code>tbody</code>标签，并且每项的一个<code>td</code>标签存在<code>useragent</code>这样一个类属性。如此就好办了。我们可以通过编写js语句来直接读取单页总数。</p>
-
-<p><img src="/img/content_img/ua_demo/itemnums2.png" alt="" /></p>
-
+<p><img src="/img/content_img/ua_demo/itemnums2.png" alt=""></p>
 <p>于是总页数就为<code>math.ceil(nums/50)</code></p>
-
 <p>如此一来，一二级目录名称及总页数都找到了解决办法，这个时候我们就可以开始coding了。在编写过程中，我们发现这个站点也是对访问频率进行了一定限制，而Tor代理可以很好地绕过。具体手法详见【url】。</p>
-
 <p>考虑到我们使用的异步模块<code>asks</code>并没有<code>proxy</code>配置项，于是经过一番搜寻，我们找到了一个很好的命令行代理，接下来我给大家介绍它及其使用方法。</p>
-
-<h2 id="命令代理proxychain4-以mac为例">命令代理ProxyChain4（以MAC为例）</h2>
-
+<h2 id="命令代理proxychain4以mac为例">命令代理ProxyChain4（以MAC为例）</h2>
 <blockquote>
 <p>使用环境<code>Linux, BSD, MAC</code>(win用户的悲剧)</p>
 </blockquote>
-
 <h4 id="软件安装">软件安装</h4>
-
 <p>这里我们通过<code>brew</code>来管理软件包，具体关于<code>brew</code>的安装方式不再赘述。</p>
-
-<p><code>brew install proxychains-ng</code></p>
-
+<p><code>brew install proxychains-ng </code></p>
 <h4 id="软件配置">软件配置</h4>
-
-<p><img src="/img/content_img/ua_demo/proxy.png" alt="" /></p>
-
+<p><img src="/img/content_img/ua_demo/proxy.png" alt=""></p>
 <p>我们通过<code>vim</code>编辑配置文件<code>vi /usr/local/etc/proxychains.conf</code>，搜索<code>[ProxyList]</code>(一般在底部) 在其下方加上 <code>socks5  127.0.0.1 9150</code>(此为Tor代理节点)并保存。</p>
-
 <h4 id="使用方法">使用方法</h4>
-
 <p>这个神奇的插件可以通过<code>proxychains4 [你要运行的命令]</code> 来让任何命令经过代理</p>
-
-<p><img src="/img/content_img/ua_demo/demo.png" alt="" /></p>
-
+<p><img src="/img/content_img/ua_demo/demo.png" alt=""></p>
 <p>当然它还能这样，如下是一张鲜明的对比图。</p>
-
-<p><img src="/img/content_img/ua_demo/demo3.png" alt="" /></p>
-
-<p>想必也有人会问，是否本地地址也会走代理，答案是，默认是的。需要通过修改配置才能跳过本地地址，找到如下配置并去掉<strong>#</strong>号即可。</p>
-
-<p><img src="/img/content_img/ua_demo/local.png" alt="" /></p>
-
+<p><img src="/img/content_img/ua_demo/demo3.png" alt=""></p>
+<p>想必也有人会问，是否本地地址也会走代理，答案是，默认是的。需要通过修改配置才能跳过本地地址，找到如下配置并去掉**#**号即可。</p>
+<p><img src="/img/content_img/ua_demo/local.png" alt=""></p>
 <h2 id="数据存储">数据存储</h2>
-
 <p>为了快速构建我们选择使用sqlite，并通过模块<code>peewee</code>来构建ORM，没有安装的同学可以通过<code>pip install peewee</code>来安装。</p>
-
 <p>首先我们来配置表字段</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> peewee <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">
+<span style="color:#f92672">from</span> peewee <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
 
 db <span style="color:#f92672">=</span> SqliteDatabase(<span style="color:#e6db74">&#39;useragents.db&#39;</span>) <span style="color:#75715e"># 初始化数据库</span>
 
@@ -235,30 +187,28 @@ db <span style="color:#f92672">=</span> SqliteDatabase(<span style="color:#e6db7
         database <span style="color:#f92672">=</span> db <span style="color:#75715e"># 指定数据库</span>
 
 db<span style="color:#f92672">.</span>connect() <span style="color:#75715e"># 连接数据库</span>
-db<span style="color:#f92672">.</span>create_tables([UAS]) <span style="color:#75715e"># 初始化创建不存在的库</span></code></pre></div>
-<p>这样我们就完成了表配置，考虑到脚本是异步执行，用同步代码会引发性能问题
+db<span style="color:#f92672">.</span>create_tables([UAS]) <span style="color:#75715e"># 初始化创建不存在的库</span>
+
+
+</code></pre></div><p>这样我们就完成了表配置，考虑到脚本是异步执行，用同步代码会引发性能问题
 ，所以接下来我们需要在运行完之后再将数据存储。并且在编写中遇到一个问题。<code>peewee</code>的<code>insert__many</code>方法并不能一下子插入较多的数据，所以得将结果数据分块存储。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">MakeChunk</span>(datas,length<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>):
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">MakeChunk</span>(datas,length<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>):
     <span style="color:#66d9ef">for</span> item <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1</span>, math<span style="color:#f92672">.</span>ceil(len(datas)<span style="color:#f92672">/</span>length)):
-        <span style="color:#66d9ef">yield</span> datas[item<span style="color:#f92672">*</span>length:(item<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">*</span>length]</code></pre></div>
-<p>在如上部分完成后，大致代码也已完成，这里截取爬了一定数量后中断的截图</p>
+        <span style="color:#66d9ef">yield</span> datas[item<span style="color:#f92672">*</span>length:(item<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">*</span>length]
 
-<p><img src="/img/content_img/ua_demo/uares.png" alt="" /></p>
-
+</code></pre></div><p>在如上部分完成后，大致代码也已完成，这里截取爬了一定数量后中断的截图</p>
+<p><img src="/img/content_img/ua_demo/uares.png" alt=""></p>
 <p>可以看到数据已经成功录入到了sqlite中</p>
-
-<p><img src="/img/content_img/ua_demo/uadb.png" alt="" /></p>
-
+<p><img src="/img/content_img/ua_demo/uadb.png" alt=""></p>
 <p>接下来就可以制作模块了。</p>
-
 <h2 id="查询代码">查询代码</h2>
-
 <blockquote>
 <p>原本考虑使用Django来做但那样实用性是在太差于是就觉得做了个针对特定需求内容的过滤查询并随机取值</p>
 </blockquote>
-
 <p>不多废话，直接上代码,这里我通过搜索关键内容<code>searchwords</code>字典传入希望查询的参数，当然这里并未支持模糊查询，这是有待改进的地方。并以<code>methods</code>为条件组合方法（与、或）进行查询。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">UserAgent</span>(searchwords, methods<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;and&#39;</span>):
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">UserAgent</span>(searchwords, methods<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;and&#39;</span>):
     <span style="color:#e6db74">&#34;&#34;&#34;
 </span><span style="color:#e6db74">       searchwords: 
 </span><span style="color:#e6db74">       {
@@ -283,29 +233,23 @@ db<span style="color:#f92672">.</span>create_tables([UAS]) <span style="color:#7
     <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">Exception</span> <span style="color:#66d9ef">as</span> e:
         <span style="color:#66d9ef">pass</span>
     <span style="color:#66d9ef">return</span> count, resagent
-    </code></pre></div>
-<p>结果将返回所能查询到的<strong>数据量</strong>及随机一个<strong><code>UA</code></strong>结果字段组成的元祖，当然如果查询出错也会以友好的方式返回</p>
-
+    
+</code></pre></div><p>结果将返回所能查询到的<strong>数据量</strong>及随机一个**<code>UA</code>**结果字段组成的元祖，当然如果查询出错也会以友好的方式返回</p>
 <p>在这里我们使用如下案例测试一下</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(UserAgent({
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">
+<span style="color:#66d9ef">print</span>(UserAgent({
         <span style="color:#e6db74">&#34;software&#34;</span>: [
             <span style="color:#e6db74">&#39;Android Browser 4.0&#39;</span>
         ]
-    }))</code></pre></div>
-<p>可以看到结果如下</p>
+    }))
 
-<p><img src="/img/content_img/ua_demo/fakedbres.png" alt="" /></p>
-
+</code></pre></div><p>可以看到结果如下</p>
+<p><img src="/img/content_img/ua_demo/fakedbres.png" alt=""></p>
 <p>不过可能会有同学问到，我要怎么知道其中包含哪些种类呢，自己写<code>group by</code>吗???</p>
-
-<p>答案是当然不会，这里我们编写了一个<code>UserAgentGroups(colname, limit=10)</code>方法供开发者查阅,只需传入一个<strong>类型字段<code>colname</code></strong>及<strong>返回最大数量<code>limit</code></strong>即可。</p>
-
+<p>答案是当然不会，这里我们编写了一个<code>UserAgentGroups(colname, limit=10)</code>方法供开发者查阅,只需传入一个**类型字段<code>colname</code><strong>及</strong>返回最大数量<code>limit</code>**即可。</p>
 <p>例如：<code>UserAgentGroups('engine', 5)</code>,返回结果如下图所示列表。</p>
-
-<p><img src="/img/content_img/ua_demo/fakedbgroup.png" alt="" /></p>
-
+<p><img src="/img/content_img/ua_demo/fakedbgroup.png" alt=""></p>
 <h2 id="源码链接">源码链接</h2>
-
 <p><a href="https://github.com/aoii103/FakeUA">https://github.com/aoii103/FakeUA</a></p>
 		</div>
 		
