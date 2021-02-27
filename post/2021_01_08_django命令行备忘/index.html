@@ -96,7 +96,8 @@ if (!doNotTrack) {
         <li></li>
       </ul>
     </li>
-    <li><a href="#0x02-类字段额外解析开启">0x02 类字段额外解析开启</a></li>
+    <li><a href="#0x01-类字段额外解析开启">0x01 类字段额外解析开启</a></li>
+    <li><a href="#0x03-类额外meta">0x03 类额外Meta</a></li>
   </ul>
 </nav>
 	</div>
@@ -116,7 +117,7 @@ if (!doNotTrack) {
         <span style="color:#e6db74">&#39;rest_framework.authentication.TokenAuthentication&#39;</span>,
     )
 }
-</code></pre></div><h2 id="0x02-类字段额外解析开启">0x02 类字段额外解析开启</h2>
+</code></pre></div><h2 id="0x01-类字段额外解析开启">0x01 类字段额外解析开启</h2>
 <blockquote>
 <p>exact,iexact,gt,gte,lt,lte,in,contains,icontains,startswith,istartswith,endswith,iendswith,range,isnull,regex,iregex</p>
 </blockquote>
@@ -132,6 +133,10 @@ if (!doNotTrack) {
             lookup_list <span style="color:#f92672">=</span> cls<span style="color:#f92672">.</span>Meta<span style="color:#f92672">.</span>model<span style="color:#f92672">.</span>_meta<span style="color:#f92672">.</span>get_field(field_name)<span style="color:#f92672">.</span>get_lookups()<span style="color:#f92672">.</span>keys()
             fields[field_name] <span style="color:#f92672">=</span> lookup_list
         <span style="color:#66d9ef">return</span> fields
+</code></pre></div><h2 id="0x03-类额外meta">0x03 类额外Meta</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># models.py</span>
+<span style="color:#f92672">import</span> django.db.models.options <span style="color:#f92672">as</span> options
+options<span style="color:#f92672">.</span>DEFAULT_NAMES <span style="color:#f92672">=</span> options<span style="color:#f92672">.</span>DEFAULT_NAMES <span style="color:#f92672">+</span> (<span style="color:#e6db74">&#39;table_cols&#39;</span>,<span style="color:#e6db74">&#39;form_cols&#39;</span>,<span style="color:#e6db74">&#39;export_order&#39;</span>,)
 </code></pre></div>
 		</div>
 		

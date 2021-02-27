@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Django-Model导出带验证的excel表单 - 进击的Hunter</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta name="generator" content="Hugo 0.80.0" />
+	<meta property="og:title" content="Django-Model导出带验证的excel表单" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://pyocean.com/post/2021_02_17_python_excel%E6%8A%80%E5%B7%A7/" />
+<meta property="article:published_time" content="2021-02-17T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-02-17T00:00:00+00:00" />
+
+	<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Django-Model导出带验证的excel表单"/>
+<meta name="twitter:description" content=""/>
+
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-135738940-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="进击的Hunter" rel="home">
+				<div class="logo__title">进击的Hunter</div>
+				<div class="logo__tagline">Uneasy lies the head that wears the crown.</div>
+			</a>
+		</div>
+		<a href="https://github.com/aoii103/every_day_cmd"><div style="
+	height: 30px;
+	display: inline-block;
+	line-height:30px;
+	padding:0 20px;
+	color:rgb(73, 80, 87);
+	font-size:13px;
+	text-decoration:none;
+	font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;" id="every_day_cmd" class="every_day_cmd" title="字字珠玑，每日一记。" ></div></a>
+<div class="divider"></div>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+	axios.get('https://pyocean.com/every_day_cmd?os=osx,window,common').then(resp => {
+		document.getElementById('every_day_cmd').innerHTML = `🍺 ${resp.data.description}: <code  style="color: rgb(232, 62, 140);background:none;border:none;">${resp.data.code}</code>`
+	})
+</script>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Django-Model导出带验证的excel表单</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2021-02-17T00:00:00">February 17, 2021</time>
+</div>
+</div>
+		</header>
+		<figure class="post__thumbnail">
+			<img src="https://image-1302887441.cos.ap-nanjing.myqcloud.com/logo_1200x630.png" alt="Django-Model导出带验证的excel表单">
+		</figure>
+
+
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+  <ul>
+    <li><a href="#0x01-excel中列名与序列的转换">0x01 Excel中列名与序列的转换</a></li>
+  </ul>
+</nav>
+	</div>
+</div>
+<div class="content post__content clearfix">
+			<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RetrieveModelMixin</span>:
+    <span style="color:#e6db74">&#34;&#34;&#34;
+</span><span style="color:#e6db74">    允许获得模板及对应key
+</span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">retrieve</span>(self, request, <span style="color:#f92672">*</span>args, <span style="color:#f92672">**</span>kwargs):
+        pk <span style="color:#f92672">=</span> request<span style="color:#f92672">.</span>parser_context[<span style="color:#e6db74">&#34;kwargs&#34;</span>][<span style="color:#e6db74">&#34;pk&#34;</span>]
+        model <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>serializer_class<span style="color:#f92672">.</span>Meta<span style="color:#f92672">.</span>model
+        fields <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>_meta<span style="color:#f92672">.</span>fields
+
+        filter_item <span style="color:#f92672">=</span> <span style="color:#66d9ef">lambda</span> _: _<span style="color:#f92672">.</span>editable
+        fields_maps <span style="color:#f92672">=</span> {item<span style="color:#f92672">.</span>name: item<span style="color:#f92672">.</span>verbose_name <span style="color:#66d9ef">for</span> item <span style="color:#f92672">in</span> fields <span style="color:#66d9ef">if</span> filter_item(item)}
+        <span style="color:#66d9ef">if</span> pk <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__csv&#34;</span>:  <span style="color:#75715e"># 模板文件下载</span>
+            response <span style="color:#f92672">=</span> HttpResponse(content_type<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text/csv&#34;</span>)
+            response[<span style="color:#e6db74">&#34;Content-Disposition&#34;</span>] <span style="color:#f92672">=</span> f<span style="color:#e6db74">&#39;attachment; filename=&#34;{self.basename}_model.csv&#34;&#39;</span>
+            response<span style="color:#f92672">.</span>write(codecs<span style="color:#f92672">.</span>BOM_UTF8)
+            writer <span style="color:#f92672">=</span> csv<span style="color:#f92672">.</span>writer(response)
+            writer<span style="color:#f92672">.</span>writerow([item<span style="color:#f92672">.</span>verbose_name <span style="color:#66d9ef">for</span> item <span style="color:#f92672">in</span> fields <span style="color:#66d9ef">if</span> filter_item(item)])
+            <span style="color:#66d9ef">return</span> response
+        <span style="color:#66d9ef">elif</span> pk <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__xlsx&#34;</span>: <span style="color:#75715e"># 模板xlsx下载</span>
+            cell_req <span style="color:#f92672">=</span> NamedStyle(name<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;req&#39;</span>,border<span style="color:#f92672">=</span>Border(top<span style="color:#f92672">=</span>Side(style<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;thick&#39;</span>, color<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;00FF6600&#34;</span>)))
+            cell_blank <span style="color:#f92672">=</span> NamedStyle(name<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;blank&#39;</span>,border<span style="color:#f92672">=</span>Border(top<span style="color:#f92672">=</span>Side(style<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;thick&#39;</span>, color<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;0000FFFF&#34;</span>)))
+            cell_styles <span style="color:#f92672">=</span> []
+            
+            <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">add_valid</span>(worksheet,item,col):
+                <span style="color:#e6db74">&#34;&#34;&#34;[设定认证器]]
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">                Args:
+</span><span style="color:#e6db74">                    worksheet ([type]): [description]
+</span><span style="color:#e6db74">                    item ([type]): [列]
+</span><span style="color:#e6db74">                    col ([type]): [col字母]
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">                Raises:
+</span><span style="color:#e6db74">                    ValueError: [description]
+</span><span style="color:#e6db74">                &#34;&#34;&#34;</span>
+                col <span style="color:#f92672">=</span> col<span style="color:#f92672">.</span>strip()<span style="color:#f92672">.</span>upper()
+                cell_styles<span style="color:#f92672">.</span>append(<span style="color:#66d9ef">lambda</span> : setattr(worksheet[f<span style="color:#e6db74">&#39;{col}1&#39;</span>],<span style="color:#e6db74">&#39;style&#39;</span>,cell_blank <span style="color:#66d9ef">if</span> item<span style="color:#f92672">.</span>blank <span style="color:#66d9ef">else</span>  cell_req))
+                dv <span style="color:#f92672">=</span> None
+                <span style="color:#66d9ef">if</span> item<span style="color:#f92672">.</span>choices:
+                    <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> re<span style="color:#f92672">.</span>match(<span style="color:#e6db74">&#39;[A-z]*&#39;</span>,col):
+                        <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">ValueError</span>(<span style="color:#e6db74">&#39;invalid col&#39;</span>)
+                    dv <span style="color:#f92672">=</span> DataValidation(type<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;list&#34;</span>, formula1<span style="color:#f92672">=</span>f<span style="color:#e6db74">&#39;&#34;{&#34;,&#34;.join([v.label for k, v in dict(item.choices).items() if v.label])}&#34;&#39;</span>, allow_blank<span style="color:#f92672">=</span>True)
+                    dv<span style="color:#f92672">.</span>prompt <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;请选择列表中的选项&#39;</span>
+                    dv<span style="color:#f92672">.</span>promptTitle <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;List Selection&#39;</span>
+                <span style="color:#66d9ef">elif</span> isinstance(item,models<span style="color:#f92672">.</span>IntegerField):
+                    dv <span style="color:#f92672">=</span> DataValidation(type<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;whole&#34;</span>)
+                    dv<span style="color:#f92672">.</span>prompt <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;请输入一个整数&#39;</span>
+                    dv<span style="color:#f92672">.</span>promptTitle <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;Decimal&#39;</span>
+                <span style="color:#66d9ef">elif</span> isinstance(item,(models<span style="color:#f92672">.</span>DateField,models<span style="color:#f92672">.</span>DateTimeField,)):
+                    dv <span style="color:#f92672">=</span> DataValidation(type<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;date&#34;</span>)
+                    dv<span style="color:#f92672">.</span>prompt <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;请输入一个日期或时间&#39;</span>
+                    dv<span style="color:#f92672">.</span>promptTitle <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;DateTime&#39;</span>
+                <span style="color:#66d9ef">elif</span> isinstance(item,models<span style="color:#f92672">.</span>TimeField):
+                    dv <span style="color:#f92672">=</span> DataValidation(type<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;time&#34;</span>)
+                    dv<span style="color:#f92672">.</span>prompt <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;请输入一个时间&#39;</span>
+                    dv<span style="color:#f92672">.</span>promptTitle <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;Time&#39;</span>
+                <span style="color:#66d9ef">elif</span> isinstance(item,models<span style="color:#f92672">.</span>GenericIPAddressField):
+                    dv <span style="color:#f92672">=</span> DataValidation(type<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;custom&#34;</span>,formula1<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;=AND((LEN(A2)-LEN(SUBSTITUTE(A2,&#34;.&#34;,&#34;&#34;)))=3,ISNUMBER(SUBSTITUTE(A2,&#34;.&#34;,&#34;&#34;)+0))&#39;</span>)
+                    dv<span style="color:#f92672">.</span>prompt <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;请输入一个IP&#39;</span>
+                    dv<span style="color:#f92672">.</span>promptTitle <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;IPaddress&#39;</span>
+                <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> dv:
+                    <span style="color:#66d9ef">return</span>
+                
+                dv<span style="color:#f92672">.</span>promptTitle <span style="color:#f92672">=</span> item<span style="color:#f92672">.</span>__class__<span style="color:#f92672">.</span>__name__
+                dv<span style="color:#f92672">.</span>error <span style="color:#f92672">=</span><span style="color:#e6db74">&#39;输入内容有误&#39;</span>
+                dv<span style="color:#f92672">.</span>errorTitle <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;Invalid Entry&#39;</span>
+                worksheet<span style="color:#f92672">.</span>add_data_validation(dv)
+                dv<span style="color:#f92672">.</span>add(f<span style="color:#e6db74">&#39;{col}1:{col}1048576&#39;</span>)
+                    
+            <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">excel_column_name</span>(n):
+                <span style="color:#e6db74">&#34;&#34;&#34;[数字转列名]
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">                Args:
+</span><span style="color:#e6db74">                    n ([type]): [description]
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">                Returns:
+</span><span style="color:#e6db74">                    [type]: [description]
+</span><span style="color:#e6db74">                &#34;&#34;&#34;</span>
+                name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>
+                <span style="color:#66d9ef">while</span> n <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>:
+                    n, r <span style="color:#f92672">=</span> divmod (n <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">26</span>)
+                    name <span style="color:#f92672">=</span> chr(r <span style="color:#f92672">+</span> ord(<span style="color:#e6db74">&#39;A&#39;</span>)) <span style="color:#f92672">+</span> name
+                <span style="color:#66d9ef">return</span> name
+                
+            wb <span style="color:#f92672">=</span> Workbook()
+            ws <span style="color:#f92672">=</span> wb<span style="color:#f92672">.</span>active
+            header,body <span style="color:#f92672">=</span> [],[]
+            keys <span style="color:#f92672">=</span> { item:num <span style="color:#66d9ef">for</span> num,item <span style="color:#f92672">in</span> enumerate(model<span style="color:#f92672">.</span>_meta<span style="color:#f92672">.</span>export_order)}
+            <span style="color:#66d9ef">for</span> num,item <span style="color:#f92672">in</span>  enumerate( filter(filter_item, sorted(fields ,key<span style="color:#f92672">=</span><span style="color:#66d9ef">lambda</span> _: keys<span style="color:#f92672">.</span>get(_<span style="color:#f92672">.</span>name,<span style="color:#ae81ff">1000</span>)))) :
+                header<span style="color:#f92672">.</span>append(item<span style="color:#f92672">.</span>verbose_name)
+                add_valid(ws,item,excel_column_name(num<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>))
+            ws<span style="color:#f92672">.</span>append(header)
+            [_() <span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> cell_styles]
+            ws<span style="color:#f92672">.</span>append(body)
+            response <span style="color:#f92672">=</span> HttpResponse(content<span style="color:#f92672">=</span>save_virtual_workbook(wb), content_type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;application/ms-excel&#39;</span>)
+            response[<span style="color:#e6db74">&#34;Content-Disposition&#34;</span>] <span style="color:#f92672">=</span> f<span style="color:#e6db74">&#39;attachment; filename=&#34;{self.basename}_model.xlsx&#34;&#39;</span>
+            <span style="color:#66d9ef">return</span> response
+        <span style="color:#66d9ef">elif</span> pk <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__fields&#34;</span>:  <span style="color:#75715e"># 模板对应翻译</span>
+            <span style="color:#66d9ef">return</span> Response(
+                {
+                    <span style="color:#e6db74">&#34;data&#34;</span>: {item<span style="color:#f92672">.</span>verbose_name: item<span style="color:#f92672">.</span>name <span style="color:#66d9ef">for</span> item <span style="color:#f92672">in</span> fields <span style="color:#66d9ef">if</span> filter_item(item)},
+                    <span style="color:#e6db74">&#34;error&#34;</span>: <span style="color:#e6db74">&#34;&#34;</span>,
+                }
+            )
+        <span style="color:#66d9ef">elif</span> pk <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__export_all&#34;</span>:  <span style="color:#75715e"># 导出所有文档</span>
+            datas <span style="color:#f92672">=</span> [obj<span style="color:#f92672">.</span>to_dict() <span style="color:#66d9ef">for</span> obj <span style="color:#f92672">in</span> model<span style="color:#f92672">.</span>objects<span style="color:#f92672">.</span>all()]
+            <span style="color:#66d9ef">if</span> datas:
+                response <span style="color:#f92672">=</span> HttpResponse(content_type<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text/csv&#34;</span>)
+                response[<span style="color:#e6db74">&#34;Content-Disposition&#34;</span>] <span style="color:#f92672">=</span> f<span style="color:#e6db74">&#39;attachment; filename=&#34;{self.basename}_all.csv&#34;&#39;</span>
+                response<span style="color:#f92672">.</span>write(codecs<span style="color:#f92672">.</span>BOM_UTF8)
+                writer <span style="color:#f92672">=</span> csv<span style="color:#f92672">.</span>writer(response)
+                writer<span style="color:#f92672">.</span>writerow([fields_maps<span style="color:#f92672">.</span>get(key, key) <span style="color:#66d9ef">for</span> key <span style="color:#f92672">in</span> datas[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>keys()])
+                <span style="color:#66d9ef">for</span> item <span style="color:#f92672">in</span> datas:
+                    writer<span style="color:#f92672">.</span>writerow(list(item<span style="color:#f92672">.</span>values()))
+                <span style="color:#66d9ef">return</span> response
+            <span style="color:#66d9ef">else</span>:
+                <span style="color:#66d9ef">return</span> Response(
+                    {
+                        <span style="color:#e6db74">&#34;detail&#34;</span>: <span style="color:#e6db74">&#34;empty datas&#34;</span>,
+                    },
+                    status<span style="color:#f92672">=</span><span style="color:#ae81ff">400</span>,
+                )
+        instance <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>get_object()
+        serializer <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>get_serializer(instance)
+        <span style="color:#66d9ef">return</span> Response(serializer<span style="color:#f92672">.</span>data)
+</code></pre></div><h2 id="0x01-excel中列名与序列的转换">0x01 Excel中列名与序列的转换</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">excel_column_name</span>(n):
+    <span style="color:#e6db74">&#34;&#34;&#34;Number to Excel-style column name, e.g., 1 = A, 26 = Z, 27 = AA, 703 = AAA.&#34;&#34;&#34;</span>
+    name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>
+    <span style="color:#66d9ef">while</span> n <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>:
+        n, r <span style="color:#f92672">=</span> divmod (n <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">26</span>)
+        name <span style="color:#f92672">=</span> chr(r <span style="color:#f92672">+</span> ord(<span style="color:#e6db74">&#39;A&#39;</span>)) <span style="color:#f92672">+</span> name
+    <span style="color:#66d9ef">return</span> name
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">excel_column_number</span>(name):
+    <span style="color:#e6db74">&#34;&#34;&#34;Excel-style column name to number, e.g., A = 1, Z = 26, AA = 27, AAA = 703.&#34;&#34;&#34;</span>
+    n <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+    <span style="color:#66d9ef">for</span> c <span style="color:#f92672">in</span> name:
+        n <span style="color:#f92672">=</span> n <span style="color:#f92672">*</span> <span style="color:#ae81ff">26</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> ord(c) <span style="color:#f92672">-</span> ord(<span style="color:#e6db74">&#39;A&#39;</span>)
+    <span style="color:#66d9ef">return</span> n
+</code></pre></div>
+		</div>
+		
+<div class="post__tags tags clearfix">
+	<svg class="icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="/tags/excel/" rel="tag">excel</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/django/" rel="tag">django</a></li>
+	</ul>
+</div>
+	</article>
+</main>
+<h5>更多及时资讯欢迎关注 <code>进击的Hunter</code> </h5>
+<img src="/img/qrcode.jpg" />
+
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/post/2021_02_16_ngrok%E6%9C%8D%E5%8A%A1%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">ngrok服务内网穿透</p></a>
+	</div>
+	<div class="post-nav__item post-nav__item--next">
+		<a class="post-nav__link" href="/post/2021_02_18_%E9%BB%91%E7%BE%A4%E8%BE%89%E6%9E%B6%E8%AE%BE%E7%AC%94%E8%AE%B0/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">黑群辉折腾笔记</p></a>
+	</div>
+</nav>
+
+<section class="comments">
+	<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "https-pyocean-com" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 s045pd.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+</body>
+</html>
